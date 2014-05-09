@@ -1,7 +1,8 @@
 /**
  *
  */
-package leandro.mediaextractor
+package org.dbpedia.media_extractor
+
 import scala.math.cos
 import java.net.URLEncoder
 import scala.collection.mutable.Map
