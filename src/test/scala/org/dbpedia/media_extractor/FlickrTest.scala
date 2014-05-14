@@ -62,6 +62,8 @@ class FlickrTest extends FunSpec {
       assert(testInterfaceResults.toString().contains("method"))
     }
     
+    it("should get at least one picture") (pending)
+
   }
 
 }
