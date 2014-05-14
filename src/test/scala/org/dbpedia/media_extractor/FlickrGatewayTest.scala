@@ -13,22 +13,22 @@ import java.util.HashMap
  * @author allentiak
  *
  */
-object FlickrGatewayTest extends FunSpec{
+class FlickrGatewayTest extends FunSpec{
   
   describe("A FlickrGateway") {
-    it("should be able to exist :-)") (pending)
-//    {
-//      val myAPIKey="myKey"
-//      val mySecret="mySecret"
-//      val myTransport:REST=new REST()
-//      var myFlickrGateway= new Flickr(myAPIKey,mySecret,myTransport)
-//      val mytestInterface = myFlickrGateway.getTestInterface()
-//      var myHashMap= new HashMap[String,String]
-//      myHashMap.put("Marco","Polo")
-//      val results = mytestInterface.echo(myHashMap)
-//
-//    }
-//    (pending)
+    it("should be able to exist :-)")
+    {
+      val myAPIKey="myKey"
+      val mySecret="mySecret"
+      var myFlickrGateway= new Flickr(myAPIKey,mySecret,new REST())
+      val myTestInterface = myFlickrGateway.getTestInterface()
+      println("myTestInterface="+myTestInterface.toString())
+      var myHashMap= new HashMap[String,String]
+      myHashMap.put("Marco","Polo")
+      val results = myTestInterface.echo(myHashMap)
+      println("results="+results.toString())
+      assert (results===myAPIKey)
+    }
   }
 
  // def main(args: Array[String]): Unit = {}
