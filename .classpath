@@ -1,14 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-  <classpathentry output="target/scala-2.10/classes" kind="src" path="src/main/scala"/>
-  <classpathentry output="target/scala-2.10/classes" kind="src" path="src/main/java"/>
-  <classpathentry output="target/scala-2.10/test-classes" kind="src" path="src/test/scala"/>
-  <classpathentry output="target/scala-2.10/test-classes" kind="src" path="src/test/java"/>
-  <classpathentry kind="con" path="org.scala-ide.sdt.launching.SCALA_CONTAINER"/>
-  <classpathentry kind="lib" path="/home/allentiak/.ivy2/cache/com.flickr4java/flickr4java/jars/flickr4java-2.6.jar"/>
-  <classpathentry kind="lib" path="/home/allentiak/.ivy2/cache/org.scribe/scribe/jars/scribe-1.3.5.jar"/>
-  <classpathentry kind="lib" path="/home/allentiak/.ivy2/cache/org.apache.axis/axis/jars/axis-1.4.jar"/>
-  <classpathentry kind="lib" path="/home/allentiak/.ivy2/cache/log4j/log4j/bundles/log4j-1.2.17.jar"/>
-  <classpathentry kind="lib" path="/home/allentiak/.ivy2/cache/org.scalatest/scalatest_2.10/jars/scalatest_2.10-2.1.5.jar"/>
-  <classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-  <classpathentry kind="output" path="bin"/>
+	<classpathentry kind="src" output="target/scala-2.11/classes" path="src/main/scala"/>
+	<classpathentry kind="src" output="target/scala-2.11/test-classes" path="src/test/scala"/>
+	<classpathentry kind="con" path="org.scala-ide.sdt.launching.SCALA_CONTAINER"/>
+	<classpathentry kind="lib" path="/home/allentiak/.ivy2/cache/com.flickr4java/flickr4java/jars/flickr4java-2.6.jar"/>
+	<classpathentry kind="lib" path="/home/allentiak/.ivy2/cache/org.scribe/scribe/jars/scribe-1.3.5.jar"/>
+	<classpathentry kind="lib" path="/home/allentiak/.ivy2/cache/org.apache.axis/axis/jars/axis-1.4.jar"/>
+	<classpathentry kind="lib" path="/home/allentiak/.ivy2/cache/log4j/log4j/bundles/log4j-1.2.17.jar"/>
+	<classpathentry kind="lib" path="/home/allentiak/.ivy2/cache/org.scalatest/scalatest_2.11/jars/scalatest_2.11-2.1.6.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="output" path="bin"/>
 </classpath>
