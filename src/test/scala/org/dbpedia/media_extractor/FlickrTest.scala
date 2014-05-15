@@ -3,39 +3,51 @@
  */
 package org.dbpedia.media_extractor
 
-import org.scalatest.FunSpec
-import com.flickr4java.flickr.test.TestInterface
-import com.flickr4java.flickr.Flickr
-import com.flickr4java.flickr.REST
 import java.util.HashMap
-import java.util.Collections
-import java.util.Collection
+
+import org.scalatest.FunSpec
+
 import com.flickr4java.flickr.Flickr
 import com.flickr4java.flickr.FlickrException
 import com.flickr4java.flickr.REST
-import com.flickr4java.flickr.auth.Auth
-import com.flickr4java.flickr.auth.AuthInterface
-import com.flickr4java.flickr.auth.Permission
-import com.flickr4java.flickr.util.IOUtilities
-import org.scribe.model.Token
-import org.scribe.model.Verifier
-import java.io.IOException
-import java.io.InputStream
-import java.util.Properties
+import com.flickr4java.flickr.auth.Auth;
+import com.flickr4java.flickr.auth.AuthInterface;
+import com.flickr4java.flickr.auth.Permission;
+import com.flickr4java.flickr.util.IOUtilities;
+
+import org.scribe.model.Token;
+import org.scribe.model.Verifier;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Properties;
 import java.util.Scanner;
-import org.scalatest.BeforeAndAfter
 
 /**
  * @author allentiak
  *
  */
-class FlickrTest extends FunSpec {
+object FlickrTest extends FunSpec {
 
   describe("A Flickr instance") {
+       
+    var properties: Properties = null
 
-    val myAPIKey = "myAPIKey"
-    val mySecret = "mySecret"
-    var myFlickr = new Flickr(myAPIKey, mySecret, new REST())
+    @throws[IOException]
+    @throws[FlickrException]
+    def auth() {
+      
+      var in: InputStream = null;
+      try {
+        var in = classOf[AuthExample].getResourceAsStream("/flickr.setup.properties");
+        properties = new Properties();
+        properties.load(in);
+      } finally {
+        IOUtilities.close(in);
+      }
+    }
+
+    val myFlickr = new Flickr(properties.getProperty("apiKey"), properties.getProperty("secret"), new REST());
 
     var myHashMap = new HashMap[String, String]
     myHashMap.put("api_key", myAPIKey)
@@ -61,8 +73,8 @@ class FlickrTest extends FunSpec {
       var testInterfaceResults = myTestInterface.echo(myHashMap)
       assert(testInterfaceResults.toString().contains("method"))
     }
-    
-    it("should get at least one picture") (pending)
+
+    it("should get at least one picture")(pending)
 
   }
 
