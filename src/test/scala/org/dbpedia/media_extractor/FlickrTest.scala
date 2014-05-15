@@ -33,10 +33,7 @@ object FlickrTest extends FunSpec {
        
     var properties: Properties = null
 
-    @throws[IOException]
-    @throws[FlickrException]
-    def auth() {
-      
+    def auth() {      
       var in: InputStream = null;
       try {
         var in = classOf[AuthExample].getResourceAsStream("/flickr.setup.properties");
