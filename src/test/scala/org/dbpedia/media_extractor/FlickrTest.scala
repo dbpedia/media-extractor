@@ -28,7 +28,7 @@ class FlickrTest extends FunSpec {
 
   describe("A Flickr instance") {
 
-    it("should be able to connect to Flickr") {
+    it("should be able to connect to Flickr") (pending)
     it("should get at least one picture")(pending)
 
   }
