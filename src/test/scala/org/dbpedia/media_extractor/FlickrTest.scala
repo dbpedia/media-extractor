@@ -4,9 +4,7 @@
 package org.dbpedia.media_extractor
 
 import java.util.HashMap
-
 import org.scalatest.FunSpec
-
 import com.flickr4java.flickr.Flickr
 import com.flickr4java.flickr.FlickrException
 import com.flickr4java.flickr.REST
@@ -14,14 +12,13 @@ import com.flickr4java.flickr.auth.Auth
 import com.flickr4java.flickr.auth.AuthInterface
 import com.flickr4java.flickr.auth.Permission
 import com.flickr4java.flickr.util.IOUtilities
-
 import org.scribe.model.Token
 import org.scribe.model.Verifier
-
 import java.io.IOException
 import java.io.InputStream
 import java.util.Properties
 import java.util.Scanner
+import org.scribe.exceptions.OAuthException
 
 /**
  * @author allentiak
@@ -32,6 +29,8 @@ class FlickrTest extends FunSpec {
   describe("A Flickr instance") {
 
     it("should be able to connect to Flickr") {
+      
+      //Scala version of Flickr4Java's AuthExample
       var properties: Properties = null
 
       def auth() = {
@@ -63,10 +62,42 @@ class FlickrTest extends FunSpec {
         val tokenKey: String = scanner.nextLine()
         scanner.close()
 
-        val requestToken = authInterface.getAccessToken(token, new Verifier(tokenKey))
+        println("declaring requestToken...")
+        var requestToken = new Token("", "")
+
+        println("about to start the first try block...")
+        try {
+          println("trying for the first time...")
+          requestToken = authInterface.getAccessToken(token, new Verifier(tokenKey))
+        } catch {
+          case e: OAuthException => {
+            println("case e:OAuthException...")
+            println("Authentication failure")
+            println("Stack Trace:")
+            println(e.printStackTrace())
+          }
+          case e:Throwable =>{
+            println("(cought an unspecified exception)")
+          }
+        }
+
         println("Authentication success")
 
-        val auth = authInterface.checkToken(requestToken)
+        println("declaring auth...")
+        var auth: Auth = new (Auth)
+
+        println("about to start the second try block...")
+        try {
+          println("trying for the second time...")
+          auth = authInterface.checkToken(requestToken)
+        } catch {
+          case e: FlickrException => {
+            println("case e:FlickrException...")
+            println("Failure checking token")
+            println("Stack Trace:")
+            println(e.printStackTrace())
+          }
+        }
 
         // This token can be used until the user revokes it.
         println("Token: " + requestToken.getToken())
@@ -78,7 +109,7 @@ class FlickrTest extends FunSpec {
         auth
       }
 
-      def main(args: Array[String]=null):Int ={
+      def main(args: Array[String] = null): Int = {
         try {
           auth()
         } catch {
@@ -86,8 +117,8 @@ class FlickrTest extends FunSpec {
         }
         0
       }
-      
-      assert (main()===0)
+
+      assert(main() === 0)
     }
 
     it("should get at least one picture")(pending)
