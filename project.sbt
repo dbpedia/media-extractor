@@ -6,5 +6,5 @@ scalaVersion := "2.11.0"
 
 libraryDependencies += "org.scalatest" %% "scalatest" % "2.1.6" % "test"
 
-libraryDependencies += "org.glassfish.jersey.core" % "jersey-client" % "2.8"
+libraryDependencies += "org.glassfish.jersey.core" % "jersey-client" % "2.9"
 
