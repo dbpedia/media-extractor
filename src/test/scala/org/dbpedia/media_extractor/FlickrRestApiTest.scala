@@ -34,10 +34,10 @@ class FlickrRestApiTest extends FunSpec {
       val inputFile = classOf[FlickrRestApiTest].getResourceAsStream("/flickr.setup.properties")
       accessCredentials.load(inputFile)
       inputFile.close()
-      //      assert(
-      //        (accessCredentials.getProperty("apiKey") != null)
-      //          &&
-      //          (accessCredentials.getProperty("secret") != null))
+      assert(
+        (accessCredentials.getProperty("apiKey") != null)
+          &&
+          (accessCredentials.getProperty("secret") != null))
 
       //Here the first sub test should end
 
@@ -73,12 +73,11 @@ class FlickrRestApiTest extends FunSpec {
 
       //Here the second sub test should end
 
-      
       //Here the flickr.test.login test should start
 
       println("Building the access request to the protected resource flickr.test.login...")
       val authRequest1 = new OAuthRequest(Verb.POST, endPointUri.toString())
-      
+
       println("About to construct auth request for invoking method flickr.test.login...")
       authRequest1.addQuerystringParameter("method", "flickr.test.login")
       myFlickrService.signRequest(accessToken, authRequest1)
@@ -92,17 +91,16 @@ class FlickrRestApiTest extends FunSpec {
       println("Headers: " + response1.getHeaders())
       println("Stream: " + response1.getStream())
       println()
-      
-      assert(response1.getMessage()==="OK")
+
+      assert(response1.getMessage() === "OK")
 
       //Here the flickr.test.login test should end
-      
-      
+
       //Here the flickr.test.echo test should start
 
       println("Building the access request to the protected resource flickr.test.echo...")
       val authRequest2 = new OAuthRequest(Verb.POST, endPointUri.toString())
-      
+
       println("About to construct auth request for invoking method flickr.test.echo...")
       authRequest2.addQuerystringParameter("method", "flickr.test.echo")
       myFlickrService.signRequest(accessToken, authRequest2)
@@ -116,16 +114,15 @@ class FlickrRestApiTest extends FunSpec {
       println("Headers: " + response2.getHeaders())
       println("Stream: " + response2.getStream())
       println()
-      
-      assert(response2.getMessage()==="OK")
-      //Here the flickr.test.echo test should end
 
+      assert(response2.getMessage() === "OK")
+      //Here the flickr.test.echo test should end
 
       //Here the flickr.test.null test should start
 
       println("Building the access request to the protected resource flickr.test.null...")
       val authRequest3 = new OAuthRequest(Verb.POST, endPointUri.toString())
-      
+
       println("About to construct auth request for invoking method flickr.test.null...")
       authRequest3.addQuerystringParameter("method", "flickr.test.null")
       myFlickrService.signRequest(accessToken, authRequest3)
@@ -139,7 +136,7 @@ class FlickrRestApiTest extends FunSpec {
       println("Headers: " + response3.getHeaders())
       println("Stream: " + response3.getStream())
       println()
-      assert(response3.getMessage()==="OK")
+      assert(response3.getMessage() === "OK")
 
       //Here the flickr.test.login test should end
 
