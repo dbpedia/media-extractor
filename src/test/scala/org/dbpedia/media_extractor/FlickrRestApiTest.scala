@@ -176,7 +176,7 @@ class FlickrRestApiTest extends FunSpec {
       */
 
       val lat = 50.85
-      val long = 4.35
+      val lon = 4.35
       
       
       
@@ -201,7 +201,7 @@ class FlickrRestApiTest extends FunSpec {
       println("About to construct auth request for invoking method flickr.photos.search...")
       photosSearchRequest.addQuerystringParameter("method", "flickr.photos.search")
       photosSearchRequest.addQuerystringParameter("lat", lat.toString)
-      photosSearchRequest.addQuerystringParameter("long", long.toString)
+      photosSearchRequest.addQuerystringParameter("lon", lon.toString)
       photosSearchRequest.addQuerystringParameter("license",license)
       photosSearchRequest.addQuerystringParameter("per_page", "10")
       photosSearchRequest.addQuerystringParameter("sort", "relevance")
