@@ -138,7 +138,7 @@ class FlickrRestApiTest extends FunSpec {
       println()
       assert(nullResponse.getMessage() === "OK")
 
-      //Here the flickr.test.login test should end
+      //Here the flickr.test.null test should end
 
     }
 
