@@ -162,6 +162,72 @@ class FlickrRestApiTest extends FunSpec {
 * 
 * 
 */
+      
+      
+      //Here the flickr.photos.search test should start
+
+      println("Building the access request to the protected resource flickr.photos.search...")
+      var photosSearchRequest = new OAuthRequest(Verb.POST, endPointUri.toString())
+
+      /*
+       * Brussels:
+      latitude: 50°51′0″N
+      longitude: 4°21′0″E
+      */
+
+      val lat = 50.85
+      val long = 4.35
+      
+      
+      
+      /*
+       <licenses>
+  			<license id="0" name="All Rights Reserved" url="" />
+  			<license id="1" name="Attribution-NonCommercial-ShareAlike License" url="http://creativecommons.org/licenses/by-nc-sa/2.0/" />
+  			<license id="2" name="Attribution-NonCommercial License" url="http://creativecommons.org/licenses/by-nc/2.0/" />
+  			<license id="3" name="Attribution-NonCommercial-NoDerivs License" url="http://creativecommons.org/licenses/by-nc-nd/2.0/" />
+  			<license id="4" name="Attribution License" url="http://creativecommons.org/licenses/by/2.0/" />
+  			<license id="5" name="Attribution-ShareAlike License" url="http://creativecommons.org/licenses/by-sa/2.0/" />
+  			<license id="6" name="Attribution-NoDerivs License" url="http://creativecommons.org/licenses/by-nd/2.0/" />
+  			<license id="7" name="No known copyright restrictions" url="http://flickr.com/commons/usage/" />
+  			<license id="8" name="United States Government Work" url="http://www.usa.gov/copyright.shtml" />
+		</licenses>
+      */
+
+      val license = "1,2"
+
+      
+      
+      println("About to construct auth request for invoking method flickr.photos.search...")
+      photosSearchRequest.addQuerystringParameter("method", "flickr.photos.search")
+      photosSearchRequest.addQuerystringParameter("lat", lat.toString)
+      photosSearchRequest.addQuerystringParameter("long", long.toString)
+      photosSearchRequest.addQuerystringParameter("license",license)
+      photosSearchRequest.addQuerystringParameter("per_page", "10")
+      photosSearchRequest.addQuerystringParameter("sort", "relevance")
+      
+      println("Request about to be sent: ")
+      println("QueryStringParams: "+ photosSearchRequest.getQueryStringParams().toString())
+      println("BodyParams: " + photosSearchRequest.getBodyParams().toString())
+      println("BodyContents: " + photosSearchRequest.getBodyContents())
+      println("Headers: "+ photosSearchRequest.getHeaders().toString())
+      
+      myFlickrService.signRequest(accessToken, photosSearchRequest)
+
+      println("About to invoke method flickr.photos.search...")
+      val photosSearchResponse = photosSearchRequest.send()
+      println("Response:")
+      println("Body: " + photosSearchResponse.getBody())
+      println("Code: " + photosSearchResponse.getCode())
+      println("Message: " + photosSearchResponse.getMessage())
+      println("Headers: " + photosSearchResponse.getHeaders())
+      println("Stream: " + photosSearchResponse.getStream())
+      println()
+      assert(photosSearchResponse.getMessage() === "OK")
+
+      //Here the flickr.photos.search test should end
+
+
 
     }
 
