@@ -73,6 +73,9 @@ class FlickrRestApiTest extends FunSpec {
 
       //Here the second sub test should end
 
+/*
+ * 
+ * 
       //Here the flickr.test.login test should start
 
       println("Building the access request to the protected resource flickr.test.login...")
@@ -155,6 +158,10 @@ class FlickrRestApiTest extends FunSpec {
 
       //Here the flickr.test.null test should end
 
+*
+* 
+* 
+*/
 //      //Here the flickr.photos.geo.photosForLocation test should start
 //
 //      println("Building the access request to the protected resource flickr.photos.geo.photosForLocation...")
