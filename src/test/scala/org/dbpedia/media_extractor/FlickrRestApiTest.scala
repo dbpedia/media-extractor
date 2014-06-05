@@ -155,6 +155,67 @@ class FlickrRestApiTest extends FunSpec {
 
       //Here the flickr.test.null test should end
 
+//      //Here the flickr.photos.geo.photosForLocation test should start
+//
+//      println("Building the access request to the protected resource flickr.photos.geo.photosForLocation...")
+//      val photosForLocationRequest = new OAuthRequest(Verb.POST, endPointUri.toString())
+//
+//      /*
+//       * Brussels:
+//      latitude: 50°51′0″N
+//      longitude: 4°21′0″E
+//      */
+//
+//      val lat = 50.85
+//      val long = 4.35
+//      
+//      
+//      
+//      /*
+//       <licenses>
+//  			<license id="0" name="All Rights Reserved" url="" />
+//  			<license id="1" name="Attribution-NonCommercial-ShareAlike License" url="http://creativecommons.org/licenses/by-nc-sa/2.0/" />
+//  			<license id="2" name="Attribution-NonCommercial License" url="http://creativecommons.org/licenses/by-nc/2.0/" />
+//  			<license id="3" name="Attribution-NonCommercial-NoDerivs License" url="http://creativecommons.org/licenses/by-nc-nd/2.0/" />
+//  			<license id="4" name="Attribution License" url="http://creativecommons.org/licenses/by/2.0/" />
+//  			<license id="5" name="Attribution-ShareAlike License" url="http://creativecommons.org/licenses/by-sa/2.0/" />
+//  			<license id="6" name="Attribution-NoDerivs License" url="http://creativecommons.org/licenses/by-nd/2.0/" />
+//  			<license id="7" name="No known copyright restrictions" url="http://flickr.com/commons/usage/" />
+//  			<license id="8" name="United States Government Work" url="http://www.usa.gov/copyright.shtml" />
+//		</licenses>
+//      */
+//
+//      val license = "1,2"
+//
+//      
+//      
+//      println("About to construct auth request for invoking method flickr.photos.geo.photosForLocation...")
+//      photosForLocationRequest.addQuerystringParameter("method", "flickr.photos.geo.photosForLocation")
+//      photosForLocationRequest.addQuerystringParameter("lat", lat.toString)
+//      photosForLocationRequest.addQuerystringParameter("long", long.toString)
+//      //photosForLocationRequest.addQuerystringParameter("extra", "license="+license)
+//      
+//      println("Request about to be sent: ")
+//      println("QueryStrinParams: "+ photosForLocationRequest.getQueryStringParams().toString())
+//      println("BodyParams: " + photosForLocationRequest.getBodyParams().toString())
+//      println("BodyContents: " + photosForLocationRequest.getBodyContents())
+//      println("Headers: "+ photosForLocationRequest.getHeaders().toString())
+//      
+//      myFlickrService.signRequest(accessToken, photosForLocationRequest)
+//
+//      println("About to invoke method flickr.photos.geo.photosForLocation...")
+//      val photosForLocationResponse = photosForLocationRequest.send()
+//      println("Response:")
+//      println("Body: " + photosForLocationResponse.getBody())
+//      println("Code: " + photosForLocationResponse.getCode())
+//      println("Message: " + photosForLocationResponse.getMessage())
+//      println("Headers: " + photosForLocationResponse.getHeaders())
+//      println("Stream: " + photosForLocationResponse.getStream())
+//      println()
+//      assert(photosForLocationResponse.getMessage() === "OK")
+//
+//      //Here the flickr.photos.geo.photosForLocation test should end
+
     }
 
     it("should load non-empty credentials from an external file")(pending)
