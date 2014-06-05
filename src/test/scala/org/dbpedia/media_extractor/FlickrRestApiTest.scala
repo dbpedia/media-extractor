@@ -103,6 +103,14 @@ class FlickrRestApiTest extends FunSpec {
 
       println("About to construct auth request for invoking method flickr.test.echo...")
       echoRequest.addQuerystringParameter("method", "flickr.test.echo")
+      
+      println("Request about to be sent: ")
+      println("QueryStrinParams: "+ echoRequest.getQueryStringParams().toString())
+      println("BodyParams: " + echoRequest.getBodyParams().toString())
+      println("BodyContents: " + echoRequest.getBodyContents())
+      println("Headers: "+ echoRequest.getHeaders().toString())
+
+      
       myFlickrService.signRequest(accessToken, echoRequest)
 
       println("About to invoke method flickr.test.echo...")
@@ -125,6 +133,13 @@ class FlickrRestApiTest extends FunSpec {
 
       println("About to construct auth request for invoking method flickr.test.null...")
       nullRequest.addQuerystringParameter("method", "flickr.test.null")
+      
+      println("Request about to be sent: ")
+      println("QueryStrinParams: "+ nullRequest.getQueryStringParams().toString())
+      println("BodyParams: " + nullRequest.getBodyParams().toString())
+      println("BodyContents: " + nullRequest.getBodyContents())
+      println("Headers: "+ nullRequest.getHeaders().toString())
+      
       myFlickrService.signRequest(accessToken, nullRequest)
 
       println("About to invoke method flickr.test.null...")
