@@ -76,67 +76,67 @@ class FlickrRestApiTest extends FunSpec {
       //Here the flickr.test.login test should start
 
       println("Building the access request to the protected resource flickr.test.login...")
-      val authRequest1 = new OAuthRequest(Verb.POST, endPointUri.toString())
+      val loginRequest = new OAuthRequest(Verb.POST, endPointUri.toString())
 
       println("About to construct auth request for invoking method flickr.test.login...")
-      authRequest1.addQuerystringParameter("method", "flickr.test.login")
-      myFlickrService.signRequest(accessToken, authRequest1)
+      loginRequest.addQuerystringParameter("method", "flickr.test.login")
+      myFlickrService.signRequest(accessToken, loginRequest)
 
       println("About to invoke method flickr.test.login...")
-      val response1 = authRequest1.send()
+      val loginResponse = loginRequest.send()
       println("Response:")
-      println("Body: " + response1.getBody())
-      println("Code: " + response1.getCode())
-      println("Message: " + response1.getMessage())
-      println("Headers: " + response1.getHeaders())
-      println("Stream: " + response1.getStream())
+      println("Body: " + loginResponse.getBody())
+      println("Code: " + loginResponse.getCode())
+      println("Message: " + loginResponse.getMessage())
+      println("Headers: " + loginResponse.getHeaders())
+      println("Stream: " + loginResponse.getStream())
       println()
 
-      assert(response1.getMessage() === "OK")
+      assert(loginResponse.getMessage() === "OK")
 
       //Here the flickr.test.login test should end
 
       //Here the flickr.test.echo test should start
 
       println("Building the access request to the protected resource flickr.test.echo...")
-      val authRequest2 = new OAuthRequest(Verb.POST, endPointUri.toString())
+      val echoRequest = new OAuthRequest(Verb.POST, endPointUri.toString())
 
       println("About to construct auth request for invoking method flickr.test.echo...")
-      authRequest2.addQuerystringParameter("method", "flickr.test.echo")
-      myFlickrService.signRequest(accessToken, authRequest2)
+      echoRequest.addQuerystringParameter("method", "flickr.test.echo")
+      myFlickrService.signRequest(accessToken, echoRequest)
 
       println("About to invoke method flickr.test.echo...")
-      val response2 = authRequest2.send()
+      val echoResponse = echoRequest.send()
       println("Response:")
-      println("Body: " + response2.getBody())
-      println("Code: " + response2.getCode())
-      println("Message: " + response2.getMessage())
-      println("Headers: " + response2.getHeaders())
-      println("Stream: " + response2.getStream())
+      println("Body: " + echoResponse.getBody())
+      println("Code: " + echoResponse.getCode())
+      println("Message: " + echoResponse.getMessage())
+      println("Headers: " + echoResponse.getHeaders())
+      println("Stream: " + echoResponse.getStream())
       println()
 
-      assert(response2.getMessage() === "OK")
+      assert(echoResponse.getMessage() === "OK")
       //Here the flickr.test.echo test should end
 
       //Here the flickr.test.null test should start
 
       println("Building the access request to the protected resource flickr.test.null...")
-      val authRequest3 = new OAuthRequest(Verb.POST, endPointUri.toString())
+      val nullRequest = new OAuthRequest(Verb.POST, endPointUri.toString())
 
       println("About to construct auth request for invoking method flickr.test.null...")
-      authRequest3.addQuerystringParameter("method", "flickr.test.null")
-      myFlickrService.signRequest(accessToken, authRequest3)
+      nullRequest.addQuerystringParameter("method", "flickr.test.null")
+      myFlickrService.signRequest(accessToken, nullRequest)
 
       println("About to invoke method flickr.test.null...")
-      val response3 = authRequest3.send()
+      val nullResponse = nullRequest.send()
       println("Response:")
-      println("Body: " + response3.getBody())
-      println("Code: " + response3.getCode())
-      println("Message: " + response3.getMessage())
-      println("Headers: " + response3.getHeaders())
-      println("Stream: " + response3.getStream())
+      println("Body: " + nullResponse.getBody())
+      println("Code: " + nullResponse.getCode())
+      println("Message: " + nullResponse.getMessage())
+      println("Headers: " + nullResponse.getHeaders())
+      println("Stream: " + nullResponse.getStream())
       println()
-      assert(response3.getMessage() === "OK")
+      assert(nullResponse.getMessage() === "OK")
 
       //Here the flickr.test.login test should end
 
