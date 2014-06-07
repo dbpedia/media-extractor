@@ -15,7 +15,6 @@ import org.scribe.builder.api.FlickrApi
 import org.scribe.model.OAuthRequest
 import org.scribe.model.Verb
 import org.scribe.model.Verifier
-import org.scribe.oauth.OAuthService
 
 /**
  * @author allentiak
@@ -75,9 +74,6 @@ class FlickrRestApiTest extends FunSpec {
 
       //Here the second sub test should end
 
-/*
- * 
- * 
       //Here the flickr.test.login test should start
 
       println("Building the access request to the protected resource flickr.test.login...")
@@ -108,14 +104,13 @@ class FlickrRestApiTest extends FunSpec {
 
       println("About to construct auth request for invoking method flickr.test.echo...")
       echoRequest.addQuerystringParameter("method", "flickr.test.echo")
-      
+
       println("Request about to be sent: ")
-      println("QueryStrinParams: "+ echoRequest.getQueryStringParams().toString())
+      println("QueryStrinParams: " + echoRequest.getQueryStringParams().toString())
       println("BodyParams: " + echoRequest.getBodyParams().toString())
       println("BodyContents: " + echoRequest.getBodyContents())
-      println("Headers: "+ echoRequest.getHeaders().toString())
+      println("Headers: " + echoRequest.getHeaders().toString())
 
-      
       myFlickrService.signRequest(accessToken, echoRequest)
 
       println("About to invoke method flickr.test.echo...")
@@ -138,13 +133,13 @@ class FlickrRestApiTest extends FunSpec {
 
       println("About to construct auth request for invoking method flickr.test.null...")
       nullRequest.addQuerystringParameter("method", "flickr.test.null")
-      
+
       println("Request about to be sent: ")
-      println("QueryStrinParams: "+ nullRequest.getQueryStringParams().toString())
+      println("QueryStrinParams: " + nullRequest.getQueryStringParams().toString())
       println("BodyParams: " + nullRequest.getBodyParams().toString())
       println("BodyContents: " + nullRequest.getBodyContents())
-      println("Headers: "+ nullRequest.getHeaders().toString())
-      
+      println("Headers: " + nullRequest.getHeaders().toString())
+
       myFlickrService.signRequest(accessToken, nullRequest)
 
       println("About to invoke method flickr.test.null...")
@@ -160,12 +155,6 @@ class FlickrRestApiTest extends FunSpec {
 
       //Here the flickr.test.null test should end
 
-*
-* 
-* 
-*/
-      
-      
       //Here the flickr.photos.search test should start
 
       println("Building the access request to the protected resource flickr.photos.search...")
@@ -179,9 +168,7 @@ class FlickrRestApiTest extends FunSpec {
 
       val lat = 50.85
       val lon = 4.35
-      
-      
-      
+
       /*
        <licenses>
   			<license id="0" name="All Rights Reserved" url="" />
@@ -198,38 +185,63 @@ class FlickrRestApiTest extends FunSpec {
 
       val license = "1,2"
 
-      
-      
       println("About to construct auth request for invoking method flickr.photos.search...")
       photosSearchRequest.addQuerystringParameter("method", "flickr.photos.search")
       photosSearchRequest.addQuerystringParameter("lat", lat.toString)
       photosSearchRequest.addQuerystringParameter("lon", lon.toString)
-      photosSearchRequest.addQuerystringParameter("license",license)
+      photosSearchRequest.addQuerystringParameter("license", license)
       photosSearchRequest.addQuerystringParameter("per_page", "10")
       photosSearchRequest.addQuerystringParameter("sort", "relevance")
-      
+
       println("Request about to be sent: ")
-      println("QueryStringParams: "+ photosSearchRequest.getQueryStringParams().toString())
+      println("QueryStringParams: " + photosSearchRequest.getQueryStringParams().toString())
       println("BodyParams: " + photosSearchRequest.getBodyParams().toString())
       println("BodyContents: " + photosSearchRequest.getBodyContents())
-      println("Headers: "+ photosSearchRequest.getHeaders().toString())
-      
+      println("Headers: " + photosSearchRequest.getHeaders().toString())
+
       myFlickrService.signRequest(accessToken, photosSearchRequest)
 
       println("About to invoke method flickr.photos.search...")
       val photosSearchResponse = photosSearchRequest.send()
       println("Response:")
-      println("Body: " + photosSearchResponse.getBody())
-      println("Code: " + photosSearchResponse.getCode())
-      println("Message: " + photosSearchResponse.getMessage())
+      println("Body (this is the XML): " + photosSearchResponse.getBody())
+      println("Code (200): " + photosSearchResponse.getCode())
+      println("Message (OK): " + photosSearchResponse.getMessage())
       println("Headers: " + photosSearchResponse.getHeaders())
       println("Stream: " + photosSearchResponse.getStream())
       println()
-      assert(photosSearchResponse.getMessage() === "OK")
+
+      /*
+
+This is the answer from https://secure.flickr.com/services/api/explore/flickr.photos.search
+<?xml version="1.0" encoding="utf-8" ?>
+<rsp stat="ok">
+  <photos page="1" pages="4023" perpage="10" total="40229">
+    <photo id="14153007660" owner="85268272@N05" secret="175c4b4cef" server="2905" farm="3" title="Flower after the rainfall (3/3)" ispublic="1" isfriend="0" isfamily="0" />
+    <photo id="14336289671" owner="85268272@N05" secret="d7247be34c" server="2895" farm="3" title="Flower after the rainfall (2/3)" ispublic="1" isfriend="0" isfamily="0" />
+    <photo id="14336289131" owner="85268272@N05" secret="c2e9f60870" server="3871" farm="4" title="Flower after the rainfall (1/3)" ispublic="1" isfriend="0" isfamily="0" />
+    <photo id="14313295856" owner="85268272@N05" secret="3e62843b56" server="2898" farm="3" title="Swamps in West Brussels" ispublic="1" isfriend="0" isfamily="0" />
+    <photo id="14335679414" owner="85268272@N05" secret="f346a186ed" server="2904" farm="3" title="Brussels' river" ispublic="1" isfriend="0" isfamily="0" />
+    <photo id="14313296716" owner="85268272@N05" secret="b3a94caa90" server="5509" farm="6" title="Stream at the park" ispublic="1" isfriend="0" isfamily="0" />
+    <photo id="14121413390" owner="85268272@N05" secret="12257a844a" server="5120" farm="6" title="Sunset in Brussels at the Basilique du Sacré-Cœur" ispublic="1" isfriend="0" isfamily="0" />
+    <photo id="14313795253" owner="86559646@N00" secret="a09eda03ae" server="5592" farm="6" title="Jambinai @ AB Club" ispublic="1" isfriend="0" isfamily="0" />
+    <photo id="14290930582" owner="86559646@N00" secret="56730d389f" server="3745" farm="4" title="Jambinai @ AB Club" ispublic="1" isfriend="0" isfamily="0" />
+    <photo id="14288156014" owner="85268272@N05" secret="515595e554" server="5274" farm="6" title="Poppy against the wall" ispublic="1" isfriend="0" isfamily="0" />
+  </photos>
+</rsp>
+*/
+
+      val myXML = XML.loadString(photosSearchResponse.getBody)
+
+      println("Printing all of 'photo' items (photo URI and page URI): ")
+      (myXML \\ "rsp" \ "photos" \ "photo") foreach {
+        photo =>
+          println("https://farm" + (photo \ "@farm") + ".staticflickr.com/" + (photo \ "@server") + "/" + (photo \ "@id") + "_" + (photo \ "@secret") + ".jpg")
+          println("https://flickr.com/photos/" + (photo \ "@owner") + "/" + (photo \ "@id"))
+          println()
+      }
 
       //Here the flickr.photos.search test should end
-
-
 
     }
 
