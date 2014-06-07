@@ -13,3 +13,4 @@ libraryDependencies += "org.glassfish.jersey.core" % "jersey-client" % "2.9"
 
 libraryDependencies += "org.scribe" % "scribe" % "1.3.6" 
 
+libraryDependencies += "org.scala-lang.modules" %% "scala-xml" % "1.0.2"

@@ -7,6 +7,8 @@ import java.net.URI
 import java.util.Properties
 import java.util.Scanner
 
+import scala.xml.XML
+
 import org.scalatest.FunSpec
 import org.scribe.builder.ServiceBuilder
 import org.scribe.builder.api.FlickrApi
