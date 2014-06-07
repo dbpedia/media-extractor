@@ -1,1 +1,1 @@
-n extension of Flickr Wrapper that will support more APIs
+An extension of Flickr Wrapper that will support more APIs

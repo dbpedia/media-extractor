@@ -9,4 +9,6 @@
 *~
 *.sc
 .worksheet
+/.project
+/.classpath
 
