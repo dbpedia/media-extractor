@@ -16,6 +16,9 @@ import org.scribe.model.OAuthRequest
 import org.scribe.model.Verb
 import org.scribe.model.Verifier
 
+import com.hp.hpl.jena.rdf.model._
+import org.apache.jena.vocabulary._
+
 /**
  * @author allentiak
  *
