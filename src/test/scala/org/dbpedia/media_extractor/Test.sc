@@ -38,7 +38,7 @@ Respose XML:
 
   println((myXml \\ "rsp" \ "photos" \ "photo")(0))
 
-  println(((myXml \\ "rsp" \ "photos" \ "photo")(0)) \ "@id")
+  println(((myXml \\ "rsp" \ "photos" \ "photo")(0))
 
   val pictureURIsBuffer = new ListBuffer[String]
   val pageURIsBuffer = new ListBuffer[String]
@@ -55,16 +55,6 @@ Respose XML:
 
   /* Initialize result model */
 
-  /*
-$resultModel = new MemModel();
-	$resultModel->addNamespace('foaf', 'http://xmlns.com/foaf/0.1/');
-	$resultModel->addNamespace('dcterms', 'http://purl.org/dc/terms/');
-	$resultModel->addNamespace('rdfs', 'http://www.w3.org/2000/01/rdf-schema#');
-	//$resultModel->addNamespace('geonames', 'http://www.geonames.org/ontology#');
-	$resultModel->addNamespace('geo', 'http://www.w3.org/2003/01/geo/wgs84_pos#');
-	$resultModel->addNamespace('georss', 'http://www.georss.org/georss/');
-*/
-
   val resultsModel = ModelFactory.createDefaultModel()
 
   resultsModel.setNsPrefix("foaf", "http://xmlns.com/foaf/0.1/")
@@ -76,33 +66,11 @@ $resultModel = new MemModel();
 
   /* Perform flickr search */
 
-  //We already have a sample XML converted into two lists :-)
+  // (We already have a sample XML converted into two lists :-)
 
-/*
 
-/* Constants from other files: */
 
-define("FLICKRWRAPPR_LOCATION_URI_ROOT", "http://www4.wiwiss.fu-berlin.de/flickrwrappr/location/");
-define("FLICKRWRAPPR_LOCATION_DATA_URI_ROOT", "http://www4.wiwiss.fu-berlin.de/flickrwrappr/data/photosDepictingLocation/");
-$locationURI = FLICKRWRAPPR_LOCATION_URI_ROOT . $_REQUEST['lat'] . '/' . $_REQUEST['long'] . '/' . $_REQUEST['radius'];
-$dataURI = FLICKRWRAPPR_LOCATION_DATA_URI_ROOT . $_REQUEST['lat'] . '/' . $_REQUEST['long'] . '/' . $_REQUEST['radius'];
-*/
-
-/*
-/* Process found photos */
-
-	foreach ($flickrPhotos as $flickrPhoto) {
-		/* Provide the picture itself (small version) */
-		$resultModel->add(new Statement(new Resource($locationURI),
-										new Resource("http://xmlns.com/foaf/0.1/depiction"),
-										new Resource($flickrPhoto['imgsmall'])));
-
-		/* Provide its page on flickr */
-		$resultModel->add(new Statement(new Resource($flickrPhoto['imgsmall']),
-	                                        new Resource("http://xmlns.com/foaf/0.1/page"),
-	                                        new Resource($flickrPhoto['flickrpage'])));
-	}
-*/
+/* Important parameters */
 
   //Brussels
   val lat = "50.85"
@@ -110,14 +78,15 @@ $dataURI = FLICKRWRAPPR_LOCATION_DATA_URI_ROOT . $_REQUEST['lat'] . '/' . $_REQU
   val radius = "5"
 
   val uriRoot = "http://localhost/flickrwrappr/"
-
   val locationUriRoot = uriRoot + "location/"
   val dataUriRoot = uriRoot + "data/photosDepictingLocation/"
 
-  val geoPath = lat + "/" + lon + "/" + radius 
-
-  val locationUri = locationUriRoot + geoPath 
+  val geoPath = lat + "/" + lon + "/" + radius
+  val locationUri = locationUriRoot + geoPath
   val dataUri = dataUriRoot + lat + geoPath
+
+
+/* Process found photos */
 
   for (pictureUri <- pictureURIsList; pageUri <- pageURIsList) {
     //provide photo picture uri
@@ -130,33 +99,8 @@ $dataURI = FLICKRWRAPPR_LOCATION_DATA_URI_ROOT . $_REQUEST['lat'] . '/' . $_REQU
       resultsModel.createResource(pageUri)))
   }
 
-  /*
+
 	    /* Add metadata for location */
-	    $resultModel->add(new Statement(new Resource($locationURI),
-			      		    new Resource("http://www.w3.org/1999/02/22-rdf-syntax-ns#type"),
-			      		    new Resource("http://www.w3.org/2003/01/geo/wgs84_pos#SpatialThing")));
-
-		$latLiteral = new Literal($lat);
-		$latLiteral->setDatatype("http://www.w3.org/2001/XMLSchema#float");
-		
-	    $resultModel->add(new Statement(new Resource($locationURI),
-			      		    new Resource("http://www.w3.org/2003/01/geo/wgs84_pos#lat"),
-			      		    $latLiteral));
-							
-		$longLiteral = new Literal($long);
-		$longLiteral->setDatatype("http://www.w3.org/2001/XMLSchema#float");
-
-	    $resultModel->add(new Statement(new Resource($locationURI),
-			      		    new Resource("http://www.w3.org/2003/01/geo/wgs84_pos#long"),
-			      		    $longLiteral));
-							
-		$radiusLiteral = new Literal($radius);
-		$radiusLiteral->setDatatype("http://www.w3.org/2001/XMLSchema#double");
-		
-	    $resultModel->add(new Statement(new Resource($locationURI),
-			      		    new Resource("http://www.georss.org/georss/radius"),
-			      		    $radiusLiteral));
-*/
 
   resultsModel.add(resultsModel.createStatement(resultsModel.createResource(locationUri),
     resultsModel.createProperty("http://www.w3.org/1999/02/22-rdf-syntax-ns#type"),
@@ -180,38 +124,9 @@ $dataURI = FLICKRWRAPPR_LOCATION_DATA_URI_ROOT . $_REQUEST['lat'] . '/' . $_REQU
     resultsModel.createProperty("http://www.georss.org/georss/radius"),
     radiusLiteral))
 
-  /*
+
 		/* Add metadata for document */
 		
-		  define("FLICKRWRAPPR_HOMEPAGE", "http://www4.wiwiss.fu-berlin.de/flickrwrappr/");
-      define("FLICKR_TOS_URL", "http://www.flickr.com/terms.gne");
-		
-	    $resultModel->add(new Statement(new Resource($dataURI),
-			      		    new Resource("http://www.w3.org/1999/02/22-rdf-syntax-ns#type"),
-			      		    new Resource("http://xmlns.com/foaf/0.1/Document")));
-
-	    $resultsLabel = "Photos taken within $radius meters of geographic location lat=$lat long=$long";
-	    $resultModel->add(new Statement(new Resource($dataURI),
-			      		    new Resource("http://www.w3.org/2000/01/rdf-schema#label"),
-			      		    new Literal($resultsLabel, "en")));
-
-	    $resultModel->add(new Statement(new Resource($dataURI),
-			      		    new Resource("http://xmlns.com/foaf/0.1/primaryTopic"),
-			      		    new Resource($locationURI)));
-			      		    
-	    $resultModel->add(new Statement(new Resource($dataURI),
-			      		    new Resource("http://purl.org/dc/terms/license"),
-			      		    new Resource(FLICKR_TOS_URL)));
-			      		    
-	    $resultModel->add(new Statement(new Resource($dataURI),
-			      		    new Resource("http://xmlns.com/foaf/0.1/maker"),
-			      		    new Resource(FLICKRWRAPPR_HOMEPAGE)));
-
-	    $resultModel->add(new Statement(new Resource(FLICKRWRAPPR_HOMEPAGE),
-			      		    new Resource("http://www.w3.org/2000/01/rdf-schema#label"),
-			      		    new Literal("flickr(tm) wrappr", "en")));
-
-*/
   val flickrWrapprHomepage = "http://www4.wiwiss.fu-berlin.de/flickrwrappr/"
   val flickrTosUri = "http://www.flickr.com/terms.gne"
 
