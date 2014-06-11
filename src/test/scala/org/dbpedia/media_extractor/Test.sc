@@ -38,8 +38,6 @@ Respose XML:
 
   println((myXml \\ "rsp" \ "photos" \ "photo")(0))
 
-  println(((myXml \\ "rsp" \ "photos" \ "photo")(0))
-
   val pictureURIsBuffer = new ListBuffer[String]
   val pageURIsBuffer = new ListBuffer[String]
   (myXml \\ "rsp" \ "photos" \ "photo") foreach {
