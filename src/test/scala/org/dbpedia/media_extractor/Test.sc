@@ -112,12 +112,12 @@ $dataURI = FLICKRWRAPPR_LOCATION_DATA_URI_ROOT . $_REQUEST['lat'] . '/' . $_REQU
   val uriRoot = "http://localhost/flickrwrappr/"
 
   val locationUriRoot = uriRoot + "location/"
-  val DataUriRoot = uriRoot + "data/photosDepictingLocation/"
+  val dataUriRoot = uriRoot + "data/photosDepictingLocation/"
 
-  val geoPath = lat + "/" + lon + "/" + radius
+  val geoPath = lat + "/" + lon + "/" + radius 
 
-  val locationUri = locationUriRoot + geoPath
-  val dataURI = DataUriRoot + lat + geoPath
+  val locationUri = locationUriRoot + geoPath 
+  val dataUri = dataUriRoot + lat + geoPath
 
   for (pictureUri <- pictureURIsList; pageUri <- pageURIsList) {
     //provide photo picture uri
@@ -164,23 +164,20 @@ $dataURI = FLICKRWRAPPR_LOCATION_DATA_URI_ROOT . $_REQUEST['lat'] . '/' . $_REQU
 
   val latLiteral = resultsModel.createLiteral(lat, "http://www.w3.org/2001/XMLSchema#float")
 
-//FIXME: compiling error here
   resultsModel.add(resultsModel.createStatement(resultsModel.createResource(locationUri),
-    resultsModel.createResource("http://www.w3.org/2003/01/geo/wgs84_pos#lat"),
+    resultsModel.createProperty("http://www.w3.org/2003/01/geo/wgs84_pos#lat"),
     latLiteral))
 
   val longLiteral = resultsModel.createLiteral(lon, "http://www.w3.org/2001/XMLSchema#float")
 
-//FIXME: compiling error here
   resultsModel.add(resultsModel.createStatement(resultsModel.createResource(locationUri),
-    resultsModel.createResource("http://www.w3.org/2003/01/geo/wgs84_pos#long"),
+    resultsModel.createProperty("http://www.w3.org/2003/01/geo/wgs84_pos#long"),
     longLiteral))
 
   val radiusLiteral = resultsModel.createLiteral(radius, "http://www.w3.org/2001/XMLSchema#double")
 
-//FIXME: compiling error here
   resultsModel.add(resultsModel.createStatement(resultsModel.createResource(locationUri),
-    resultsModel.createResource("http://www.georss.org/georss/radius"),
+    resultsModel.createProperty("http://www.georss.org/georss/radius"),
     radiusLiteral))
 
   /*
@@ -218,36 +215,30 @@ $dataURI = FLICKRWRAPPR_LOCATION_DATA_URI_ROOT . $_REQUEST['lat'] . '/' . $_REQU
   val flickrWrapprHomepage = "http://www4.wiwiss.fu-berlin.de/flickrwrappr/"
   val flickrTosUri = "http://www.flickr.com/terms.gne"
 
-//FIXME: compiling error here
   resultsModel.add(resultsModel.createStatement(resultsModel.createResource(dataUri),
-    resultsModel.createResource("http://www.w3.org/1999/02/22-rdf-syntax-ns#type"),
+    resultsModel.createProperty("http://www.w3.org/1999/02/22-rdf-syntax-ns#type"),
     resultsModel.createResource("http://xmlns.com/foaf/0.1/Document")))
 
-//FIXME: compiling error here
   val resultsLabel = "Photos taken within " + radius + " meters of geographic location lat=" + lat + " lon=" + lon
   resultsModel.add(resultsModel.createStatement(resultsModel.createResource(dataUri),
-    resultsModel.createResource("http://www.w3.org/2000/01/rdf-schema#label"),
+    resultsModel.createProperty("http://www.w3.org/2000/01/rdf-schema#label"),
     resultsModel.createLiteral(resultsLabel, "en")))
 
-//FIXME: compiling error here
   resultsModel.add(resultsModel.createStatement(resultsModel.createResource(dataUri),
-    resultsModel.createResource("http://xmlns.com/foaf/0.1/primaryTopic"),
+    resultsModel.createProperty("http://xmlns.com/foaf/0.1/primaryTopic"),
     resultsModel.createResource(locationUri)))
 
-//FIXME: compiling error here
   resultsModel.add(resultsModel.createStatement(resultsModel.createResource(dataUri),
-    resultsModel.createResource("http://purl.org/dc/terms/license"),
+    resultsModel.createProperty("http://purl.org/dc/terms/license"),
     resultsModel.createResource(flickrTosUri)))
 
-//FIXME: compiling error here
   resultsModel.add(resultsModel.createStatement(resultsModel.createResource(dataUri),
-    resultsModel.createResource("http://xmlns.com/foaf/0.1/maker"),
+    resultsModel.createProperty("http://xmlns.com/foaf/0.1/maker"),
     resultsModel.createResource(flickrWrapprHomepage)))
 
-//FIXME: compiling error here
   resultsModel.add(resultsModel.createStatement(resultsModel.createResource(flickrWrapprHomepage),
-    resultsModel.createResource("http://www.w3.org/2000/01/rdf-schema#label"),
+    resultsModel.createProperty("http://www.w3.org/2000/01/rdf-schema#label"),
     resultsModel.createLiteral("flickr(tm) wrappr", "en")))
 
 }
- 
+
