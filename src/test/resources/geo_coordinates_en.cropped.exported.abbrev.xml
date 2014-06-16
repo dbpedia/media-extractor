@@ -1,0 +1,76 @@
+<rdf:RDF
+    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+    xmlns:j.0="http://www.opengis.net/gml/"
+    xmlns:j.2="http://www.georss.org/georss/"
+    xmlns:j.1="http://www.w3.org/2003/01/geo/wgs84_pos#">
+  <j.0:_Feature rdf:about="http://dbpedia.org/resource/Pioneers_in_Engineering">
+    <j.2:point xml:lang="en">37.871766 -122.26080819</j.2:point>
+    <j.1:long rdf:datatype="http://www.w3.org/2001/XMLSchema#float"
+    >-122.26080819</j.1:long>
+    <j.1:lat rdf:datatype="http://www.w3.org/2001/XMLSchema#float"
+    >37.871766</j.1:lat>
+  </j.0:_Feature>
+  <j.0:_Feature rdf:about="http://dbpedia.org/resource/White_House">
+    <j.2:point xml:lang="en">38.89767 -77.03655</j.2:point>
+    <j.1:long rdf:datatype="http://www.w3.org/2001/XMLSchema#float"
+    >-77.03655</j.1:long>
+    <j.1:lat rdf:datatype="http://www.w3.org/2001/XMLSchema#float"
+    >38.89767</j.1:lat>
+  </j.0:_Feature>
+  <j.0:_Feature rdf:about="http://dbpedia.org/resource/Geography_of_Brunei">
+    <j.2:point xml:lang="en">4.5 114.66666666666667</j.2:point>
+    <j.1:long rdf:datatype="http://www.w3.org/2001/XMLSchema#float"
+    >114.66666666666667</j.1:long>
+    <j.1:lat rdf:datatype="http://www.w3.org/2001/XMLSchema#float"
+    >4.5</j.1:lat>
+  </j.0:_Feature>
+  <j.0:_Feature rdf:about="http://dbpedia.org/resource/Geography_of_Burundi">
+    <j.2:point xml:lang="en">-3.5 30.0</j.2:point>
+    <j.1:long rdf:datatype="http://www.w3.org/2001/XMLSchema#float"
+    >30.0</j.1:long>
+    <j.1:lat rdf:datatype="http://www.w3.org/2001/XMLSchema#float"
+    >-3.5</j.1:lat>
+  </j.0:_Feature>
+  <j.0:_Feature rdf:about="http://dbpedia.org/resource/Brussels">
+    <j.2:point xml:lang="en">50.85 4.35</j.2:point>
+    <j.1:long rdf:datatype="http://www.w3.org/2001/XMLSchema#float"
+    >4.35</j.1:long>
+    <j.1:lat rdf:datatype="http://www.w3.org/2001/XMLSchema#float"
+    >50.85</j.1:lat>
+  </j.0:_Feature>
+  <j.0:_Feature rdf:about="http://dbpedia.org/resource/Bosphorus">
+    <j.2:point xml:lang="en">41.11944444444445 29.075277777777778</j.2:point>
+    <j.1:long rdf:datatype="http://www.w3.org/2001/XMLSchema#float"
+    >29.075277777777778</j.1:long>
+    <j.1:lat rdf:datatype="http://www.w3.org/2001/XMLSchema#float"
+    >41.11944444444445</j.1:lat>
+  </j.0:_Feature>
+  <j.0:_Feature rdf:about="http://dbpedia.org/resource/Mashachapada_Road">
+    <j.2:point xml:lang="en">19.27138888888889 72.89083333333333</j.2:point>
+    <j.1:long rdf:datatype="http://www.w3.org/2001/XMLSchema#float"
+    >72.89083333333333</j.1:long>
+    <j.1:lat rdf:datatype="http://www.w3.org/2001/XMLSchema#float"
+    >19.27138888888889</j.1:lat>
+  </j.0:_Feature>
+  <j.0:_Feature rdf:about="http://dbpedia.org/resource/White_House_(Moscow)">
+    <j.2:point xml:lang="en">55.754935 37.573146</j.2:point>
+    <j.1:long rdf:datatype="http://www.w3.org/2001/XMLSchema#float"
+    >37.573146</j.1:long>
+    <j.1:lat rdf:datatype="http://www.w3.org/2001/XMLSchema#float"
+    >55.754935</j.1:lat>
+  </j.0:_Feature>
+  <j.0:_Feature rdf:about="http://dbpedia.org/resource/Bell_Labs">
+    <j.2:point xml:lang="en">40.683404 -74.400744</j.2:point>
+    <j.1:long rdf:datatype="http://www.w3.org/2001/XMLSchema#float"
+    >-74.400744</j.1:long>
+    <j.1:lat rdf:datatype="http://www.w3.org/2001/XMLSchema#float"
+    >40.683404</j.1:lat>
+  </j.0:_Feature>
+  <j.0:_Feature rdf:about="http://dbpedia.org/resource/Reston_Town_Center_I_and_II">
+    <j.2:point xml:lang="en">38.9552 -77.3602</j.2:point>
+    <j.1:long rdf:datatype="http://www.w3.org/2001/XMLSchema#float"
+    >-77.3602</j.1:long>
+    <j.1:lat rdf:datatype="http://www.w3.org/2001/XMLSchema#float"
+    >38.9552</j.1:lat>
+  </j.0:_Feature>
+</rdf:RDF>
