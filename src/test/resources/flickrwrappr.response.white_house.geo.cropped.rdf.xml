@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<rdf:RDF
+   xmlns:foaf="http://xmlns.com/foaf/0.1/"
+   xmlns:dcterms="http://purl.org/dc/terms/"
+   xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+   xmlns:geo="http://www.w3.org/2003/01/geo/wgs84_pos#"
+   xmlns:georss="http://www.georss.org/georss/"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+   xmlns:owl="http://www.w3.org/2002/07/owl#"
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:vcard="http://www.w3.org/2001/vcard-rdf/3.0#">
+
+<rdf:Description rdf:about="http://wifo5-03.informatik.uni-mannheim.de/flickrwrappr/location/38.897671/-77.036552/1000">
+   <foaf:depiction rdf:resource="http://farm4.static.flickr.com/3899/14382645106_7fcb5fd1a4_m.jpg"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://farm4.static.flickr.com/3899/14382645106_7fcb5fd1a4_m.jpg">
+   <foaf:page rdf:resource="http://www.flickr.com/photos/77945684@N00/14382645106"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://wifo5-03.informatik.uni-mannheim.de/flickrwrappr/location/38.897671/-77.036552/1000">
+   <foaf:depiction rdf:resource="http://farm6.static.flickr.com/5516/14219164550_7c2848b1ae_m.jpg"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://farm6.static.flickr.com/5516/14219164550_7c2848b1ae_m.jpg">
+   <foaf:page rdf:resource="http://www.flickr.com/photos/77945684@N00/14219164550"/>
+</rdf:Description>
+
+<geo:SpatialThing rdf:about="http://wifo5-03.informatik.uni-mannheim.de/flickrwrappr/location/38.897671/-77.036552/1000">
+   <geo:lat rdf:datatype="http://www.w3.org/2001/XMLSchema#float">38.897671</geo:lat>
+   <geo:long rdf:datatype="http://www.w3.org/2001/XMLSchema#float">-77.036552</geo:long>
+   <georss:radius rdf:datatype="http://www.w3.org/2001/XMLSchema#double">1000</georss:radius>
+</geo:SpatialThing>
+
+<foaf:Document rdf:about="http://wifo5-03.informatik.uni-mannheim.de/flickrwrappr/data/photosDepictingLocation/38.897671/-77.036552/1000">
+   <rdfs:label xml:lang="en">Photos taken within 1000 meters of geographic location lat=38.897671 long=-77.036552</rdfs:label>
+   <foaf:primaryTopic rdf:resource="http://wifo5-03.informatik.uni-mannheim.de/flickrwrappr/location/38.897671/-77.036552/1000"/>
+   <dcterms:license rdf:resource="http://www.flickr.com/terms.gne"/>
+   <foaf:maker rdf:resource="http://wifo5-03.informatik.uni-mannheim.de/flickrwrappr/"/>
+</foaf:Document>
+
+<rdf:Description rdf:about="http://wifo5-03.informatik.uni-mannheim.de/flickrwrappr/">
+   <rdfs:label xml:lang="en">flickr(tm) wrappr</rdfs:label>
+</rdf:Description>
+
+</rdf:RDF>
