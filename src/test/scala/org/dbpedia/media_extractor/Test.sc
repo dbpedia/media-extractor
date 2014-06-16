@@ -1,59 +1,41 @@
 package org.dbpedia.media_extractor.test
 
 import scala.xml._
-
 import scala.collection.mutable.ListBuffer
-
+import scala.io.Source._
+import java.io._
 import com.hp.hpl.jena.rdf.model._
 import com.hp.hpl.jena.vocabulary._
+
 import com.hp.hpl.jena.shared._
+import com.hp.hpl.jena.sparql.vocabulary._
+import scala.collection.mutable
 
 object Test {
 
   val xmlString = Test.getClass().getResourceAsStream("/flickr.photos.search.manneken_pis.response.xml")
 
-  /*
-Respose XML:
-
-<?xml version="1.0" encoding="utf-8" ?>
-<?xml version="1.0" encoding="utf-8" ?>
-<rsp stat="ok">
-  <photos page="1" pages="193" perpage="10" total="1927">
-    <photo id="2934609620" owner="13808372@N04" secret="ee0f89aa66" server="3177" farm="4" title="Manneken Pis" ispublic="1" isfriend="0" isfamily="0" />
-    <photo id="7074274419" owner="25659362@N00" secret="13c28d0cca" server="5328" farm="6" title="Manneken Pis" ispublic="1" isfriend="0" isfamily="0" />
-    <photo id="8322858611" owner="25221135@N08" secret="2abdc8b30c" server="8218" farm="9" title="Manneken-Pis Corrida 33" ispublic="1" isfriend="0" isfamily="0" />
-    <photo id="8322860021" owner="25221135@N08" secret="e99c1ba6ef" server="8212" farm="9" title="Manneken-Pis Corrida 36" ispublic="1" isfriend="0" isfamily="0" />
-    <photo id="8322870253" owner="25221135@N08" secret="6bf18c10fd" server="8361" farm="9" title="Manneken-Pis Corrida 56" ispublic="1" isfriend="0" isfamily="0" />
-    <photo id="8322855813" owner="25221135@N08" secret="a81706fdcf" server="8219" farm="9" title="Manneken-Pis Corrida 27" ispublic="1" isfriend="0" isfamily="0" />
-    <photo id="8322874345" owner="25221135@N08" secret="87e2a1c00b" server="8361" farm="9" title="Manneken-Pis Corrida 58" ispublic="1" isfriend="0" isfamily="0" />
-    <photo id="8322867775" owner="25221135@N08" secret="57a40e9a7d" server="8358" farm="9" title="Manneken-Pis Corrida 51" ispublic="1" isfriend="0" isfamily="0" />
-    <photo id="8323925784" owner="25221135@N08" secret="1e4b24fb5a" server="8213" farm="9" title="Manneken-Pis Corrida 48" ispublic="1" isfriend="0" isfamily="0" />
-    <photo id="8323917472" owner="25221135@N08" secret="cf879f260e" server="8075" farm="9" title="Manneken-Pis Corrida 32" ispublic="1" isfriend="0" isfamily="0" />
-  </photos>
-</rsp>
-
-*/
-
   val myXml = XML.load(xmlString)
 
-  println((myXml \\ "rsp" \ "photos" \ "photo")(0))
+  case class SearchResult(depictionUri: String, pageUri: String)
 
-  val pictureURIsBuffer = new ListBuffer[String]
-  val pageURIsBuffer = new ListBuffer[String]
+  val resultsListBuffer = new ListBuffer[SearchResult]
+
   (myXml \\ "rsp" \ "photos" \ "photo") foreach {
     photo =>
       //generate photo image URI
-      pictureURIsBuffer += "https://farm" + (photo \ "@farm") + ".staticflickr.com/" + (photo \ "@server") + "/" + (photo \ "@id") + "_" + (photo \ "@secret") + ".jpg"
+      val pictureUri = "https://farm" + (photo \ "@farm") + ".staticflickr.com/" + (photo \ "@server") + "/" + (photo \ "@id") + "_" + (photo \ "@secret") + ".jpg"
       //generate photo page URI
-      pageURIsBuffer += "https://flickr.com/photos/" + (photo \ "@owner") + "/" + (photo \ "@id")
+      val pageUri = "https://flickr.com/photos/" + (photo \ "@owner") + "/" + (photo \ "@id")
+
+      resultsListBuffer += SearchResult(pictureUri, pageUri)
   }
 
-  val pictureURIsList = pictureURIsBuffer.toList
-  val pageURIsList = pageURIsBuffer.toList
+  val resultsList = resultsListBuffer.toList
 
   /* Initialize result model */
 
-  val resultsModel = ModelFactory.createDefaultModel()
+  var resultsModel = ModelFactory.createDefaultModel()
 
   resultsModel.setNsPrefix("foaf", "http://xmlns.com/foaf/0.1/")
   resultsModel.setNsPrefix("dcterms", "http://purl.org/dc/terms/")
@@ -66,40 +48,63 @@ Respose XML:
 
   // (We already have a sample XML converted into two lists :-)
 
-
-
-/* Important parameters */
+  /* Important parameters */
 
   //Brussels
   val lat = "50.85"
   val lon = "4.35"
   val radius = "5"
 
-  val uriRoot = "http://localhost/flickrwrappr/"
-  val locationUriRoot = uriRoot + "location/"
-  val dataUriRoot = uriRoot + "data/photosDepictingLocation/"
+  val serverRootUri = "http://localhost/flickrwrappr/"
+  val locationRootUri = serverRootUri + "location/"
+  val dataRootUri = serverRootUri + "data/photosDepictingLocation/"
 
   val geoPath = lat + "/" + lon + "/" + radius
-  val locationUri = locationUriRoot + geoPath
-  val dataUri = dataUriRoot + lat + geoPath
+  val locationFullUri = locationRootUri + geoPath
+  val dataFullUri = dataRootUri + lat + geoPath
 
+  val myPath = "/media/allentiak/dbpedia.git/media-extractor/src/test/resources/"
 
-/* Process found photos */
+  // Our model so far...
+  resultsModel.write(System.out)
 
-  for (pictureUri <- pictureURIsList; pageUri <- pageURIsList) {
-    //provide photo picture uri
-    resultsModel.add(resultsModel.createStatement(resultsModel.createResource(locationUri),
-      resultsModel.createProperty("http://xmlns.com/foaf/0.1/depiction"),
-      resultsModel.createResource(pictureUri)))
-    //provide photo page uri
-    resultsModel.add(resultsModel.createStatement(resultsModel.createResource(pictureUri),
-      resultsModel.createProperty("http://xmlns.com/foaf/0.1/page"),
-      resultsModel.createResource(pageUri)))
+  /* Process found photos */
+
+val locationFullUriResource = resultsModel.createResource(locationFullUri)
+
+  for (resultElem <- resultsList) {
+    val depictionUriResource = resultsModel.createResource(resultElem.depictionUri)
+    val pageUriResource = resultsModel.createResource(resultElem.pageUri)
+    
+    locationFullUriResource.addProperty(FOAF.depiction, depictionUriResource)
+    depictionUriResource.addProperty(FOAF.page, pageUriResource)
+    
+    
+    // I don't see the point in doing it this way
+    /*
+    val depictionUriProperty = resultsModel.createProperty(FOAF.depiction.toString, depictionUriResource.toString)
+    val pageUriProperty = resultsModel.createProperty(FOAF.page.toString, pageUriResource.toString)
+    
+    resultsModel.add(locationFullUriResource, depictionUriProperty, depictionUriResource)
+    */
   }
 
 
-	    /* Add metadata for location */
+  
+ 
+  /* Add metadata for location */
+//ModelFactory.create
 
+
+  val spatialThingResource = resultsModel.createResource(locationFullUri)
+  
+  val rdfProperty = resultsModel.createProperty("http://www.w3.org/1999/02/22-rdf-syntax-ns#type")
+  
+  //spatialThingResource.addProperty(resultsModel.getNsPrefixURI("geo"), "arg1", "arg2")
+  
+ 
+ /*
+    
   resultsModel.add(resultsModel.createStatement(resultsModel.createResource(locationUri),
     resultsModel.createProperty("http://www.w3.org/1999/02/22-rdf-syntax-ns#type"),
     resultsModel.createResource("http://www.w3.org/2003/01/geo/wgs84_pos#SpatialThing")))
@@ -123,8 +128,8 @@ Respose XML:
     radiusLiteral))
 
 
-		/* Add metadata for document */
-		
+  /* Add metadata for document */
+
   val flickrWrapprHomepage = "http://www4.wiwiss.fu-berlin.de/flickrwrappr/"
   val flickrTosUri = "http://www.flickr.com/terms.gne"
 
@@ -153,5 +158,41 @@ Respose XML:
     resultsModel.createProperty("http://www.w3.org/2000/01/rdf-schema#label"),
     resultsModel.createLiteral("flickr(tm) wrappr", "en")))
 
-}
 
+val outputXml = new FileOutputStream(myPath + "output.xml")
+  resultsModel.write(outputXml, "RDF/XML")
+
+*/
+
+/*
+
+  //var myFile = new File ("myRDF")
+  //var out = new BufferedWriter(new FileWriter(myFile))
+  //var writer = new Writer(
+  // out.write(text);
+  //out.close();
+  //System.setOut(new PrintStream("myRDF"))
+  // val file = Source.fro
+  resultsModel.write(System.out, "N-TRIPLES")
+  
+  val myPath = "/media/allentiak/dbpedia.git/media-extractor/src/test/resources/"
+
+  //var out = new FileOutputStream("myRDF.xml.abbrev.rdf")
+  //resultsModel.write(out,"RDF/XML-ABBREV")
+  //resultsModel.write(out,"RDF/XML-ABBREV")
+
+  val inNT = new FileInputStream(myPath+"geo_coordinates_en.cropped.nt")
+  var geoModel = ModelFactory.createDefaultModel
+  geoModel.read(inNT, null, "N-TRIPLES")
+
+var outXML = new FileOutputStream (myPath+"geo_coordinates_en.cropped.exported.plain.xml")
+var outXMLABBREV = new FileOutputStream (myPath+"geo_coordinate_en.cropped.exported.abbrev.xml")
+
+geoModel.write(outXML, "RDF/XML")
+geoModel.write(outXMLABBREV, "RDF/XML-ABBREV")
+
+
+*/
+
+
+}
