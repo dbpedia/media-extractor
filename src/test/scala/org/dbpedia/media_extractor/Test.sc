@@ -112,6 +112,10 @@ object Test {
 
   //spatialThingResource.addProperty(resultsModel.getNsPrefixURI("geo"), "arg1", "arg2")
 
+  val serverRootUriResource = resultsModel.createResource(serverRootUri)
+  val labelLiteral = resultsModel.createLiteral("flickr(tm) wrappr", "en")
+  serverRootUriResource.addProperty(RDFS.label, labelLiteral)
+  
   /*
     
   resultsModel.add(resultsModel.createStatement(resultsModel.createResource(locationUri),
@@ -163,9 +167,6 @@ object Test {
     resultsModel.createProperty("http://xmlns.com/foaf/0.1/maker"),
     resultsModel.createResource(flickrWrapprHomepage)))
 
-  resultsModel.add(resultsModel.createStatement(resultsModel.createResource(flickrWrapprHomepage),
-    resultsModel.createProperty("http://www.w3.org/2000/01/rdf-schema#label"),
-    resultsModel.createLiteral("flickr(tm) wrappr", "en")))
 */
 
   val outputXml = new FileOutputStream(myPath + "output.xml")
