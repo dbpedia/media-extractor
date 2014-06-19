@@ -185,7 +185,25 @@ var outXMLABBREV = new FileOutputStream (myPath+"geo_coordinates_en.cropped.expo
 geoModel.write(outXML, "RDF/XML")
 geoModel.write(outXMLABBREV, "RDF/XML-ABBREV")
 
-
 */
+
+/*
+
+val flickrGeoIN = new FileInputStream (myPath + "flickrwrappr.response.white_house.geo.cropped.rdf.xml")
+val flickrGeoModel = ModelFactory.createDefaultModel()
+flickrGeoModel.read (flickrGeoIN, null, "RDF/XML")
+
+val flickrGeoOUT = new FileOutputStream (myPath + "flickrwrappr.response.white_house.geo.cropped.exported.nt")
+flickrGeoModel.write(flickrGeoOUT, "N-TRIPLES")
+
+
+val flickrDBpediaIN = new FileInputStream (myPath + "flickrwrappr.response.white_house.dbpedia.cropped.rdf.xml")
+val flickrDBpediaModel = ModelFactory.createDefaultModel()
+flickrDBpediaModel.read (flickrDBpediaIN, null, "RDF/XML")
+
+val flickrDBpediaOUT = new FileOutputStream (myPath + "flickrwrappr.response.white_house.dbpedia.cropped.exported.nt")
+flickrDBpediaModel.write(flickrDBpediaOUT, "N-TRIPLES")
+*/
+
 
 }
