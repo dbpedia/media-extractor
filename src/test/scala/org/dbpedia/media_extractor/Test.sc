@@ -93,14 +93,6 @@ object Test {
 
     locationFullUriResource.addProperty(FOAF.depiction, depictionUriResource)
     depictionUriResource.addProperty(FOAF.page, pageUriResource)
-
-    // I don't see the point in doing it this way
-    /*
-    val depictionUriProperty = resultsModel.createProperty(FOAF.depiction.toString, depictionUriResource.toString)
-    val pageUriProperty = resultsModel.createProperty(FOAF.page.toString, pageUriResource.toString)
-    
-    resultsModel.add(locationFullUriResource, depictionUriProperty, depictionUriResource)
-    */
   }
 
   /* Add metadata for location */
