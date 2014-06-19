@@ -37,12 +37,21 @@ object Test {
 
   var resultsModel = ModelFactory.createDefaultModel()
 
-  resultsModel.setNsPrefix("foaf", "http://xmlns.com/foaf/0.1/")
-  resultsModel.setNsPrefix("dcterms", "http://purl.org/dc/terms/")
-  resultsModel.setNsPrefix("rdfs", "http://www.w3.org/2000/01/rdf-schema#")
-  //resultsModel.setNsPrefix("geonames", "http://www.geonames.org/ontology#")
-  resultsModel.setNsPrefix("geo", "http://www.w3.org/2003/01/geo/wgs84_pos#")
-  resultsModel.setNsPrefix("georss", "http://www.georss.org/georss/")
+
+// Namespaces
+  val foaf = "http://xmlns.com/foaf/0.1/"
+  val dcterms = "http://purl.org/dc/terms/"
+  val rdfs = "http://www.w3.org/2000/01/rdf-schema#"
+  //val geonames = "http://www.geonames.org/ontology#"
+  val geo = "http://www.w3.org/2003/01/geo/wgs84_pos#"
+  val georss = "http://www.georss.org/georss/"
+
+  resultsModel.setNsPrefix("foaf", foaf)
+  resultsModel.setNsPrefix("dcterms", dcterms)
+  resultsModel.setNsPrefix("rdfs", rdfs)
+  //resultsModel.setNsPrefix("geonames", geonames)
+  resultsModel.setNsPrefix("geo", geo)
+  resultsModel.setNsPrefix("georss", georss)
 
   /* Perform flickr search */
 
@@ -70,16 +79,15 @@ object Test {
 
   /* Process found photos */
 
-val locationFullUriResource = resultsModel.createResource(locationFullUri)
+  val locationFullUriResource = resultsModel.createResource(locationFullUri)
 
   for (resultElem <- resultsList) {
     val depictionUriResource = resultsModel.createResource(resultElem.depictionUri)
     val pageUriResource = resultsModel.createResource(resultElem.pageUri)
-    
+
     locationFullUriResource.addProperty(FOAF.depiction, depictionUriResource)
     depictionUriResource.addProperty(FOAF.page, pageUriResource)
-    
-    
+
     // I don't see the point in doing it this way
     /*
     val depictionUriProperty = resultsModel.createProperty(FOAF.depiction.toString, depictionUriResource.toString)
@@ -89,21 +97,16 @@ val locationFullUriResource = resultsModel.createResource(locationFullUri)
     */
   }
 
-
-  
- 
   /* Add metadata for location */
-//ModelFactory.create
-
+  //ModelFactory.create
 
   val spatialThingResource = resultsModel.createResource(locationFullUri)
-  
+
   val rdfProperty = resultsModel.createProperty("http://www.w3.org/1999/02/22-rdf-syntax-ns#type")
-  
+
   //spatialThingResource.addProperty(resultsModel.getNsPrefixURI("geo"), "arg1", "arg2")
-  
- 
- /*
+
+  /*
     
   resultsModel.add(resultsModel.createStatement(resultsModel.createResource(locationUri),
     resultsModel.createProperty("http://www.w3.org/1999/02/22-rdf-syntax-ns#type"),
@@ -164,7 +167,7 @@ val outputXml = new FileOutputStream(myPath + "output.xml")
 
 */
 
-/*
+  /*
 
   //var myFile = new File ("myRDF")
   //var out = new BufferedWriter(new FileWriter(myFile))
@@ -193,6 +196,5 @@ geoModel.write(outXMLABBREV, "RDF/XML-ABBREV")
 
 
 */
-
 
 }
