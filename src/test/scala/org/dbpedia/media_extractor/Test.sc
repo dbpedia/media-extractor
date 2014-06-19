@@ -166,36 +166,21 @@ object Test {
   resultsModel.add(resultsModel.createStatement(resultsModel.createResource(flickrWrapprHomepage),
     resultsModel.createProperty("http://www.w3.org/2000/01/rdf-schema#label"),
     resultsModel.createLiteral("flickr(tm) wrappr", "en")))
-
-
-val outputXml = new FileOutputStream(myPath + "output.xml")
-  resultsModel.write(outputXml, "RDF/XML")
-
 */
 
+  val outputXml = new FileOutputStream(myPath + "output.xml")
+  resultsModel.write(outputXml, "RDF/XML")
+
+
+
   /*
-
-  //var myFile = new File ("myRDF")
-  //var out = new BufferedWriter(new FileWriter(myFile))
-  //var writer = new Writer(
-  // out.write(text);
-  //out.close();
-  //System.setOut(new PrintStream("myRDF"))
-  // val file = Source.fro
-  resultsModel.write(System.out, "N-TRIPLES")
-  
-  val myPath = "/media/allentiak/dbpedia.git/media-extractor/src/test/resources/"
-
-  //var out = new FileOutputStream("myRDF.xml.abbrev.rdf")
-  //resultsModel.write(out,"RDF/XML-ABBREV")
-  //resultsModel.write(out,"RDF/XML-ABBREV")
 
   val inNT = new FileInputStream(myPath+"geo_coordinates_en.cropped.nt")
   var geoModel = ModelFactory.createDefaultModel
   geoModel.read(inNT, null, "N-TRIPLES")
 
 var outXML = new FileOutputStream (myPath+"geo_coordinates_en.cropped.exported.plain.xml")
-var outXMLABBREV = new FileOutputStream (myPath+"geo_coordinate_en.cropped.exported.abbrev.xml")
+var outXMLABBREV = new FileOutputStream (myPath+"geo_coordinates_en.cropped.exported.abbrev.xml")
 
 geoModel.write(outXML, "RDF/XML")
 geoModel.write(outXMLABBREV, "RDF/XML-ABBREV")
