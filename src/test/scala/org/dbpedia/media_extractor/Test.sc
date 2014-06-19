@@ -45,7 +45,7 @@ object Test {
   val geo = "http://www.w3.org/2003/01/geo/wgs84_pos#"
   val georss = "http://www.georss.org/georss/"
 
-	// Auto-generated Namespaces
+  // Auto-generated Namespaces
   val rdf = "http://www.w3.org/1999/02/22-rdf-syntax-ns#"
   val xsd = "http://www.w3.org/2001/XMLSchema#"
   val owl = "http://www.w3.org/2002/07/owl#"
