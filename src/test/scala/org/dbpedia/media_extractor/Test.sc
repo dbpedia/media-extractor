@@ -35,7 +35,7 @@ object Test {
 
   /* Initialize result model */
 
-  var resultsModel = ModelFactory.createDefaultModel()
+  var geoResultsModel = ModelFactory.createDefaultModel()
 
   // Namespaces
   val foaf = "http://xmlns.com/foaf/0.1/"
@@ -52,22 +52,22 @@ object Test {
   val dc = "http://purl.org/dc/elements/1.1/"
   val vcard = "http://www.w3.org/2001/vcard-rdf/3.0#"
 
-  resultsModel.setNsPrefix("foaf", foaf)
-  resultsModel.setNsPrefix("dcterms", dcterms)
-  resultsModel.setNsPrefix("rdfs", rdfs)
-  //resultsModel.setNsPrefix("geonames", geonames)
-  resultsModel.setNsPrefix("geo", geo)
-  resultsModel.setNsPrefix("georss", georss)
+  geoResultsModel.setNsPrefix("foaf", foaf)
+  geoResultsModel.setNsPrefix("dcterms", dcterms)
+  geoResultsModel.setNsPrefix("rdfs", rdfs)
+  //geoResultsModel.setNsPrefix("geonames", geonames)
+  geoResultsModel.setNsPrefix("geo", geo)
+  geoResultsModel.setNsPrefix("georss", georss)
 
   /* Perform flickr search */
 
-  // (We already have a sample XML converted into two lists :-)
+  // (We already have a sample XML converted into "resultsList" :-)
 
   /* Important parameters */
 
-  //Brussels
+  //Manneken Pis
 
-  val lat = "50.85"
+  val lat = "50.845"
   val lon = "4.35"
   val radius = "5"
 
@@ -78,65 +78,135 @@ object Test {
   val geoPath = lat + "/" + lon + "/" + radius
   val locationFullUri = locationRootUri + geoPath
   val dataFullUri = dataRootUri + lat + geoPath
+  
+  val flickrTermsUri ="http://www.flickr.com/terms.gne"
+  val flickrwrappr = "flickr(tm) wrappr"
 
   val myPath = "/media/allentiak/dbpedia.git/media-extractor/src/test/resources/"
+  
+  val outputMode = "RDF/XML"
+  //val outputMode = "RDF/XML-ABBREV"
+
+  /* Geo Search - Start */
 
   /* Process found photos */
 
-  val locationFullUriResource = resultsModel.createResource(locationFullUri)
+  val locationFullUriResource = geoResultsModel.createResource(locationFullUri)
 
   for (resultElem <- resultsList) {
-    val depictionUriResource = resultsModel.createResource(resultElem.depictionUri)
-    val pageUriResource = resultsModel.createResource(resultElem.pageUri)
+    val depictionUriResource = geoResultsModel.createResource(resultElem.depictionUri)
+    val pageUriResource = geoResultsModel.createResource(resultElem.pageUri)
 
     locationFullUriResource.addProperty(FOAF.depiction, depictionUriResource)
     depictionUriResource.addProperty(FOAF.page, pageUriResource)
   }
 
-
   /* Add metadata for location */
 
-  val spatialThingResource = resultsModel.createResource(locationFullUri)
+  val spatialThingResource = geoResultsModel.createResource(locationFullUri)
   spatialThingResource.addProperty(RDF.`type`, geo + "SpatialThing")
 
-  val geoTypeProperty = resultsModel.createProperty("type", geo + "type")
+  val geoTypeProperty = geoResultsModel.createProperty("type", geo + "type")
   spatialThingResource.addProperty(geoTypeProperty, "SpatialThing")
 
   //TODO: make literals work
-  //val latLiteral = resultsModel.createTypedLiteral(new Float(lat.toFloat))
-  //val lonLiteral = resultsModel.createTypedLiteral(new Integer(lon.toInt))
-  //  val radiusLiteral = resultsModel.createTypedLiteral(new Integer(radius.toInt))
+  //val latLiteral = geoResultsModel.createTypedLiteral(new Float(lat.toFloat))
+  //val lonLiteral = geoResultsModel.createTypedLiteral(new Integer(lon.toInt))
+  //  val radiusLiteral = geoResultsModel.createTypedLiteral(new Integer(radius.toInt))
 
   //val latProperty = spa
-  //val geo_lat = resultsModel.add (geo + "lat")
+  //val geo_lat = geoResultsModel.add (geo + "lat")
   //  spatialThingResource.addProperty(geoLatProperty,lat)
-
 
   /* Add metadata for document */
 
-  val foafDocumentResource = resultsModel.createResource(locationFullUri)
+  val foafDocumentResource = geoResultsModel.createResource(locationFullUri)
   foafDocumentResource.addProperty(RDF.`type`, foaf + "Document")
 
   val label = "Photos taken within " + radius + " meters of geographic location lat=" + lat + " long=" + lon
-  val labelLiteral = resultsModel.createLiteral(label, "en")
+  val labelLiteral = geoResultsModel.createLiteral(label, "en")
   foafDocumentResource.addProperty(RDFS.label, labelLiteral)
-
   foafDocumentResource.addProperty(FOAF.primaryTopic, locationFullUriResource)
-
-  val flickrTOUResource = resultsModel.createResource("http://www.flickr.com/terms.gne")
+  val flickrTOUResource = geoResultsModel.createResource(flickrTermsUri)
   foafDocumentResource.addProperty(DCTerms.license, flickrTOUResource)
 
-  val dataFullUriResource = resultsModel.createResource(dataFullUri)
+  val dataFullUriResource = geoResultsModel.createResource(dataFullUri)
   dataFullUriResource.addProperty(RDFS.label, labelLiteral)
 
-  val flickrwrappr = "flickr(tm) wrappr"
-  val flickrwrapprLiteral = resultsModel.createLiteral(flickrwrappr, "en")
-  val serverRootUriResource = resultsModel.createResource(serverRootUri)
+  val flickrwrapprLiteral = geoResultsModel.createLiteral(flickrwrappr, "en")
+  val serverRootUriResource = geoResultsModel.createResource(serverRootUri)
   serverRootUriResource.addProperty(RDFS.label, flickrwrapprLiteral)
 
+  val geoOutputXml = new FileOutputStream(myPath + "output.geo.xml")
+  geoResultsModel.write(geoOutputXml, outputMode)
+
+  /* Geo Search - End */
+
+  /* DBpedia - Start */
+
+  val searchText = "Manneken Pis"
+  val dbpediaResourceUri = "http://dbpedia.org/resource/"
+  val flickrwrapprPhotosUri = serverRootUri + "photos/"
+
+  val dbpediaResourceFullUri = dbpediaResourceUri + searchText.trim.replaceAll(" ", "_").replaceAll("%2F", "/").replaceAll("%3A", ":")
+
+  //TODO: Prepare and perform SPARQL query
+  //TODO: For now, we use SPARQL query result from file "geo_coordinates_en.cropped.nt"
+
+  // Initialize results model
+
+  val dbpediaResultsModel = ModelFactory.createDefaultModel()
+
+  dbpediaResultsModel.setNsPrefix("foaf", foaf)
+  dbpediaResultsModel.setNsPrefix("dcterms", dcterms)
+  dbpediaResultsModel.setNsPrefix("rdfs", rdfs)
+
+  // Perform flickr search - (for now, we will use the results from resultsList :-)
   
-  val outputXml = new FileOutputStream(myPath + "output.xml")
-  resultsModel.write(outputXml, "RDF/XML-ABBREV")
+  // Process flickr search results
+  
+   /* Process found photos */
+
+  val dbpediaResourceFullUriResource = dbpediaResultsModel.createResource(dbpediaResourceFullUri)
+
+  for (resultElem <- resultsList) {
+    val depictionUriResource = dbpediaResultsModel.createResource(resultElem.depictionUri)
+    val pageUriResource = dbpediaResultsModel.createResource(resultElem.pageUri)
+
+    dbpediaResourceFullUriResource.addProperty(FOAF.depiction, depictionUriResource)
+    depictionUriResource.addProperty(FOAF.page, pageUriResource)
+  }
+
+  // Add metadata for document
+
+  val foafDocumentResource2 = dbpediaResultsModel.createResource(dbpediaResourceFullUri)
+  foafDocumentResource2.addProperty(RDF.`type`, foaf + "Document")
+
+  val label2 = "Photos for Dbpedia resource " + searchText
+  val labelLiteral2 = dbpediaResultsModel.createLiteral(label2, "en")
+  foafDocumentResource2.addProperty(RDFS.label, labelLiteral2)
+
+  foafDocumentResource2.addProperty(FOAF.primaryTopic, dbpediaResourceFullUriResource)
+
+  val flickrTOUResource2 = dbpediaResultsModel.createResource(flickrTermsUri)
+  foafDocumentResource2.addProperty(DCTerms.license, flickrTOUResource2)
+
+  dataFullUriResource.addProperty(RDFS.label, labelLiteral2)
+
+  
+  val flickrwrapprLiteral2 = dbpediaResultsModel.createLiteral(flickrwrappr, "en")
+  val serverRootUriResource2 = dbpediaResultsModel.createResource(serverRootUri)
+  serverRootUriResource2.addProperty(RDFS.label, flickrwrapprLiteral2)
+
+
+  val dbpediaOutputXml = new FileOutputStream(myPath + "output.dbpedia.xml")
+  dbpediaResultsModel.write(dbpediaOutputXml, outputMode)
+
+  /* DBpedia - End */
+
+
+
+
 
 
   /* geo_coordiantes importing/exporting
@@ -161,7 +231,7 @@ flickrGeoModel.read (flickrGeoIN, null, "RDF/XML")
 
 
 val flickrGeoOUT = new FileOutputStream (myPath + "flickrwrappr.response.white_house.geo.cropped.exported.nt")
-resultsModel.write(flickrGeoOUT, "N-TRIPLES")
+geoResultsModel.write(flickrGeoOUT, "N-TRIPLES")
 
 
 
