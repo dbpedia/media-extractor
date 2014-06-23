@@ -1,0 +1,10 @@
+<http://dbpedia.org/resource/White_House> <http://xmlns.com/foaf/0.1/depiction> <http://farm8.static.flickr.com/7005/6629032367_d7e43fe32e_m.jpg> .
+<http://dbpedia.org/resource/White_House> <http://xmlns.com/foaf/0.1/depiction> <http://farm1.static.flickr.com/202/514083891_84a25c8129_m.jpg> .
+<http://wifo5-03.informatik.uni-mannheim.de/flickrwrappr/photos/White_House> <http://xmlns.com/foaf/0.1/maker> <http://wifo5-03.informatik.uni-mannheim.de/flickrwrappr/> .
+<http://wifo5-03.informatik.uni-mannheim.de/flickrwrappr/photos/White_House> <http://purl.org/dc/terms/license> <http://www.flickr.com/terms.gne> .
+<http://wifo5-03.informatik.uni-mannheim.de/flickrwrappr/photos/White_House> <http://xmlns.com/foaf/0.1/primaryTopic> <http://dbpedia.org/resource/White_House> .
+<http://wifo5-03.informatik.uni-mannheim.de/flickrwrappr/photos/White_House> <http://www.w3.org/2000/01/rdf-schema#label> "Photos for DBpedia.org resource White_House"@en .
+<http://wifo5-03.informatik.uni-mannheim.de/flickrwrappr/photos/White_House> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://xmlns.com/foaf/0.1/Document> .
+<http://farm1.static.flickr.com/202/514083891_84a25c8129_m.jpg> <http://xmlns.com/foaf/0.1/page> <http://www.flickr.com/photos/67917860@N00/514083891> .
+<http://farm8.static.flickr.com/7005/6629032367_d7e43fe32e_m.jpg> <http://xmlns.com/foaf/0.1/page> <http://www.flickr.com/photos/45812013@N04/6629032367> .
+<http://wifo5-03.informatik.uni-mannheim.de/flickrwrappr/> <http://www.w3.org/2000/01/rdf-schema#label> "flickr(tm) wrappr"@en .

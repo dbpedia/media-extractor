@@ -1,0 +1,23 @@
+<https://farm9.staticflickr.com/8218/8322858611_2abdc8b30c.jpg> <http://xmlns.com/foaf/0.1/page> <https://flickr.com/photos/25221135@N08/8322858611> .
+<https://farm6.staticflickr.com/5328/7074274419_13c28d0cca.jpg> <http://xmlns.com/foaf/0.1/page> <https://flickr.com/photos/25659362@N00/7074274419> .
+<https://farm9.staticflickr.com/8361/8322874345_87e2a1c00b.jpg> <http://xmlns.com/foaf/0.1/page> <https://flickr.com/photos/25221135@N08/8322874345> .
+<https://farm4.staticflickr.com/3177/2934609620_ee0f89aa66.jpg> <http://xmlns.com/foaf/0.1/page> <https://flickr.com/photos/13808372@N04/2934609620> .
+<https://farm9.staticflickr.com/8075/8323917472_cf879f260e.jpg> <http://xmlns.com/foaf/0.1/page> <https://flickr.com/photos/25221135@N08/8323917472> .
+<https://farm9.staticflickr.com/8213/8323925784_1e4b24fb5a.jpg> <http://xmlns.com/foaf/0.1/page> <https://flickr.com/photos/25221135@N08/8323925784> .
+<https://farm9.staticflickr.com/8212/8322860021_e99c1ba6ef.jpg> <http://xmlns.com/foaf/0.1/page> <https://flickr.com/photos/25221135@N08/8322860021> .
+<https://farm9.staticflickr.com/8358/8322867775_57a40e9a7d.jpg> <http://xmlns.com/foaf/0.1/page> <https://flickr.com/photos/25221135@N08/8322867775> .
+<https://farm9.staticflickr.com/8219/8322855813_a81706fdcf.jpg> <http://xmlns.com/foaf/0.1/page> <https://flickr.com/photos/25221135@N08/8322855813> .
+<http://localhost/flickrwrappr/location/5085/435/500> <http://xmlns.com/foaf/0.1/depiction> <https://farm9.staticflickr.com/8213/8323925784_1e4b24fb5a.jpg> .
+<http://localhost/flickrwrappr/location/5085/435/500> <http://xmlns.com/foaf/0.1/depiction> <https://farm9.staticflickr.com/8218/8322858611_2abdc8b30c.jpg> .
+<http://localhost/flickrwrappr/location/5085/435/500> <http://xmlns.com/foaf/0.1/depiction> <https://farm9.staticflickr.com/8219/8322855813_a81706fdcf.jpg> .
+<http://localhost/flickrwrappr/location/5085/435/500> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> "http://xmlns.com/foaf/0.1/Document" .
+<http://localhost/flickrwrappr/location/5085/435/500> <http://xmlns.com/foaf/0.1/depiction> <https://farm9.staticflickr.com/8361/8322874345_87e2a1c00b.jpg> .
+<http://localhost/flickrwrappr/location/5085/435/500> <http://xmlns.com/foaf/0.1/depiction> <https://farm9.staticflickr.com/8075/8323917472_cf879f260e.jpg> .
+<http://localhost/flickrwrappr/location/5085/435/500> <http://xmlns.com/foaf/0.1/depiction> <https://farm9.staticflickr.com/8212/8322860021_e99c1ba6ef.jpg> .
+<http://localhost/flickrwrappr/location/5085/435/500> <http://xmlns.com/foaf/0.1/depiction> <https://farm9.staticflickr.com/8361/8322870253_6bf18c10fd.jpg> .
+<http://localhost/flickrwrappr/location/5085/435/500> <http://xmlns.com/foaf/0.1/depiction> <https://farm6.staticflickr.com/5328/7074274419_13c28d0cca.jpg> .
+<http://localhost/flickrwrappr/location/5085/435/500> <http://xmlns.com/foaf/0.1/depiction> <https://farm9.staticflickr.com/8358/8322867775_57a40e9a7d.jpg> .
+<http://localhost/flickrwrappr/location/5085/435/500> <http://xmlns.com/foaf/0.1/depiction> <https://farm4.staticflickr.com/3177/2934609620_ee0f89aa66.jpg> .
+<http://localhost/flickrwrappr/data/photosDepictingLocation/50855085/435/500> <http://www.w3.org/2000/01/rdf-schema#label> "Photos taken within 500 meters of geographic location lat=5085 long=435"@en .
+<http://localhost/flickrwrappr/> <http://www.w3.org/2000/01/rdf-schema#label> "flickr(tm) wrappr"@en .
+<https://farm9.staticflickr.com/8361/8322870253_6bf18c10fd.jpg> <http://xmlns.com/foaf/0.1/page> <https://flickr.com/photos/25221135@N08/8322870253> .
