@@ -66,6 +66,7 @@ object Test {
   /* Important parameters */
 
   //Brussels
+
   val lat = "50.85"
   val lon = "4.35"
   val radius = "5"
@@ -80,9 +81,6 @@ object Test {
 
   val myPath = "/media/allentiak/dbpedia.git/media-extractor/src/test/resources/"
 
-  // Our model so far...
-  resultsModel.write(System.out)
-
   /* Process found photos */
 
   val locationFullUriResource = resultsModel.createResource(locationFullUri)
@@ -95,78 +93,53 @@ object Test {
     depictionUriResource.addProperty(FOAF.page, pageUriResource)
   }
 
+
   /* Add metadata for location */
-  //ModelFactory.create
 
   val spatialThingResource = resultsModel.createResource(locationFullUri)
+  spatialThingResource.addProperty(RDF.`type`, geo + "SpatialThing")
 
-  val rdfProperty = resultsModel.createProperty("http://www.w3.org/1999/02/22-rdf-syntax-ns#type")
+  val geoTypeProperty = resultsModel.createProperty("type", geo + "type")
+  spatialThingResource.addProperty(geoTypeProperty, "SpatialThing")
 
-  //spatialThingResource.addProperty(resultsModel.getNsPrefixURI("geo"), "arg1", "arg2")
+  //TODO: make literals work
+  //val latLiteral = resultsModel.createTypedLiteral(new Float(lat.toFloat))
+  //val lonLiteral = resultsModel.createTypedLiteral(new Integer(lon.toInt))
+  //  val radiusLiteral = resultsModel.createTypedLiteral(new Integer(radius.toInt))
 
-  val serverRootUriResource = resultsModel.createResource(serverRootUri)
-  val labelLiteral = resultsModel.createLiteral("flickr(tm) wrappr", "en")
-  serverRootUriResource.addProperty(RDFS.label, labelLiteral)
-  
-  /*
-    
-  resultsModel.add(resultsModel.createStatement(resultsModel.createResource(locationUri),
-    resultsModel.createProperty("http://www.w3.org/1999/02/22-rdf-syntax-ns#type"),
-    resultsModel.createResource("http://www.w3.org/2003/01/geo/wgs84_pos#SpatialThing")))
-
-  val latLiteral = resultsModel.createLiteral(lat, "http://www.w3.org/2001/XMLSchema#float")
-
-  resultsModel.add(resultsModel.createStatement(resultsModel.createResource(locationUri),
-    resultsModel.createProperty("http://www.w3.org/2003/01/geo/wgs84_pos#lat"),
-    latLiteral))
-
-  val longLiteral = resultsModel.createLiteral(lon, "http://www.w3.org/2001/XMLSchema#float")
-
-  resultsModel.add(resultsModel.createStatement(resultsModel.createResource(locationUri),
-    resultsModel.createProperty("http://www.w3.org/2003/01/geo/wgs84_pos#long"),
-    longLiteral))
-
-  val radiusLiteral = resultsModel.createLiteral(radius, "http://www.w3.org/2001/XMLSchema#double")
-
-  resultsModel.add(resultsModel.createStatement(resultsModel.createResource(locationUri),
-    resultsModel.createProperty("http://www.georss.org/georss/radius"),
-    radiusLiteral))
+  //val latProperty = spa
+  //val geo_lat = resultsModel.add (geo + "lat")
+  //  spatialThingResource.addProperty(geoLatProperty,lat)
 
 
   /* Add metadata for document */
 
-  val flickrWrapprHomepage = "http://www4.wiwiss.fu-berlin.de/flickrwrappr/"
-  val flickrTosUri = "http://www.flickr.com/terms.gne"
+  val foafDocumentResource = resultsModel.createResource(locationFullUri)
+  foafDocumentResource.addProperty(RDF.`type`, foaf + "Document")
 
-  resultsModel.add(resultsModel.createStatement(resultsModel.createResource(dataUri),
-    resultsModel.createProperty("http://www.w3.org/1999/02/22-rdf-syntax-ns#type"),
-    resultsModel.createResource("http://xmlns.com/foaf/0.1/Document")))
+  val label = "Photos taken within " + radius + " meters of geographic location lat=" + lat + " long=" + lon
+  val labelLiteral = resultsModel.createLiteral(label, "en")
+  foafDocumentResource.addProperty(RDFS.label, labelLiteral)
 
-  val resultsLabel = "Photos taken within " + radius + " meters of geographic location lat=" + lat + " lon=" + lon
-  resultsModel.add(resultsModel.createStatement(resultsModel.createResource(dataUri),
-    resultsModel.createProperty("http://www.w3.org/2000/01/rdf-schema#label"),
-    resultsModel.createLiteral(resultsLabel, "en")))
+  foafDocumentResource.addProperty(FOAF.primaryTopic, locationFullUriResource)
 
-  resultsModel.add(resultsModel.createStatement(resultsModel.createResource(dataUri),
-    resultsModel.createProperty("http://xmlns.com/foaf/0.1/primaryTopic"),
-    resultsModel.createResource(locationUri)))
+  val flickrTOUResource = resultsModel.createResource("http://www.flickr.com/terms.gne")
+  foafDocumentResource.addProperty(DCTerms.license, flickrTOUResource)
 
-  resultsModel.add(resultsModel.createStatement(resultsModel.createResource(dataUri),
-    resultsModel.createProperty("http://purl.org/dc/terms/license"),
-    resultsModel.createResource(flickrTosUri)))
+  val dataFullUriResource = resultsModel.createResource(dataFullUri)
+  dataFullUriResource.addProperty(RDFS.label, labelLiteral)
 
-  resultsModel.add(resultsModel.createStatement(resultsModel.createResource(dataUri),
-    resultsModel.createProperty("http://xmlns.com/foaf/0.1/maker"),
-    resultsModel.createResource(flickrWrapprHomepage)))
+  val flickrwrappr = "flickr(tm) wrappr"
+  val flickrwrapprLiteral = resultsModel.createLiteral(flickrwrappr, "en")
+  val serverRootUriResource = resultsModel.createResource(serverRootUri)
+  serverRootUriResource.addProperty(RDFS.label, flickrwrapprLiteral)
 
-*/
-
+  
   val outputXml = new FileOutputStream(myPath + "output.xml")
-  resultsModel.write(outputXml, "RDF/XML")
+  resultsModel.write(outputXml, "RDF/XML-ABBREV")
 
 
-
-  /*
+  /* geo_coordiantes importing/exporting
 
   val inNT = new FileInputStream(myPath+"geo_coordinates_en.cropped.nt")
   var geoModel = ModelFactory.createDefaultModel
@@ -180,14 +153,16 @@ geoModel.write(outXMLABBREV, "RDF/XML-ABBREV")
 
 */
 
-/*
+  /* flickrwrappr importing/exporting
 
 val flickrGeoIN = new FileInputStream (myPath + "flickrwrappr.response.white_house.geo.cropped.rdf.xml")
 val flickrGeoModel = ModelFactory.createDefaultModel()
 flickrGeoModel.read (flickrGeoIN, null, "RDF/XML")
 
+
 val flickrGeoOUT = new FileOutputStream (myPath + "flickrwrappr.response.white_house.geo.cropped.exported.nt")
-flickrGeoModel.write(flickrGeoOUT, "N-TRIPLES")
+resultsModel.write(flickrGeoOUT, "N-TRIPLES")
+
 
 
 val flickrDBpediaIN = new FileInputStream (myPath + "flickrwrappr.response.white_house.dbpedia.cropped.rdf.xml")
@@ -196,7 +171,6 @@ flickrDBpediaModel.read (flickrDBpediaIN, null, "RDF/XML")
 
 val flickrDBpediaOUT = new FileOutputStream (myPath + "flickrwrappr.response.white_house.dbpedia.cropped.exported.nt")
 flickrDBpediaModel.write(flickrDBpediaOUT, "N-TRIPLES")
+
 */
-
-
 }
