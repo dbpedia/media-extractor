@@ -26,7 +26,6 @@ object FlickrWrappr2 extends App {
     resultsListBuffer.toList
   }
 
-}
   def flickrAuth(credentialsFile: String) = {
 
     val endPointUri = new URI("https://api.flickr.com/services/rest/")
@@ -58,5 +57,17 @@ object FlickrWrappr2 extends App {
 
     val accessToken = myFlickrService.getAccessToken(requestToken, verifier)
     println("Authentication success")
+  }
+
+  def getSavedFlickrAccessToken(accessTokenFile: String): Token = {
+    val accessCredentials = new Properties()
+    val inputFile = this.getClass().getResourceAsStream(accessTokenFile)
+    accessCredentials.load(inputFile)
+    inputFile.close()
+
+    val accessToken = accessCredentials.getProperty("accessToken")
+    val accessSecret = accessCredentials.getProperty("accessSecret")
+
+    new Token(accessToken, accessSecret)
   }
 }
