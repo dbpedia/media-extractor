@@ -11,6 +11,7 @@ import org.scribe.model.Verifier
 import org.scribe.model.Token
 import org.scribe.model.OAuthRequest
 import org.scribe.model.Verb
+import org.scribe.model.Response
 
 case class SearchResult(depictionUri: String, pageUri: String)
 
@@ -73,34 +74,18 @@ object FlickrWrappr2 extends App {
     new Token(accessToken, accessSecret)
   }
 
-  def performFlickrSearch(text: String, latitude: String, longitude: String, license:String) = {
+  def getFlickrSearchResponse(text: String = "", latitude: String = "", longitude: String = "", license: String = ""): Response = {
     val searchRequest = new OAuthRequest(Verb.POST, endPointUri.toString())
 
-      searchRequest.addQuerystringParameter("method", "flickr.photos.search")
-      searchRequest.addQuerystringParameter("lat", latitude)
-      searchRequest.addQuerystringParameter("lon", longitude)
-      searchRequest.addQuerystringParameter("license", license)
-      searchRequest.addQuerystringParameter("per_page", "30")
-      searchRequest.addQuerystringParameter("sort", "relevance")
+    searchRequest.addQuerystringParameter("method", "flickr.photos.search")
+    searchRequest.addQuerystringParameter("lat", latitude)
+    searchRequest.addQuerystringParameter("lon", longitude)
+    searchRequest.addQuerystringParameter("license", license)
+    searchRequest.addQuerystringParameter("per_page", "30") // maximum according to FlickrAPI's TOU
+    searchRequest.addQuerystringParameter("sort", "relevance")
 
-      println("Request about to be sent: ")
-      println("QueryStringParams: " + searchRequest.getQueryStringParams().toString())
-      println("BodyParams: " + searchRequest.getBodyParams().toString())
-      println("BodyContents: " + searchRequest.getBodyContents())
-      println("Headers: " + searchRequest.getHeaders().toString())
-
-      myFlickrService.signRequest(accessToken, searchRequest)
-
-      println("About to invoke method flickr.photos.search...")
-      val searchResponse = searchRequest.send()
-      println("Response:")
-      println("Body (this is the XML): " + searchResponse.getBody())
-      println("Code (200): " + searchResponse.getCode())
-      println("Message (OK): " + searchResponse.getMessage())
-      println("Headers: " + searchResponse.getHeaders())
-      println("Stream: " + searchResponse.getStream())
-      println()
-      
-    assert(searchResponse.getMessage() === "OK"))
+    // This request does not need to be signed
+    searchRequest.send()
   }
+  
 }
