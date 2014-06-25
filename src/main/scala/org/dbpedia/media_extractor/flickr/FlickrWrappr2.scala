@@ -88,7 +88,7 @@ object FlickrWrappr2 extends App {
     searchRequest.send()
   }
 
-  def validateSearchResponse(flickrSearchResponse: Response): Boolean = {
+  def validateFlickrSearchResponse(flickrSearchResponse: Response): Boolean = {
     flickrSearchResponse.getCode().equals("200")
   }
 }
