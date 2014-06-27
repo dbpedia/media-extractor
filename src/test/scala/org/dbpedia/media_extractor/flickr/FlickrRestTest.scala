@@ -1,23 +1,21 @@
 /**
  *
  */
-package org.dbpedia.media_extractor
+package org.dbpedia.media_extractor.flickr
 
 import java.net.URI
 import java.util.Properties
 import java.util.Scanner
-
 import scala.xml.XML
-
 import org.scalatest.FunSpec
 import org.scribe.builder.ServiceBuilder
 import org.scribe.builder.api.FlickrApi
 import org.scribe.model.OAuthRequest
 import org.scribe.model.Verb
 import org.scribe.model.Verifier
-
 import com.hp.hpl.jena.rdf.model._
 import org.apache.jena.vocabulary._
+import org.scribe.builder.api.FlickrApi
 
 /**
  * @author allentiak
