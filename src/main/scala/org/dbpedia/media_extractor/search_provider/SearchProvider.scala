@@ -8,12 +8,27 @@ package org.dbpedia.media_extractor.search_provider
  *
  */
 
-abstract trait SearchBehavior
-trait GeoSearchBehavior extends SearchBehavior
-trait SemanticSearchBehavior extends SearchBehavior
+abstract trait SearchBehavior {
+  def search
+}
+trait GeoSearchBehavior extends SearchBehavior {
+  //TODO: implement stub
+  override def search = ???
+}
+trait SemanticSearchBehavior extends SearchBehavior {
+  //TODO: implement stub
+  override def search = ???
+}
 
-abstract trait AuthenticationBehavior
-trait OAuthBehavior extends AuthenticationBehavior
+abstract trait AuthenticationBehavior {
+  def authenticate
+}
+trait OAuthBehavior extends AuthenticationBehavior {
+  //TODO: implement stub
+  override def authenticate = ???
+}
+
+// The singleton to generate, store and load access credentials
 object OAuthSession
 
 abstract class SearchProvider {
@@ -23,8 +38,26 @@ abstract class SearchProvider {
   def setAuthenticationBehavior
 }
 
-case class FlickrSearchProvider() extends SearchProvider
+//TODO: implement stubs
+case class FlickrSearchProvider() extends SearchProvider {
+  override def performSearchBehavior = ???
+  override def setSearchBehavior = ???
+  override def performAuthenticationBehavior = ???
+  override def setAuthenticationBehavior = ???
+}
 
-case class CreativeCommonsSearchProvider() extends SearchProvider
+//TODO: implement stubs
+case class CreativeCommonsSearchProvider() extends SearchProvider {
+  override def performSearchBehavior = ???
+  override def setSearchBehavior = ???
+  override def performAuthenticationBehavior = ???
+  override def setAuthenticationBehavior = ???
+}
 
-case class YouTubeSearchProvider() extends SearchProvider
+//TODO: implement stubs
+case class YouTubeSearchProvider() extends SearchProvider {
+  override def performSearchBehavior = ???
+  override def setSearchBehavior = ???
+  override def performAuthenticationBehavior = ???
+  override def setAuthenticationBehavior = ???
+}
