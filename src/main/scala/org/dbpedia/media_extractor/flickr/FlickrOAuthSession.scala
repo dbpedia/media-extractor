@@ -14,8 +14,13 @@ import org.scribe.model.Token
  * @author allentiak
  *
  */
+
+class FlickrOAuthSession(val credentialsFile: String) {
+
+}
+
 object FlickrOAuthSession {
-  val credentialsFile: String
+
   def flickrAuth = {
 
     val accessCredentials = new Properties()
