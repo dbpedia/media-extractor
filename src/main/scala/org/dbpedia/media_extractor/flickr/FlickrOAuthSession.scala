@@ -15,24 +15,57 @@ import org.scribe.model.Token
  *
  */
 
-class FlickrOAuthSession(val credentialsFile: String) {
-
-  val inputFile = this.getClass().getResourceAsStream(credentialsFile)
-  val accessCredentials = new Properties()
-
-  accessCredentials.load(inputFile)
-  inputFile.close()
-  val myApiKey = accessCredentials.getProperty("apiKey")
-  val myApiKeySecret = accessCredentials.getProperty("apiKeySecret")
-
-  val myFlickrService = new ServiceBuilder()
-    .provider(classOf[FlickrApi])
-    .apiKey(myApiKey)
-    .apiSecret(myApiKeySecret)
-    .build()
+trait OAuthSession {
+  val credentialsFile: String
+  def postCreate()
+  def preDestroy()
 }
 
-object FlickrOAuthSession {
+class FlickrOAuthSessionImpl(val credentialsFile: String) extends OAuthSession {
+  val myFlickrService = Nil
+
+  def postCreate = {
+    val inputFile = this.getClass().getResourceAsStream(credentialsFile)
+    val accessCredentials = new Properties()
+
+    accessCredentials.load(inputFile)
+    inputFile.close()
+    val myApiKey = accessCredentials.getProperty("apiKey")
+    val myApiKeySecret = accessCredentials.getProperty("apiKeySecret")
+
+    val myFlickrService = new ServiceBuilder()
+      .provider(classOf[FlickrApi])
+      .apiKey(myApiKey)
+      .apiSecret(myApiKeySecret)
+      .build()
+  }
+}
+
+private class OAuthSessionDelegate extends OAuthSession {
+  def credentialsFile = OAuthSessionManager.instance.credentialsFile
+}
+
+object OAuthSessionManager {
+  val flickrConfigFile = ""
+
+  private[this] var _instance: Option[OAuthSession] = None
+
+  private[flickr] def instance: OAuthSession = {
+    if (_instance isEmpty) {
+      _instance = Option(new FlickrOAuthSessionImpl(flickrConfigFile))
+      _instance.get.postCreate
+    }
+    _instance.get
+  }
+
+  def destroy = {
+    if (_instance nonEmpty) {
+      _instance.get.preDestroy
+      _instance = None
+    }
+  }
+
+  def session: OAuthSession = new OAuthSessionDelegate()
 
   def flickrAuth() = {
 
