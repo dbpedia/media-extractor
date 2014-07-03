@@ -17,26 +17,27 @@ import org.scribe.model.Token
 
 class FlickrOAuthSession(val credentialsFile: String) {
 
+  val inputFile = this.getClass().getResourceAsStream(credentialsFile)
+  val accessCredentials = new Properties()
+
+  accessCredentials.load(inputFile)
+  inputFile.close()
+  val myApiKey = accessCredentials.getProperty("apiKey")
+  val myApiKeySecret = accessCredentials.getProperty("apiKeySecret")
+
+  val myFlickrService = new ServiceBuilder()
+    .provider(classOf[FlickrApi])
+    .apiKey(myApiKey)
+    .apiSecret(myApiKeySecret)
+    .build()
 }
 
 object FlickrOAuthSession {
 
-  def flickrAuth = {
+  def flickrAuth() = {
 
-    val accessCredentials = new Properties()
-
-    val inputFile = this.getClass().getResourceAsStream(credentialsFile)
-    accessCredentials.load(inputFile)
-    inputFile.close()
-
-    val myFlickrService = new ServiceBuilder()
-      .provider(classOf[FlickrApi])
-      .apiKey(accessCredentials.getProperty("apiKey"))
-      .apiSecret(accessCredentials.getProperty("apiKeySecret"))
-      .build()
-
-    val requestToken = myFlickrService.getRequestToken()
-    val authorizationUri = myFlickrService.getAuthorizationUrl(requestToken)
+    val requestToken = FlickrOAuthSession.myFlickrService.getRequestToken()
+    val authorizationUri = FlickrOAuthSession.myFlickrService.getAuthorizationUrl(requestToken)
 
     println("Follow this authorization URL to authorise yourself on Flickr:")
     println(authorizationUri)
