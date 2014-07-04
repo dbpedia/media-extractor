@@ -59,7 +59,7 @@ class FlickrOAuthSessionImpl(val credentialsFile: String) extends OAuthSession {
     println("")
 
     accessToken = myFlickrService.getAccessToken(requestToken, verifier)
-    println("Authentication success"))
+    println("Authentication success")
   }
   
 }
