@@ -79,7 +79,7 @@ class FlickrOAuthSessionImpl(val credentialsFile: String) extends OAuthSession {
 }
 
 private class OAuthSessionDelegate extends OAuthSession {
-  def credentialsFile = OAuthSessionManager.instance.credentialsFile
+  override val credentialsFile = OAuthSessionManager.instance.credentialsFile
 }
 
 object OAuthSessionManager {
