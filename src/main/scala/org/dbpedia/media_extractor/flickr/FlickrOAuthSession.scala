@@ -17,8 +17,8 @@ import org.scribe.model.Token
 
 trait OAuthSession {
   val credentialsFile: String
-  def postCreate()
-  def preDestroy()
+  def postCreate(): Unit = ???
+  def preDestroy(): Unit = ???
 }
 
 class FlickrOAuthSessionImpl(val credentialsFile: String) extends OAuthSession {
