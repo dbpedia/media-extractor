@@ -15,7 +15,7 @@ import org.scribe.model.Token
  *
  */
 
-trait OAuthSession {
+abstract trait OAuthSession {
   val credentialsFile: String
   def postCreate(): Unit = ???
   def preDestroy(): Unit = ???
