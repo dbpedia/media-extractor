@@ -65,7 +65,7 @@ class FlickrOAuthSessionImpl(val credentialsFile: String) extends OAuthSession {
     println("Authentication success")
   }
 
-  //e. g. method = "flickr.test.login"
+  //Examples: method = "flickr.test.echo", "flickr.test.login", "flickr.test.null"
   def invoke_parameterless_method(method: String = null, signRequest: Boolean = true): Response = {
     val request = new OAuthRequest(Verb.POST, endPointUri.toString())
     request.addQuerystringParameter("method", method)
