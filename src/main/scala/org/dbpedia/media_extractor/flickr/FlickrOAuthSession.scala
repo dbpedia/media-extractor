@@ -9,7 +9,10 @@ import java.util.Scanner
 
 import org.scribe.builder.ServiceBuilder
 import org.scribe.builder.api.FlickrApi
+import org.scribe.model.OAuthRequest
+import org.scribe.model.Response
 import org.scribe.model.Token
+import org.scribe.model.Verb
 import org.scribe.model.Verifier
 import org.scribe.oauth.OAuthService
 
@@ -61,7 +64,18 @@ class FlickrOAuthSessionImpl(val credentialsFile: String) extends OAuthSession {
     accessToken = myFlickrService.getAccessToken(requestToken, verifier)
     println("Authentication success")
   }
-  
+
+  //e. g. method = "flickr.test.login"
+  def invoke_parameterless_method(method: String = null, signRequest: Boolean = true): Response = {
+    val request = new OAuthRequest(Verb.POST, endPointUri.toString())
+    request.addQuerystringParameter("method", method)
+
+    if (signRequest)
+      myFlickrService.signRequest(accessToken, request)
+
+    request.send())
+  }
+
 }
 
 private class OAuthSessionDelegate extends OAuthSession {
