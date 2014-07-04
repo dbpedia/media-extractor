@@ -3,12 +3,15 @@
  */
 package org.dbpedia.media_extractor.flickr
 
-import org.scribe.model.Verifier
-import org.scribe.builder.api.FlickrApi
-import org.scribe.builder.ServiceBuilder
+import java.net.URI
 import java.util.Properties
 import java.util.Scanner
+
+import org.scribe.builder.ServiceBuilder
+import org.scribe.builder.api.FlickrApi
 import org.scribe.model.Token
+import org.scribe.model.Verifier
+import org.scribe.oauth.OAuthService
 
 /**
  * @author allentiak
@@ -22,9 +25,11 @@ abstract trait OAuthSession {
 }
 
 class FlickrOAuthSessionImpl(val credentialsFile: String) extends OAuthSession {
-  val myFlickrService = Nil
+  var myFlickrService: OAuthService = null
+  var accessToken: Token = null
+  val endPointUri = new URI("https://api.flickr.com/services/rest/")
 
-  def postCreate = {
+  override def postCreate: Unit = {
     val inputFile = this.getClass().getResourceAsStream(credentialsFile)
     val accessCredentials = new Properties()
 
@@ -33,12 +38,30 @@ class FlickrOAuthSessionImpl(val credentialsFile: String) extends OAuthSession {
     val myApiKey = accessCredentials.getProperty("apiKey")
     val myApiKeySecret = accessCredentials.getProperty("apiKeySecret")
 
-    val myFlickrService = new ServiceBuilder()
+    myFlickrService = new ServiceBuilder()
       .provider(classOf[FlickrApi])
       .apiKey(myApiKey)
       .apiSecret(myApiKeySecret)
       .build()
+
+    val requestToken = myFlickrService.getRequestToken()
+    val authorizationUri = myFlickrService.getAuthorizationUrl(requestToken)
+
+    println("Follow this authorization URL to authorise yourself on Flickr:")
+    println(authorizationUri)
+    println("Paste here the verifier it gives you:")
+    print(">>")
+
+    val scanner = new Scanner(System.in)
+    val verifier = new Verifier(scanner.nextLine())
+    scanner.close()
+
+    println("")
+
+    accessToken = myFlickrService.getAccessToken(requestToken, verifier)
+    println("Authentication success"))
   }
+  
 }
 
 private class OAuthSessionDelegate extends OAuthSession {
@@ -66,26 +89,6 @@ object OAuthSessionManager {
   }
 
   def session: OAuthSession = new OAuthSessionDelegate()
-
-  def flickrAuth() = {
-
-    val requestToken = FlickrOAuthSession.myFlickrService.getRequestToken()
-    val authorizationUri = FlickrOAuthSession.myFlickrService.getAuthorizationUrl(requestToken)
-
-    println("Follow this authorization URL to authorise yourself on Flickr:")
-    println(authorizationUri)
-    println("Paste here the verifier it gives you:")
-    print(">>")
-
-    val scanner = new Scanner(System.in)
-    val verifier = new Verifier(scanner.nextLine())
-    scanner.close()
-
-    println("")
-
-    val accessToken = myFlickrService.getAccessToken(requestToken, verifier)
-    println("Authentication success")
-  }
 
   def getSavedFlickrAccessToken(accessTokenFile: String): Token = {
     val accessCredentials = new Properties()
