@@ -73,7 +73,7 @@ class FlickrOAuthSessionImpl(val credentialsFile: String) extends OAuthSession {
     if (signRequest)
       myFlickrService.signRequest(accessToken, request)
 
-    request.send())
+    request.send()
   }
 
 }
