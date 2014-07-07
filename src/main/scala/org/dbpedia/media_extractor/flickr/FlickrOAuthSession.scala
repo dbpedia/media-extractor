@@ -7,6 +7,8 @@ import java.net.URI
 import java.util.Properties
 import java.util.Scanner
 
+import scala.language.postfixOps
+
 import org.scribe.builder.ServiceBuilder
 import org.scribe.builder.api.FlickrApi
 import org.scribe.model.OAuthRequest
