@@ -25,7 +25,7 @@ object FlickrWrappr2 extends App {
     }
     resultsListBuffer.toList
   }
-  
+
   def getFlickrSearchResponse(text: String = "", latitude: String = "", longitude: String = "", license: String = ""): Response = {
     val searchRequest = new OAuthRequest(Verb.POST, endPointUri.toString())
 
