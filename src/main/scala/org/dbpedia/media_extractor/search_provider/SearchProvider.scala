@@ -9,7 +9,7 @@ package org.dbpedia.media_extractor.search_provider
  */
 
 abstract trait SearchBehavior {
-  def search
+  def search()
 }
 trait GeoSearchBehavior extends SearchBehavior {
   //TODO: implement stub
@@ -21,7 +21,7 @@ trait SemanticSearchBehavior extends SearchBehavior {
 }
 
 abstract trait AuthenticationBehavior {
-  def authenticate
+  def authenticate()
 }
 trait OAuthBehavior extends AuthenticationBehavior {
   //TODO: implement stub
@@ -32,10 +32,10 @@ trait OAuthBehavior extends AuthenticationBehavior {
 object OAuthSession
 
 abstract class SearchProvider {
-  def performSearchBehavior
-  def setSearchBehavior
-  def performAuthenticationBehavior
-  def setAuthenticationBehavior
+  def performSearchBehavior()
+  def setSearchBehavior()
+  def performAuthenticationBehavior()
+  def setAuthenticationBehavior()
 }
 
 //TODO: implement stubs
