@@ -29,7 +29,13 @@ abstract trait OAuthSession {
   def preDestroy(): Unit = ???
 }
 
-class FlickrOAuthSessionImpl(val credentialsFile: String) extends OAuthSession {
+class FlickrOAuthSessionImpl extends OAuthSession {
+
+  //FIXME: There should be a way of making this field a parameter,
+  // so the credentials can be loaded from a arbitrary config file
+  // by invoking the constructor as "FlickrOAuthSessionImpl(credentialsFile)"
+  val credentialsFile = "/flickr.setup.properties"
+
   var myFlickrService: OAuthService = null
   var accessToken: Token = null
   val endPointUri = new URI("https://api.flickr.com/services/rest/")
@@ -40,6 +46,7 @@ class FlickrOAuthSessionImpl(val credentialsFile: String) extends OAuthSession {
 
     accessCredentials.load(inputFile)
     inputFile.close()
+
     val myApiKey = accessCredentials.getProperty("apiKey")
     val myApiKeySecret = accessCredentials.getProperty("apiKeySecret")
 
@@ -85,13 +92,11 @@ private class OAuthSessionDelegate extends OAuthSession {
 }
 
 object OAuthSessionManager {
-  val flickrConfigFile = ""
-
   private[this] var _instance: Option[OAuthSession] = None
 
   private[flickr] def instance: OAuthSession = {
     if (_instance isEmpty) {
-      _instance = Option(new FlickrOAuthSessionImpl(flickrConfigFile))
+      _instance = Option(new FlickrOAuthSessionImpl)
       _instance.get.postCreate
     }
     _instance.get
