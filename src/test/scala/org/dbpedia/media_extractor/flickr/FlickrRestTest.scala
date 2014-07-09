@@ -17,6 +17,8 @@ import com.hp.hpl.jena.rdf.model._
 import org.apache.jena.vocabulary._
 import org.scribe.builder.api.FlickrApi
 
+import org.dbpedia.media_extractor.flickr._
+
 /**
  * @author allentiak
  *
@@ -24,56 +26,15 @@ import org.scribe.builder.api.FlickrApi
 class FlickrRestApiTest extends FunSpec {
 
   describe("A Flickr instance") {
-    val endPointUri = new URI("https://api.flickr.com/services/rest/")
 
-    val accessCredentials = new Properties()
-
-    //FIXME: factor out this huge test into the ones specified at the end
-
-    //Here the first sub test should start
     it("should log in into Flickr and do stuff") {
 
-      val inputFile = classOf[FlickrRestApiTest].getResourceAsStream("/flickr.setup.properties")
-      accessCredentials.load(inputFile)
-      inputFile.close()
-      assert(
-        (accessCredentials.getProperty("apiKey") != null)
-          &&
-          (accessCredentials.getProperty("secret") != null))
-
-      //Here the first sub test should end
-
-      //Here the second sub test should start
-
-      val myFlickrService = new ServiceBuilder()
-        .provider(classOf[FlickrApi])
-        .apiKey(accessCredentials.getProperty("apiKey"))
-        .apiSecret(accessCredentials.getProperty("secret"))
-        .build()
-
-      println("Fetching the Request Token...")
-      val requestToken = myFlickrService.getRequestToken()
-      println("Request token: " + requestToken)
-
-      println("Getting the authorization URI...")
-      val authorizationUri = myFlickrService.getAuthorizationUrl(requestToken)
-
-      println("Follow this authorization URL to authorise yourself on Flickr:")
-      println(authorizationUri)
-      println("Paste here the verifier it gives you:")
-      print(">>")
-
-      val scanner = new Scanner(System.in)
-      val verifier = new Verifier(scanner.nextLine())
-      scanner.close()
-
-      println("About to trade the request token and the verifier for an access token...")
-      val accessToken = myFlickrService.getAccessToken(requestToken, verifier)
-      println("Access token: " + accessToken)
-
-      println("Authentication success")
-
-      //Here the second sub test should end
+      it("should load non-empty Flickr credentials from an external file, generate a session with those credentials, and save the token into a file") {
+        //FIXME: correct method invocation
+        val flickrOAuthSession = FlickrOAuthSession("/flickr.setup.properties")
+        flickrOAuthSession.postCreate()
+      }
+      it("should load the token")(pending)
 
       //Here the flickr.test.login test should start
 
@@ -246,8 +207,6 @@ This is the answer from https://secure.flickr.com/services/api/explore/flickr.ph
 
     }
 
-    it("should load non-empty credentials from an external file")(pending)
-    it("should be able to get an access token from Flickr with those credentials")(pending)
     it("should be able to invoke flickr.test.login")(pending)
     it("should be able to invoke flickr.test.echo")(pending)
     it("should be able to invoke flickr.test.null")(pending)
