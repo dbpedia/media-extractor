@@ -37,86 +37,25 @@ class FlickrRestApiTest extends FunSpec {
       //TODO: correct method invocation
       it("should load the token")(pending)
 
-      //Here the flickr.test.login test should start
+      it("should invoke test methods") {
+        it("should invoke method 'flickr.test.echo'") {
+          //FIXME: correct method invocation
+          val echoResponse = flickrOAuthSession.invoke_parameterless_method("flickr.test.echo")
+          assert(echoResponse.getMessage() === "OK")
+        }
 
-      println("Building the access request to the protected resource flickr.test.login...")
-      val loginRequest = new OAuthRequest(Verb.POST, endPointUri.toString())
+        it("should invoke method 'flickr.test.login'") {
+          //FIXME: correct method invocation
+          val loginResponse = flickrOAuthSession.invoke_parameterless_method("flickr.test.login")
+          assert(loginResponse.getMessage() === "OK")
+        }
 
-      println("About to construct auth request for invoking method flickr.test.login...")
-      loginRequest.addQuerystringParameter("method", "flickr.test.login")
-      myFlickrService.signRequest(accessToken, loginRequest)
-
-      println("About to invoke method flickr.test.login...")
-      val loginResponse = loginRequest.send()
-      println("Response:")
-      println("Body: " + loginResponse.getBody())
-      println("Code: " + loginResponse.getCode())
-      println("Message: " + loginResponse.getMessage())
-      println("Headers: " + loginResponse.getHeaders())
-      println("Stream: " + loginResponse.getStream())
-      println()
-
-      assert(loginResponse.getMessage() === "OK")
-
-      //Here the flickr.test.login test should end
-
-      //Here the flickr.test.echo test should start
-
-      println("Building the access request to the protected resource flickr.test.echo...")
-      val echoRequest = new OAuthRequest(Verb.POST, endPointUri.toString())
-
-      println("About to construct auth request for invoking method flickr.test.echo...")
-      echoRequest.addQuerystringParameter("method", "flickr.test.echo")
-
-      println("Request about to be sent: ")
-      println("QueryStrinParams: " + echoRequest.getQueryStringParams().toString())
-      println("BodyParams: " + echoRequest.getBodyParams().toString())
-      println("BodyContents: " + echoRequest.getBodyContents())
-      println("Headers: " + echoRequest.getHeaders().toString())
-
-      myFlickrService.signRequest(accessToken, echoRequest)
-
-      println("About to invoke method flickr.test.echo...")
-      val echoResponse = echoRequest.send()
-      println("Response:")
-      println("Body: " + echoResponse.getBody())
-      println("Code: " + echoResponse.getCode())
-      println("Message: " + echoResponse.getMessage())
-      println("Headers: " + echoResponse.getHeaders())
-      println("Stream: " + echoResponse.getStream())
-      println()
-
-      assert(echoResponse.getMessage() === "OK")
-      //Here the flickr.test.echo test should end
-
-      //Here the flickr.test.null test should start
-
-      println("Building the access request to the protected resource flickr.test.null...")
-      val nullRequest = new OAuthRequest(Verb.POST, endPointUri.toString())
-
-      println("About to construct auth request for invoking method flickr.test.null...")
-      nullRequest.addQuerystringParameter("method", "flickr.test.null")
-
-      println("Request about to be sent: ")
-      println("QueryStrinParams: " + nullRequest.getQueryStringParams().toString())
-      println("BodyParams: " + nullRequest.getBodyParams().toString())
-      println("BodyContents: " + nullRequest.getBodyContents())
-      println("Headers: " + nullRequest.getHeaders().toString())
-
-      myFlickrService.signRequest(accessToken, nullRequest)
-
-      println("About to invoke method flickr.test.null...")
-      val nullResponse = nullRequest.send()
-      println("Response:")
-      println("Body: " + nullResponse.getBody())
-      println("Code: " + nullResponse.getCode())
-      println("Message: " + nullResponse.getMessage())
-      println("Headers: " + nullResponse.getHeaders())
-      println("Stream: " + nullResponse.getStream())
-      println()
-      assert(nullResponse.getMessage() === "OK")
-
-      //Here the flickr.test.null test should end
+        it("should invoke method 'flickr.test.null'") {
+          //FIXME: correct method invocation
+          val nullResponse = flickrOAuthSession.invoke_parameterless_method("flickr.test.null")
+          assert(nullResponse.getMessage() === "OK")
+        }
+      }
 
       //Here the flickr.photos.search test should start
 
