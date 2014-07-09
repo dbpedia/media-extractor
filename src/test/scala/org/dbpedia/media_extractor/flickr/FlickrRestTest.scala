@@ -34,6 +34,7 @@ class FlickrRestApiTest extends FunSpec {
         val flickrOAuthSession = FlickrOAuthSession("/flickr.setup.properties")
         flickrOAuthSession.postCreate()
       }
+      //TODO: correct method invocation
       it("should load the token")(pending)
 
       //Here the flickr.test.login test should start
