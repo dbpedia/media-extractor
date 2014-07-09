@@ -17,8 +17,6 @@ import com.hp.hpl.jena.rdf.model._
 import org.apache.jena.vocabulary._
 import org.scribe.builder.api.FlickrApi
 
-import org.dbpedia.media_extractor.flickr._
-
 /**
  * @author allentiak
  *
@@ -27,15 +25,12 @@ class FlickrRestApiTest extends FunSpec {
 
   describe("A Flickr instance") {
 
-    it("should log in into Flickr and do stuff") {
+    it("should load non-empty Flickr credentials from an external file, generate a session with those credentials and use that session to invoke Flickr methods") {
+      //FIXME: correct method invocation
+      val flickrOAuthSession = OAuthSessionManager.session
 
-      it("should load non-empty Flickr credentials from an external file, generate a session with those credentials, and save the token into a file") {
-        //FIXME: correct method invocation
-        val flickrOAuthSession = FlickrOAuthSession("/flickr.setup.properties")
-        flickrOAuthSession.postCreate()
-      }
       //TODO: correct method invocation
-      it("should load the token")(pending)
+      it("should load an already created access token from a file")(pending)
 
       it("should invoke test methods") {
         it("should invoke method 'flickr.test.echo'") {
