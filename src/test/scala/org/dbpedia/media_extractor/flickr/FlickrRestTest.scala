@@ -147,9 +147,6 @@ This is the answer from https://secure.flickr.com/services/api/explore/flickr.ph
 
     }
 
-    it("should be able to invoke flickr.test.login")(pending)
-    it("should be able to invoke flickr.test.echo")(pending)
-    it("should be able to invoke flickr.test.null")(pending)
     it("should get at least one picture")(pending)
 
   }
