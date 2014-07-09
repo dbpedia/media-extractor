@@ -1,7 +1,6 @@
 package org.dbpedia.media_extractor.test
 
 import scala.xml._
-import scala.collection.mutable.ListBuffer
 import scala.io.Source._
 import java.io._
 import com.hp.hpl.jena.rdf.model._
@@ -11,27 +10,15 @@ import com.hp.hpl.jena.shared._
 import com.hp.hpl.jena.sparql.vocabulary._
 import scala.collection.mutable
 
+import org.dbpedia.media_extractor.flickr.FlickrWrappr2
+import org.dbpedia.media_extractor.flickr.SearchResult
+
 object Test {
 
-  val xmlString = Test.getClass().getResourceAsStream("/flickr.photos.search.manneken_pis.response.xml")
+  val flickrXmlResponseFileString = Test.getClass().getResourceAsStream("/flickr.photos.search.manneken_pis.response.xml")
+  val flickrXmlResponse = XML.load(flickrXmlResponseFileString)
 
-  val myXml = XML.load(xmlString)
-
-  case class SearchResult(depictionUri: String, pageUri: String)
-
-  val resultsListBuffer = new ListBuffer[SearchResult]
-
-  (myXml \\ "rsp" \ "photos" \ "photo") foreach {
-    photo =>
-      //generate photo image URI
-      val pictureUri = "https://farm" + (photo \ "@farm") + ".staticflickr.com/" + (photo \ "@server") + "/" + (photo \ "@id") + "_" + (photo \ "@secret") + ".jpg"
-      //generate photo page URI
-      val pageUri = "https://flickr.com/photos/" + (photo \ "@owner") + "/" + (photo \ "@id")
-
-      resultsListBuffer += SearchResult(pictureUri, pageUri)
-  }
-
-  val resultsList = resultsListBuffer.toList
+  val flickrSearchResultsList = FlickrWrappr2.generateLinksList(flickrXmlResponse)
 
   /* Initialize result model */
 
@@ -61,7 +48,7 @@ object Test {
 
   /* Perform flickr search */
 
-  // (We already have a sample XML converted into "resultsList" :-)
+  // (We already have a sample XML converted into "flickrSearchResultsList" :-)
 
   /* Important parameters */
 
@@ -78,12 +65,12 @@ object Test {
   val geoPath = lat + "/" + lon + "/" + radius
   val locationFullUri = locationRootUri + geoPath
   val dataFullUri = dataRootUri + lat + geoPath
-  
-  val flickrTermsUri ="http://www.flickr.com/terms.gne"
+
+  val flickrTermsUri = "http://www.flickr.com/terms.gne"
   val flickrwrappr = "flickr(tm) wrappr"
 
   val myPath = "/media/allentiak/dbpedia.git/media-extractor/src/test/resources/"
-  
+
   val outputMode = "RDF/XML"
   //val outputMode = "RDF/XML-ABBREV"
 
@@ -93,7 +80,7 @@ object Test {
 
   val locationFullUriResource = geoResultsModel.createResource(locationFullUri)
 
-  for (resultElem <- resultsList) {
+  for (resultElem <- flickrSearchResultsList) {
     val depictionUriResource = geoResultsModel.createResource(resultElem.depictionUri)
     val pageUriResource = geoResultsModel.createResource(resultElem.pageUri)
 
@@ -161,15 +148,15 @@ object Test {
   dbpediaResultsModel.setNsPrefix("dcterms", dcterms)
   dbpediaResultsModel.setNsPrefix("rdfs", rdfs)
 
-  // Perform flickr search - (for now, we will use the results from resultsList :-)
-  
+  // Perform flickr search - (for now, we will use the results from flickrSearchResultsList :-)
+
   // Process flickr search results
-  
-   /* Process found photos */
+
+  /* Process found photos */
 
   val dbpediaResourceFullUriResource = dbpediaResultsModel.createResource(dbpediaResourceFullUri)
 
-  for (resultElem <- resultsList) {
+  for (resultElem <- flickrSearchResultsList) {
     val depictionUriResource = dbpediaResultsModel.createResource(resultElem.depictionUri)
     val pageUriResource = dbpediaResultsModel.createResource(resultElem.pageUri)
 
@@ -193,7 +180,7 @@ object Test {
 
   dataFullUriResource.addProperty(RDFS.label, labelLiteral2)
 
-  
+
   val flickrwrapprLiteral2 = dbpediaResultsModel.createLiteral(flickrwrappr, "en")
   val serverRootUriResource2 = dbpediaResultsModel.createResource(serverRootUri)
   serverRootUriResource2.addProperty(RDFS.label, flickrwrapprLiteral2)
