@@ -13,7 +13,7 @@ import scala.collection.mutable
 import org.dbpedia.media_extractor.flickr.FlickrWrappr2
 import org.dbpedia.media_extractor.flickr.SearchResult
 
-object Test {
+object RDFTest {
 
   val flickrXmlResponseFileString = this.getClass().getResourceAsStream("/flickr.photos.search.manneken_pis.response.xml")
   val flickrXmlResponse = XML.load(flickrXmlResponseFileString)
