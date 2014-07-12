@@ -10,9 +10,6 @@ import com.hp.hpl.jena.shared._
 import com.hp.hpl.jena.sparql.vocabulary._
 import scala.collection.mutable
 
-import org.dbpedia.media_extractor.flickr.FlickrWrappr2
-import org.dbpedia.media_extractor.flickr.SearchResult
-
 object RDFTest {
 
   val flickrXmlResponseFileString = getClass().getResourceAsStream("/flickr.photos.search.manneken_pis.response.xml")
