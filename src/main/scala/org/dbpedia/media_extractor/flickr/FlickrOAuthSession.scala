@@ -91,6 +91,7 @@ object FlickrOAuthSession {
     searchRequest.addQuerystringParameter("license", license)
     searchRequest.addQuerystringParameter("per_page", "30") // maximum according to FlickrAPI's TOU
     searchRequest.addQuerystringParameter("sort", "relevance")
+    searchRequest.addQuerystringParameter("min_taken_date", "1800-01-01 00:00:00") // limiting agent to avoid "parameterless searches"
 
     // This request does not need to be signed
     searchRequest.send()
