@@ -84,7 +84,7 @@ class FlickrRestApiTest extends FunSpec {
           val resultElemList = FlickrWrappr2.generateLinksList(flickrXmlResponse)
           println("Flickr Response:")
           for (resultElem <- resultElemList) {
-            println("Picture" + " " + resultElemList.indexOf(resultElem) + "/" + resultElemList.size + ":")
+            println("Picture" + " " + resultElemList.indexOf(resultElem)+1 + "/" + resultElemList.size + ":")
             println("page Uri: " + resultElem.pageUri)
             println("depiction Uri: " + resultElem.depictionUri)
 
