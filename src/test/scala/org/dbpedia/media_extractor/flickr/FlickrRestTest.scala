@@ -55,13 +55,12 @@ class FlickrRestApiTest extends FunSpec {
         */
 
           val searchText = ""
-          val lat = 50.85
-          val lon = 4.35
+          val lat = "50.85"
+          val lon = "4.35"
 
           val license = "1,2"
 
-          //FIXME: correct method invocation
-          val searchResponse = getFlickrSearchResponse(searchText, lat, lon, license)
+          val searchResponse = FlickrOAuthSession.getFlickrSearchResponse(searchText, lat, lon, license)
 
         }
 
