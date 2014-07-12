@@ -63,7 +63,7 @@ class FlickrOAuthSession(val credentialsFile: String) {
     request.send()
   }
 
-  def getFlickrSearchResponse(text: String = "", latitude: String = "", longitude: String = "", license: String = "", signRequest: Boolean): Response = {
+  def getFlickrSearchResponse(text: String = "", latitude: String = "", longitude: String = "", license: String = "", signRequest: Boolean = true): Response = {
     val searchRequest = new OAuthRequest(Verb.POST, FlickrOAuthSession.endPointUri.toString())
 
     searchRequest.addQuerystringParameter("method", "flickr.photos.search")
