@@ -16,7 +16,6 @@ import org.scribe.model.Token
  */
 
 class FlickrOAuthSession(val credentialsFile: String) {
-
   val inputFile = this.getClass().getResourceAsStream(credentialsFile)
   val accessCredentials = new Properties()
 
@@ -30,29 +29,29 @@ class FlickrOAuthSession(val credentialsFile: String) {
     .apiKey(myApiKey)
     .apiSecret(myApiKeySecret)
     .build()
+
+  val requestToken = myFlickrService.getRequestToken()
+  val authorizationUri = myFlickrService.getAuthorizationUrl(requestToken)
+
+  println("Follow this authorization URL to authorise yourself on Flickr:")
+  println(authorizationUri)
+  println("Paste here the verifier it gives you:")
+  print(">>")
+
+  val scanner = new Scanner(System.in)
+  val verifier = new Verifier(scanner.nextLine())
+  scanner.close()
+
+  println("")
+
+  val accessToken = myFlickrService.getAccessToken(requestToken, verifier)
+  println("Authentication success")
+
 }
 
 object FlickrOAuthSession {
 
-  def flickrAuth() = {
-
-    val requestToken = FlickrOAuthSession.myFlickrService.getRequestToken()
-    val authorizationUri = FlickrOAuthSession.myFlickrService.getAuthorizationUrl(requestToken)
-
-    println("Follow this authorization URL to authorise yourself on Flickr:")
-    println(authorizationUri)
-    println("Paste here the verifier it gives you:")
-    print(">>")
-
-    val scanner = new Scanner(System.in)
-    val verifier = new Verifier(scanner.nextLine())
-    scanner.close()
-
-    println("")
-
-    val accessToken = myFlickrService.getAccessToken(requestToken, verifier)
-    println("Authentication success")
-  }
+  def apply(credentialsFile: String) = new FlickrOAuthSession(credentialsFile)
 
   def getSavedFlickrAccessToken(accessTokenFile: String): Token = {
     val accessCredentials = new Properties()
