@@ -9,6 +9,10 @@ import org.scribe.builder.ServiceBuilder
 import java.util.Properties
 import java.util.Scanner
 import org.scribe.model.Token
+import org.scribe.model.OAuthRequest
+import org.scribe.model.Verb
+import java.net.URI
+import org.scribe.model.Response
 
 /**
  * @author allentiak
@@ -16,6 +20,7 @@ import org.scribe.model.Token
  */
 
 class FlickrOAuthSession(val credentialsFile: String) {
+
   val inputFile = this.getClass().getResourceAsStream(credentialsFile)
   val accessCredentials = new Properties()
 
@@ -51,6 +56,8 @@ class FlickrOAuthSession(val credentialsFile: String) {
 
 object FlickrOAuthSession {
 
+  val endPointUri = new URI("https://api.flickr.com/services/rest/")
+
   def apply(credentialsFile: String) = new FlickrOAuthSession(credentialsFile)
 
   def getSavedFlickrAccessToken(accessTokenFile: String): Token = {
@@ -63,5 +70,23 @@ object FlickrOAuthSession {
     val accessSecret = accessCredentials.getProperty("accessSecret")
 
     new Token(accessToken, accessSecret)
+  }
+
+  def getFlickrSearchResponse(text: String = "", latitude: String = "", longitude: String = "", license: String = ""): Response = {
+    val searchRequest = new OAuthRequest(Verb.POST, endPointUri.toString())
+
+    searchRequest.addQuerystringParameter("method", "flickr.photos.search")
+    searchRequest.addQuerystringParameter("lat", latitude)
+    searchRequest.addQuerystringParameter("lon", longitude)
+    searchRequest.addQuerystringParameter("license", license)
+    searchRequest.addQuerystringParameter("per_page", "30") // maximum according to FlickrAPI's TOU
+    searchRequest.addQuerystringParameter("sort", "relevance")
+
+    // This request does not need to be signed
+    searchRequest.send()
+  }
+
+  def validateFlickrSearchResponse(flickrSearchResponse: Response): Boolean = {
+    flickrSearchResponse.getCode().equals("200")
   }
 }
