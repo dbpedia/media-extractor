@@ -26,19 +26,16 @@ class FlickrRestApiTest extends FunSpec {
 
       it("should invoke test methods") {
         it("should invoke method 'flickr.test.echo'") {
-          //FIXME: correct method invocation
           val echoResponse = flickrOAuthSession.invoke_parameterless_method("flickr.test.echo")
           assert(echoResponse.getMessage() === "OK")
         }
 
         it("should invoke method 'flickr.test.login'") {
-          //FIXME: correct method invocation
           val loginResponse = flickrOAuthSession.invoke_parameterless_method("flickr.test.login")
           assert(loginResponse.getMessage() === "OK")
         }
 
         it("should invoke method 'flickr.test.null'") {
-          //FIXME: correct method invocation
           val nullResponse = flickrOAuthSession.invoke_parameterless_method("flickr.test.null")
           assert(nullResponse.getMessage() === "OK")
         }
