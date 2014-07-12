@@ -26,31 +26,31 @@ class FlickrRestApiTest extends FunSpec {
 
       describe("should invoke test methods (unsigned)") {
         it("should invoke method 'flickr.test.echo'") {
-          val echoResponse = flickrOAuthSession.invoke_parameterless_method("flickr.test.echo", false)
-          assert(echoResponse.getMessage() === "OK")
+          val unsignedEchoResponse = flickrOAuthSession.invoke_parameterless_method("flickr.test.echo", false)
+          assert(unsignedEchoResponse.getMessage() === "OK")
         }
         it("should invoke method 'flickr.test.login'") {
-          val loginResponse = flickrOAuthSession.invoke_parameterless_method("flickr.test.login", false)
-          assert(loginResponse.getMessage() === "OK")
+          val unsignedLoginResponse = flickrOAuthSession.invoke_parameterless_method("flickr.test.login", false)
+          assert(unsignedLoginResponse.getMessage() === "OK")
         }
         it("should invoke method 'flickr.test.null'") {
-          val nullResponse = flickrOAuthSession.invoke_parameterless_method("flickr.test.null", false)
-          assert(nullResponse.getMessage() === "OK")
+          val unsignedNullResponse = flickrOAuthSession.invoke_parameterless_method("flickr.test.null", false)
+          assert(unsignedNullResponse.getMessage() === "OK")
         }
       }
 
       describe("should invoke test methods (signed)") {
         it("should invoke method 'flickr.test.echo'") {
-          val echoResponse = flickrOAuthSession.invoke_parameterless_method("flickr.test.echo", true)
-          assert(echoResponse.getMessage() === "OK")
+          val signedEchoResponse = flickrOAuthSession.invoke_parameterless_method("flickr.test.echo", true)
+          assert(signedEchoResponse.getMessage() === "OK")
         }
         it("should invoke method 'flickr.test.login'") {
-          val loginResponse = flickrOAuthSession.invoke_parameterless_method("flickr.test.login", true)
-          assert(loginResponse.getMessage() === "OK")
+          val signedLoginResponse = flickrOAuthSession.invoke_parameterless_method("flickr.test.login", true)
+          assert(signedLoginResponse.getMessage() === "OK")
         }
         it("should invoke method 'flickr.test.null'") {
-          val nullResponse = flickrOAuthSession.invoke_parameterless_method("flickr.test.null", true)
-          assert(nullResponse.getMessage() === "OK")
+          val signedNullResponse = flickrOAuthSession.invoke_parameterless_method("flickr.test.null", true)
+          assert(signedNullResponse.getMessage() === "OK")
         }
       }
 
