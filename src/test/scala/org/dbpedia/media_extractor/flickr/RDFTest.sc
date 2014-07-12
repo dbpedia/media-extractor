@@ -15,7 +15,7 @@ import org.dbpedia.media_extractor.flickr.SearchResult
 
 object RDFTest {
 
-  val flickrXmlResponseFileString = this.getClass().getResourceAsStream("/flickr.photos.search.manneken_pis.response.xml")
+  val flickrXmlResponseFileString = getClass().getResourceAsStream("/flickr.photos.search.manneken_pis.response.xml")
   val flickrXmlResponse = XML.load(flickrXmlResponseFileString)
 
   val flickrSearchResultsList = FlickrWrappr2.generateLinksList(flickrXmlResponse)
