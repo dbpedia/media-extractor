@@ -93,6 +93,11 @@ class FlickrRestApiTest extends FunSpec {
         }
 
       }
+      
+      describe("RDF generation"){
+        describe("Geo Search")(pending)
+        describe("DBpedia Search")(pending)
+      }
     }
 
   }
