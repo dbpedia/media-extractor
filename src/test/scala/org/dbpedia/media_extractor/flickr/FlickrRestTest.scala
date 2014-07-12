@@ -4,6 +4,7 @@
 package org.dbpedia.media_extractor.flickr
 
 import org.scalatest.FunSpec
+import scala.xml.XML
 
 /**
  * @author allentiak
@@ -69,13 +70,27 @@ class FlickrRestApiTest extends FunSpec {
           val unsignedSearchResponse = flickrOAuthSession.getFlickrSearchResponse(searchText, lat, lon, license, false)
           assert(unsignedSearchResponse.getMessage() === "OK")
         }
-        
+
         it("should invoke 'flickr.photos.search' (signed)") {
           val signedSearchResponse = flickrOAuthSession.getFlickrSearchResponse(searchText, lat, lon, license, true)
           assert(signedSearchResponse.getMessage() === "OK")
         }
 
-        it("should show the photos' links")(pending)
+        it("should show the photos' links") {
+          val signedSearchResponse = flickrOAuthSession.getFlickrSearchResponse(searchText, lat, lon, license, true)
+          assert(signedSearchResponse.getMessage() === "OK")
+
+          val flickrXmlResponse = XML.loadString(signedSearchResponse.getBody())
+          val resultElemList = FlickrWrappr2.generateLinksList(flickrXmlResponse)
+          println("Flickr Response:")
+          for (resultElem <- resultElemList) {
+            println("Picture" + " " + resultElemList.indexOf(resultElem) + "/" + resultElemList.size + ":")
+            println("page Uri: " + resultElem.pageUri)
+            println("depiction Uri: " + resultElem.depictionUri)
+
+            // FIXME: I don't know how to "assert" this
+          }
+        }
 
       }
     }
