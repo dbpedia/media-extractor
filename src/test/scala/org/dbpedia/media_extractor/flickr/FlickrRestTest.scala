@@ -58,6 +58,7 @@ class FlickrRestApiTest extends FunSpec {
           val license = "1,2"
 
           val searchResponse = FlickrOAuthSession.getFlickrSearchResponse(searchText, lat, lon, license)
+          assert(searchResponse.getMessage() === "OK")
 
         }
 
