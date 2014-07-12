@@ -52,6 +52,16 @@ class FlickrOAuthSession(val credentialsFile: String) {
   val accessToken = myFlickrService.getAccessToken(requestToken, verifier)
   println("Authentication success")
 
+  //e. g. method = "flickr.test.login"
+  def invoke_parameterless_method(method: String = null, signRequest: Boolean = true): Response = {
+    val request = new OAuthRequest(Verb.POST, FlickrOAuthSession.endPointUri.toString())
+    request.addQuerystringParameter("method", method)
+
+    if (signRequest)
+      myFlickrService.signRequest(accessToken, request)
+
+    request.send()
+  }
 }
 
 object FlickrOAuthSession {
@@ -85,17 +95,6 @@ object FlickrOAuthSession {
     // This request does not need to be signed
     searchRequest.send()
   }
-  
-   //e. g. method = "flickr.test.login"
-   def invoke_parameterless_method(method: String = null, signRequest: Boolean = true): Response = {
-     val request = new OAuthRequest(Verb.POST, endPointUri.toString())
-     request.addQuerystringParameter("method", method)
- 
-     if (signRequest)
-       myFlickrService.signRequest(accessToken, request)
- 
-     request.send()
-   }
 
   def validateFlickrSearchResponse(flickrSearchResponse: Response): Boolean = {
     flickrSearchResponse.getCode().equals("200")
