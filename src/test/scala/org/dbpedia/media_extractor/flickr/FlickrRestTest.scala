@@ -24,7 +24,7 @@ class FlickrRestApiTest extends FunSpec {
         assert(generatedToken === savedToken)
       }
 
-      describe("should invoke test methods (unsigned)") {
+      describe("test methods (unsigned)") {
         it("should invoke method 'flickr.test.echo'") {
           val unsignedEchoResponse = flickrOAuthSession.invoke_parameterless_method("flickr.test.echo", false)
           assert(unsignedEchoResponse.getMessage() === "OK")
@@ -39,7 +39,7 @@ class FlickrRestApiTest extends FunSpec {
         }
       }
 
-      describe("should invoke test methods (signed)") {
+      describe("test methods (signed)") {
         it("should invoke method 'flickr.test.echo'") {
           val signedEchoResponse = flickrOAuthSession.invoke_parameterless_method("flickr.test.echo", true)
           assert(signedEchoResponse.getMessage() === "OK")
@@ -54,21 +54,27 @@ class FlickrRestApiTest extends FunSpec {
         }
       }
 
-      describe("should invoke method 'flickr.photos.search'") {
-        it("should get at least one picture") {
-          /*
+      describe("method 'flickr.photos.search'") {
+        /*
         Brussels:
         latitude: 50°51′0″N
         longitude: 4°21′0″E
         */
-          val searchText = ""
-          val lat = "50.85"
-          val lon = "4.35"
-          val license = "1,2"
+        val searchText = ""
+        val lat = "50.85"
+        val lon = "4.35"
+        val license = "1,2"
 
-          val searchResponse = FlickrOAuthSession.getFlickrSearchResponse(searchText, lat, lon, license)
-          assert(searchResponse.getMessage() === "OK")
+        it("should invoke 'flickr.photos.search' (unsigned)") {
+          val unsignedSearchResponse = flickrOAuthSession.getFlickrSearchResponse(searchText, lat, lon, license, false)
+          assert(unsignedSearchResponse.getMessage() === "OK")
         }
+        
+        it("should invoke 'flickr.photos.search' (signed)") {
+          val signedSearchResponse = flickrOAuthSession.getFlickrSearchResponse(searchText, lat, lon, license, true)
+          assert(signedSearchResponse.getMessage() === "OK")
+        }
+
         it("should show the photos' links")(pending)
 
       }

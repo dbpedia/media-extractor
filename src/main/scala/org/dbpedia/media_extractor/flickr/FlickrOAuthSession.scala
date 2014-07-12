@@ -62,6 +62,24 @@ class FlickrOAuthSession(val credentialsFile: String) {
 
     request.send()
   }
+
+  def getFlickrSearchResponse(text: String = "", latitude: String = "", longitude: String = "", license: String = "", signRequest: Boolean): Response = {
+    val searchRequest = new OAuthRequest(Verb.POST, FlickrOAuthSession.endPointUri.toString())
+
+    searchRequest.addQuerystringParameter("method", "flickr.photos.search")
+    searchRequest.addQuerystringParameter("lat", latitude)
+    searchRequest.addQuerystringParameter("lon", longitude)
+    searchRequest.addQuerystringParameter("license", license)
+    searchRequest.addQuerystringParameter("per_page", "30") // maximum according to FlickrAPI's TOU
+    searchRequest.addQuerystringParameter("sort", "relevance")
+    searchRequest.addQuerystringParameter("min_taken_date", "1800-01-01 00:00:00") // limiting agent to avoid "parameterless searches"
+
+    // This request does not need to be signed
+    if (signRequest)
+      myFlickrService.signRequest(accessToken, searchRequest)
+    searchRequest.send()
+  }
+
 }
 
 object FlickrOAuthSession {
@@ -80,21 +98,6 @@ object FlickrOAuthSession {
     val accessSecret = accessCredentials.getProperty("accessSecret")
 
     new Token(accessToken, accessSecret)
-  }
-
-  def getFlickrSearchResponse(text: String = "", latitude: String = "", longitude: String = "", license: String = ""): Response = {
-    val searchRequest = new OAuthRequest(Verb.POST, endPointUri.toString())
-
-    searchRequest.addQuerystringParameter("method", "flickr.photos.search")
-    searchRequest.addQuerystringParameter("lat", latitude)
-    searchRequest.addQuerystringParameter("lon", longitude)
-    searchRequest.addQuerystringParameter("license", license)
-    searchRequest.addQuerystringParameter("per_page", "30") // maximum according to FlickrAPI's TOU
-    searchRequest.addQuerystringParameter("sort", "relevance")
-    searchRequest.addQuerystringParameter("min_taken_date", "1800-01-01 00:00:00") // limiting agent to avoid "parameterless searches"
-
-    // This request does not need to be signed
-    searchRequest.send()
   }
 
   def validateFlickrSearchResponse(flickrSearchResponse: Response): Boolean = {
