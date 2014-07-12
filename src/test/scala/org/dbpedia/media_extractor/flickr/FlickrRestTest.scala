@@ -3,19 +3,7 @@
  */
 package org.dbpedia.media_extractor.flickr
 
-import java.net.URI
-import java.util.Properties
-import java.util.Scanner
-import scala.xml.XML
 import org.scalatest.FunSpec
-import org.scribe.builder.ServiceBuilder
-import org.scribe.builder.api.FlickrApi
-import org.scribe.model.OAuthRequest
-import org.scribe.model.Verb
-import org.scribe.model.Verifier
-import com.hp.hpl.jena.rdf.model._
-import org.apache.jena.vocabulary._
-import org.scribe.builder.api.FlickrApi
 
 /**
  * @author allentiak
@@ -26,11 +14,15 @@ class FlickrRestApiTest extends FunSpec {
   describe("A Flickr instance") {
 
     it("should load non-empty Flickr credentials from an external file, generate a session with those credentials and use that session to invoke Flickr methods") {
-      //FIXME: correct method invocation
-      val flickrOAuthSession = OAuthSessionManager.session
+      // I don't know how to correctly test whether the instance was successfully created
+      // Maybe adding a return type of 0 (zero) to the constructor?
+      val flickrOAuthSession = FlickrOAuthSession("/flickr.setup.properties")
 
-      //TODO: correct method invocation
-      it("should load an already created access token from a file")(pending)
+      it("should load an already created access token from a file") {
+        val generatedToken = flickrOAuthSession.accessToken
+        val savedToken = FlickrOAuthSession.getSavedFlickrAccessToken("/flickr.accessToken.properties")
+        assert(generatedToken === savedToken)
+      }
 
       it("should invoke test methods") {
         it("should invoke method 'flickr.test.echo'") {
