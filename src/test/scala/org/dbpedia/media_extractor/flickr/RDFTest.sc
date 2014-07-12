@@ -1,4 +1,4 @@
-package org.dbpedia.media_extractor.test
+package org.dbpedia.media_extractor.flickr
 
 import scala.xml._
 import scala.io.Source._
