@@ -15,7 +15,7 @@ object RDFTest {
   val flickrXmlResponseFileString = getClass().getResourceAsStream("/flickr.photos.search.manneken_pis.response.xml")
   val flickrXmlResponse = XML.load(flickrXmlResponseFileString)
 
-  val flickrSearchResultsList = FlickrWrappr2.generateLinksList(flickrXmlResponse)
+  val flickrSearchResultsList = FlickrWrappr2.generateUrisForFlickrSearchResponse(flickrXmlResponse)
 
   /* Initialize result model */
 
