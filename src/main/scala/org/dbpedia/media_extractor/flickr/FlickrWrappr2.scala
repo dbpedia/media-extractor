@@ -14,6 +14,8 @@ object FlickrWrappr2 extends App {
   val geoRDFGraph = ModelFactory.createDefaultModel()
   val dbpediaRDFGraph = ModelFactory.createDefaultModel()
 
+  val dbpediaResourceUri = "http://dbpedia.org/resource/"
+
   val defaultServerRootUri = "http://localhost/flickrwrappr/"
 
   val locationRootUri = defaultServerRootUri + "location/"
@@ -57,7 +59,7 @@ object FlickrWrappr2 extends App {
   }
 
   // TODO: implement stub
-  def performFlickrDBpediaSearch(resource: String, searchRadius: String = radius) {
+  def performFlickrDBpediaSearch(targetResource: String, searchRadius: String = radius) {
   }
 
   def processFlickrGeoSearchResults(flickrSearchResultsList: List[SearchResult]) {
@@ -73,7 +75,19 @@ object FlickrWrappr2 extends App {
   }
 
   // TODO: implement stub
-  def processFlickrDBpediaSearchResults
+  def processFlickrDBpediaSearchResults(flickrSearchResultsList: List[SearchResult], targetResource:String) {
+    val dbpediaResourceFullUri = FlickrWrappr2.dbpediaResourceUri + targetResource.trim.replaceAll(" ", "_").replaceAll("%2F", "/").replaceAll("%3A", ":")
+
+    val dbpediaResourceFullUriResource = dbpediaRDFGraph.createResource(dbpediaResourceFullUri)
+
+    for (resultElem <- flickrSearchResultsList) {
+      val depictionUriResource = dbpediaRDFGraph.createResource(resultElem.depictionUri)
+      val pageUriResource = dbpediaRDFGraph.createResource(resultElem.pageUri)
+
+      dbpediaResourceFullUriResource.addProperty(FOAF.depiction, depictionUriResource)
+      depictionUriResource.addProperty(FOAF.page, pageUriResource)
+    }
+  }
 
   // TODO: implement stub
   def addGeoLocationMetadataToRDFGraph
