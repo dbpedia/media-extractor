@@ -2,9 +2,9 @@ package org.dbpedia.media_extractor.flickr
 
 import scala.collection.mutable.ListBuffer
 import scala.xml.Elem
-
 import com.hp.hpl.jena.rdf.model.Model
 import com.hp.hpl.jena.rdf.model.ModelFactory
+import com.hp.hpl.jena.sparql.vocabulary.FOAF
 
 case class SearchResult(depictionUri: String, pageUri: String)
 
@@ -60,8 +60,17 @@ object FlickrWrappr2 extends App {
   def performFlickrDBpediaSearch(resource: String, searchRadius: String = radius) {
   }
 
-  // TODO: implement stub
-  def processFlickrGeoSearchResults
+  def processFlickrGeoSearchResults(flickrSearchResultsList: List[SearchResult]) {
+    val locationFullUriResource = geoRDFGraph.createResource(locationFullUri)
+
+    for (resultElem <- flickrSearchResultsList) {
+      val depictionUriResource = geoRDFGraph.createResource(resultElem.depictionUri)
+      val pageUriResource = geoRDFGraph.createResource(resultElem.pageUri)
+
+      locationFullUriResource.addProperty(FOAF.depiction, depictionUriResource)
+      depictionUriResource.addProperty(FOAF.page, pageUriResource)
+    }
+  }
 
   // TODO: implement stub
   def processFlickrDBpediaSearchResults
