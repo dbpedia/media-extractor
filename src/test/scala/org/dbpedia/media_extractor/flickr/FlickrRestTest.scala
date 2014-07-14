@@ -91,12 +91,16 @@ class FlickrRestApiTest extends FunSpec {
             // FIXME: I don't know how to "assert" this
           }
         }
-
       }
-      
-      describe("RDF generation"){
-        describe("Geo Search")(pending)
-        describe("DBpedia Search")(pending)
+
+      describe("should generate RDF graphs") {
+        describe("for Geo Search")(pending)
+        describe("for DBpedia Search")(pending)
+      }
+
+      describe("should generate valid RDF graphs") {
+        describe("for Geo Search")(pending)
+        describe("for DBpedia Search")(pending)
       }
     }
 
