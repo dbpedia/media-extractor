@@ -131,7 +131,6 @@ object RDFTest {
 
   val searchText = "Manneken Pis"
   val dbpediaResourceUri = "http://dbpedia.org/resource/"
-  val flickrwrapprPhotosUri = serverRootUri + "photos/"
 
   val dbpediaResourceFullUri = dbpediaResourceUri + searchText.trim.replaceAll(" ", "_").replaceAll("%2F", "/").replaceAll("%3A", ":")
 
