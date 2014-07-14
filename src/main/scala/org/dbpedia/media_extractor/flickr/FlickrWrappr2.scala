@@ -23,4 +23,8 @@ object FlickrWrappr2 extends App {
     resultsListBuffer.toList
   }
 
+  def addNameSpacesToRDFGraph(nsMap: Map[String, String], rdfGraph: Model) =
+    nsMap.foreach { case (k, v) => rdfGraph.setNsPrefix(k, v) }
+
 }
+
