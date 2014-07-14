@@ -53,10 +53,12 @@ object FlickrWrappr2 extends App {
     nsMap.foreach { case (k, v) => rdfGraph.setNsPrefix(k, v) }
 
   // TODO: implement stub 
-  def performFlickrGeoSearch
+  def performFlickrGeoSearch(latitude: String = lat, longitude: String = lon, searchRadius: String = radius) {
+  }
 
   // TODO: implement stub
-  def performFlickrDBpediaSearch
+  def performFlickrDBpediaSearch(resource: String, searchRadius: String = radius) {
+  }
 
   // TODO: implement stub
   def processFlickrGeoSearchResults
