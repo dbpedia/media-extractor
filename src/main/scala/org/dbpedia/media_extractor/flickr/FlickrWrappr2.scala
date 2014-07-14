@@ -74,8 +74,7 @@ object FlickrWrappr2 extends App {
     }
   }
 
-  // TODO: implement stub
-  def processFlickrDBpediaSearchResults(flickrSearchResultsList: List[SearchResult], targetResource:String) {
+  def processFlickrDBpediaSearchResults(flickrSearchResultsList: List[SearchResult], targetResource: String) {
     val dbpediaResourceFullUri = FlickrWrappr2.dbpediaResourceUri + targetResource.trim.replaceAll(" ", "_").replaceAll("%2F", "/").replaceAll("%3A", ":")
 
     val dbpediaResourceFullUriResource = dbpediaRDFGraph.createResource(dbpediaResourceFullUri)
