@@ -4,6 +4,7 @@ import scala.collection.mutable.ListBuffer
 import scala.xml.Elem
 
 import com.hp.hpl.jena.rdf.model.Model
+import com.hp.hpl.jena.rdf.model.ModelFactory
 
 case class SearchResult(depictionUri: String, pageUri: String)
 
