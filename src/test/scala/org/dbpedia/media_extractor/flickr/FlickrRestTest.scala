@@ -12,7 +12,7 @@ import scala.xml.XML
  */
 class FlickrRestApiTest extends FunSpec {
 
-  describe("A Flickr instance") {
+  describe("A FlickrOAuthSession instance") {
 
     describe("should load non-empty Flickr credentials from an external file, generate a session with those credentials and use that session to invoke Flickr methods") {
       // I don't know how to correctly test whether the instance was successfully created
@@ -25,37 +25,37 @@ class FlickrRestApiTest extends FunSpec {
         assert(generatedToken === savedToken)
       }
 
-      describe("test methods (unsigned)") {
-        it("should invoke method 'flickr.test.echo'") {
+      describe("should properly invoke test methods (unsigned)") {
+        it("method 'flickr.test.echo'") {
           val unsignedEchoResponse = flickrOAuthSession.invoke_parameterless_method("flickr.test.echo", false)
           assert(unsignedEchoResponse.getMessage() === "OK")
         }
-        it("should invoke method 'flickr.test.login'") {
+        it("method 'flickr.test.login'") {
           val unsignedLoginResponse = flickrOAuthSession.invoke_parameterless_method("flickr.test.login", false)
           assert(unsignedLoginResponse.getMessage() === "OK")
         }
-        it("should invoke method 'flickr.test.null'") {
+        it("method 'flickr.test.null'") {
           val unsignedNullResponse = flickrOAuthSession.invoke_parameterless_method("flickr.test.null", false)
           assert(unsignedNullResponse.getMessage() === "OK")
         }
       }
 
-      describe("test methods (signed)") {
-        it("should invoke method 'flickr.test.echo'") {
+      describe("should properly invoke test methods (signed)") {
+        it("method 'flickr.test.echo'") {
           val signedEchoResponse = flickrOAuthSession.invoke_parameterless_method("flickr.test.echo", true)
           assert(signedEchoResponse.getMessage() === "OK")
         }
-        it("should invoke method 'flickr.test.login'") {
+        it("method 'flickr.test.login'") {
           val signedLoginResponse = flickrOAuthSession.invoke_parameterless_method("flickr.test.login", true)
           assert(signedLoginResponse.getMessage() === "OK")
         }
-        it("should invoke method 'flickr.test.null'") {
+        it("method 'flickr.test.null'") {
           val signedNullResponse = flickrOAuthSession.invoke_parameterless_method("flickr.test.null", true)
           assert(signedNullResponse.getMessage() === "OK")
         }
       }
 
-      describe("method 'flickr.photos.search'") {
+      describe("should properly perform and process a simple Flickr search") {
         /*
         Brussels:
         latitude: 50°51′0″N
@@ -66,17 +66,17 @@ class FlickrRestApiTest extends FunSpec {
         val lon = "4.35"
         val license = "1,2"
 
-        it("should invoke 'flickr.photos.search' (unsigned)") {
+        it("method 'flickr.photos.search' (unsigned)") {
           val unsignedSearchResponse = flickrOAuthSession.getFlickrSearchResponse(searchText, lat, lon, license, false)
           assert(unsignedSearchResponse.getMessage() === "OK")
         }
 
-        it("should invoke 'flickr.photos.search' (signed)") {
+        it("method 'flickr.photos.search' (signed)") {
           val signedSearchResponse = flickrOAuthSession.getFlickrSearchResponse(searchText, lat, lon, license, true)
           assert(signedSearchResponse.getMessage() === "OK")
         }
 
-        it("should show the photos' links") {
+        describe("should generate and show the photos' links") {
           val signedSearchResponse = flickrOAuthSession.getFlickrSearchResponse(searchText, lat, lon, license, true)
           assert(signedSearchResponse.getMessage() === "OK")
 
