@@ -12,7 +12,7 @@ object FlickrWrappr2 extends App {
   val geoRDFGraph = ModelFactory.createDefaultModel()
   val dbpediaRDFGraph = ModelFactory.createDefaultModel()
 
-  def generateLinksList(myXml: Elem): List[SearchResult] = {
+  def generateUrisForFlickrSearchResponse(myXml: Elem): List[SearchResult] = {
     val resultsListBuffer = new ListBuffer[SearchResult]
     (myXml \\ "rsp" \ "photos" \ "photo") foreach {
       photo =>

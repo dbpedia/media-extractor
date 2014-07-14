@@ -81,13 +81,13 @@ class FlickrRestApiTest extends FunSpec {
           assert(signedSearchResponse.getMessage() === "OK")
 
           val flickrXmlResponse = XML.loadString(signedSearchResponse.getBody())
-          val resultElemList = FlickrWrappr2.generateLinksList(flickrXmlResponse)
-          println("Flickr Response:")
-          for (resultElem <- resultElemList) {
-            println("Picture" + " " + resultElemList.indexOf(resultElem)+1 + "/" + resultElemList.size + ":")
-            println("page Uri: " + resultElem.pageUri)
-            println("depiction Uri: " + resultElem.depictionUri)
+          val resultElemList = FlickrWrappr2.generateUrisForFlickrSearchResponse(flickrXmlResponse)
 
+          println("Generated URIs for a simple Flickr search:")
+          for (resultElem <- resultElemList) {
+            println("Picture" + " " + resultElemList.indexOf(resultElem) + 1 + "/" + resultElemList.size + ":")
+            println("Page Uri: " + resultElem.pageUri)
+            println("Depiction Uri: " + resultElem.depictionUri)
             // FIXME: I don't know how to "assert" this
           }
         }
