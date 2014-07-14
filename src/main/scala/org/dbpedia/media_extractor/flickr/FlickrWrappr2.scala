@@ -5,6 +5,7 @@ import scala.xml.Elem
 import com.hp.hpl.jena.rdf.model.Model
 import com.hp.hpl.jena.rdf.model.ModelFactory
 import com.hp.hpl.jena.sparql.vocabulary.FOAF
+import com.hp.hpl.jena.vocabulary.RDF
 
 case class SearchResult(depictionUri: String, pageUri: String)
 
@@ -119,8 +120,23 @@ object FlickrWrappr2 extends App {
     }
   }
 
-  // TODO: implement stub
-  def addGeoLocationMetadataToRDFGraph
+  // FIXME: make literals work
+  def addGeoLocationMetadataToRDFGraph {
+    val spatialThingResource = geoRDFGraph.createResource(locationFullUri)
+    spatialThingResource.addProperty(RDF.`type`, geo + "SpatialThing")
+
+    val geoTypeProperty = geoRDFGraph.createProperty("type", geo + "type")
+    spatialThingResource.addProperty(geoTypeProperty, "SpatialThing")
+
+    // FIXME: make literals work
+    //val latLiteral = geoResultsModel.createTypedLiteral(new Float(lat.toFloat))
+    //val lonLiteral = geoResultsModel.createTypedLiteral(new Integer(lon.toInt))
+    //val radiusLiteral = geoResultsModel.createTypedLiteral(new Integer(radius.toInt))
+
+    //val latProperty = spa
+    //val geo_lat = geoResultsModel.add (geo + "lat")
+    //spatialThingResource.addProperty(geoLatProperty,lat)
+  }
 
   // TODO: implement stub
   def addGeoSearchDocumentMetadataToRDFGraph
