@@ -8,9 +8,34 @@ import com.hp.hpl.jena.rdf.model.ModelFactory
 
 case class SearchResult(depictionUri: String, pageUri: String)
 
+class FlickrWrappr2(val serverRootUri: String)
+
 object FlickrWrappr2 extends App {
   val geoRDFGraph = ModelFactory.createDefaultModel()
   val dbpediaRDFGraph = ModelFactory.createDefaultModel()
+
+  val defaultServerRootUri = "http://localhost/flickrwrappr/"
+
+  val locationRootUri = defaultServerRootUri + "location/"
+  val dataRootUri = defaultServerRootUri + "data/photosDepictingLocation/"
+
+  // By default, search for Brussels
+  val lat = "50.85"
+  val lon = "4.35"
+  val radius = "5"
+
+  val geoPath = lat + "/" + lon + "/" + radius
+  val locationFullUri = locationRootUri + geoPath
+  val dataFullUri = dataRootUri + lat + geoPath
+
+  val flickrTermsUri = "http://www.flickr.com/terms.gne"
+  val flickrwrappr = "flickr(tm) wrappr"
+
+  val myPath = "/media/allentiak/dbpedia.git/media-extractor/src/test/resources/"
+
+  val outputMode = "RDF/XML"
+
+  def apply(serverRootUri: String = defaultServerRootUri) = new FlickrWrappr2(serverRootUri)
 
   def generateUrisForFlickrSearchResponse(myXml: Elem): List[SearchResult] = {
     val resultsListBuffer = new ListBuffer[SearchResult]
