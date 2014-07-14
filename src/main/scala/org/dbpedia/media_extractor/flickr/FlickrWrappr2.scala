@@ -27,5 +27,25 @@ object FlickrWrappr2 extends App {
   def addNameSpacesToRDFGraph(nsMap: Map[String, String], rdfGraph: Model) =
     nsMap.foreach { case (k, v) => rdfGraph.setNsPrefix(k, v) }
 
+  // TODO: implement stub 
+  def performFlickrGeoSearch
+
+  // TODO: implement stub
+  def performFlickrDBpediaSearch
+
+  // TODO: implement stub
+  def processFlickrGeoSearchResults
+
+  // TODO: implement stub
+  def processFlickrDBpediaSearchResults
+
+  // TODO: implement stub
+  def addGeoLocationMetadataToRDFGraph
+
+  // TODO: implement stub
+  def addGeoSearchDocumentMetadataToRDFGraph
+
+  // TODO: implement stub
+  def addDBpediaSearchDocumentMetadataToRDFGraph
 }
 
