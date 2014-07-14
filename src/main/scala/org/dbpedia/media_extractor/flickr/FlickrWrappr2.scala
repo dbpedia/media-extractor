@@ -3,10 +3,13 @@ package org.dbpedia.media_extractor.flickr
 import scala.collection.mutable.ListBuffer
 import scala.xml.Elem
 
+import com.hp.hpl.jena.rdf.model.Model
+
 case class SearchResult(depictionUri: String, pageUri: String)
 
 object FlickrWrappr2 extends App {
-  
+  val geoRDFGraph = ModelFactory.createDefaultModel()
+  val dbpediaRDFGraph = ModelFactory.createDefaultModel()
 
   def generateLinksList(myXml: Elem): List[SearchResult] = {
     val resultsListBuffer = new ListBuffer[SearchResult]
