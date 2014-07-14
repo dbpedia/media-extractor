@@ -66,6 +66,7 @@ object RDFTest {
   val flickrTermsUri = "http://www.flickr.com/terms.gne"
   val flickrwrappr = "flickr(tm) wrappr"
 
+  // FIXME: find a better way to express this output path
   val myPath = "/media/allentiak/dbpedia.git/media-extractor/src/test/resources/"
 
   val outputMode = "RDF/XML"
