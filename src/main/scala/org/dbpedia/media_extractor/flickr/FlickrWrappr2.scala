@@ -110,25 +110,25 @@ object FlickrWrappr2 extends App {
   val dbpediaRDFGraph = ModelFactory.createDefaultModel()
 
   // Namespaces
-  val foaf = "http://xmlns.com/foaf/0.1/"
-  val dcterms = "http://purl.org/dc/terms/"
-  val rdfs = "http://www.w3.org/2000/01/rdf-schema#"
-  //val geonames = "http://www.geonames.org/ontology#"
-  val geo = "http://www.w3.org/2003/01/geo/wgs84_pos#"
-  val georss = "http://www.georss.org/georss/"
+  private val foaf = "http://xmlns.com/foaf/0.1/"
+  private val dcterms = "http://purl.org/dc/terms/"
+  private val rdfs = "http://www.w3.org/2000/01/rdf-schema#"
+  //private val geonames = "http://www.geonames.org/ontology#"
+  private val geo = "http://www.w3.org/2003/01/geo/wgs84_pos#"
+  private val georss = "http://www.georss.org/georss/"
 
   // Auto-generated Namespaces
-  val rdf = "http://www.w3.org/1999/02/22-rdf-syntax-ns#"
-  val xsd = "http://www.w3.org/2001/XMLSchema#"
-  val owl = "http://www.w3.org/2002/07/owl#"
-  val dc = "http://purl.org/dc/elements/1.1/"
-  val vcard = "http://www.w3.org/2001/vcard-rdf/3.0#"
+  private val rdf = "http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+  private val xsd = "http://www.w3.org/2001/XMLSchema#"
+  private val owl = "http://www.w3.org/2002/07/owl#"
+  private val dc = "http://purl.org/dc/elements/1.1/"
+  private val vcard = "http://www.w3.org/2001/vcard-rdf/3.0#"
 
-  val commonNamespacesMap = Map("foaf" -> foaf,
+  private val commonNamespacesMap = Map("foaf" -> foaf,
     "dcterms" -> dcterms,
     "rdfs" -> rdfs)
 
-  val geoNamespacesMap = Map( //"geonames"-> geonames,
+  private val geoNamespacesMap = Map( //"geonames"-> geonames,
     "geo" -> geo,
     "georss" -> georss)
 
