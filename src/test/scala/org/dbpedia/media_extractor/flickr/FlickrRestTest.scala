@@ -64,20 +64,21 @@ class FlickrRestApiTest extends FunSpec {
         val searchText = ""
         val lat = "50.85"
         val lon = "4.35"
+        val radius = "5"
         val license = "1,2"
 
         it("method 'flickr.photos.search' (unsigned)") {
-          val unsignedSearchResponse = flickrOAuthSession.getFlickrSearchResponse(searchText, lat, lon, license, false)
+          val unsignedSearchResponse = flickrOAuthSession.getFlickrSearchResponse(searchText, lat, lon, radius, license, false)
           assert(unsignedSearchResponse.getMessage() === "OK")
         }
 
         it("method 'flickr.photos.search' (signed)") {
-          val signedSearchResponse = flickrOAuthSession.getFlickrSearchResponse(searchText, lat, lon, license, true)
+          val signedSearchResponse = flickrOAuthSession.getFlickrSearchResponse(searchText, lat, lon, radius, license, true)
           assert(signedSearchResponse.getMessage() === "OK")
         }
 
         describe("should generate and show the photos' links") {
-          val signedSearchResponse = flickrOAuthSession.getFlickrSearchResponse(searchText, lat, lon, license, true)
+          val signedSearchResponse = flickrOAuthSession.getFlickrSearchResponse(searchText, lat, lon, radius, license, true)
           assert(signedSearchResponse.getMessage() === "OK")
 
           val flickrXmlResponse = XML.loadString(signedSearchResponse.getBody())
