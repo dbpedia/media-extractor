@@ -95,6 +95,8 @@ class FlickrWrappr2(val serverRootUri: String) {
 
 object FlickrWrappr2 extends App {
 
+  val flickrOAuthSession = FlickrOAuthSession("/flickr.setup.properties")
+
   val dbpediaResourceUri = "http://dbpedia.org/resource/"
 
   val flickrTermsUri = "http://www.flickr.com/terms.gne"
