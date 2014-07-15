@@ -34,7 +34,7 @@ class FlickrWrappr2(val serverRootUri: String) {
   val dbpediaResourceFullUriResource = FlickrWrappr2.dbpediaRDFGraph.createResource(dbpediaResourceFullUri)
 
   // FIXME: make literals work
-  def addGeoLocationMetadataToRDFGraph {
+  def addGeoSearchLocationMetadataToGeoRDFGraph {
     val spatialThingResource = FlickrWrappr2.geoRDFGraph.createResource(locationFullUri)
     spatialThingResource.addProperty(RDF.`type`, FlickrWrappr2.geo + "SpatialThing")
 
@@ -51,7 +51,7 @@ class FlickrWrappr2(val serverRootUri: String) {
     //spatialThingResource.addProperty(geoLatProperty,lat)
   }
 
-  def addGeoSearchDocumentMetadataToRDFGraph {
+  def addGeoSearchDocumentMetadataToGeoRDFGraph {
     val locationFullUriResource = FlickrWrappr2.geoRDFGraph.createResource(locationFullUri)
 
     val foafDocumentResource = FlickrWrappr2.geoRDFGraph.createResource(locationFullUri)
@@ -71,7 +71,7 @@ class FlickrWrappr2(val serverRootUri: String) {
     serverRootUriResource.addProperty(RDFS.label, flickrwrapprLiteral)
   }
 
-  def addDBpediaSearchDocumentMetadataToRDFGraph {
+  def addDBpediaSearchDocumentMetadataToDBpediaRDFGraph {
     val foafDocumentResource2 = FlickrWrappr2.dbpediaRDFGraph.createResource(dbpediaResourceFullUri)
     foafDocumentResource2.addProperty(RDF.`type`, FlickrWrappr2.foaf + "Document")
 
