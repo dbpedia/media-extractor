@@ -33,27 +33,6 @@ class FlickrWrappr2(val serverRootUri: String) {
   val dbpediaResourceFullUri = FlickrWrappr2.dbpediaResourceUri + searchText.trim.replaceAll(" ", "_").replaceAll("%2F", "/").replaceAll("%3A", ":")
   val dbpediaResourceFullUriResource = FlickrWrappr2.dbpediaRDFGraph.createResource(dbpediaResourceFullUri)
 
-  def processFlickrGeoSearchResults(flickrSearchResultsList: List[SearchResult]) {
-
-    for (resultElem <- flickrSearchResultsList) {
-      val depictionUriResource = FlickrWrappr2.geoRDFGraph.createResource(resultElem.depictionUri)
-      val pageUriResource = FlickrWrappr2.geoRDFGraph.createResource(resultElem.pageUri)
-
-      locationFullUriResource.addProperty(FOAF.depiction, depictionUriResource)
-      depictionUriResource.addProperty(FOAF.page, pageUriResource)
-    }
-  }
-
-  def processFlickrDBpediaSearchResults(flickrSearchResultsList: List[SearchResult], targetResource: String) {
-    for (resultElem <- flickrSearchResultsList) {
-      val depictionUriResource = FlickrWrappr2.dbpediaRDFGraph.createResource(resultElem.depictionUri)
-      val pageUriResource = FlickrWrappr2.dbpediaRDFGraph.createResource(resultElem.pageUri)
-
-      dbpediaResourceFullUriResource.addProperty(FOAF.depiction, depictionUriResource)
-      depictionUriResource.addProperty(FOAF.page, pageUriResource)
-    }
-  }
-
   // FIXME: make literals work
   def addGeoLocationMetadataToRDFGraph {
     val spatialThingResource = FlickrWrappr2.geoRDFGraph.createResource(locationFullUri)
@@ -178,7 +157,23 @@ object FlickrWrappr2 extends App {
   def addNameSpacesToDBpediaSearchRDFGraph() =
     addNameSpacesToRDFGraph(commonNamespacesMap, dbpediaRDFGraph)
 
-  // TODO: implement stub 
+  def addFlickrGeoSearchResultsToGeoSearchRDFGraph(flickrSearchResultsList: List[SearchResult]) {
+    for (resultElem <- flickrSearchResultsList) {
+      val depictionUriResource = geoRDFGraph.createResource(resultElem.depictionUri)
+      val pageUriResource = geoRDFGraph.createResource(resultElem.pageUri)
+      locationFullUriResource.addProperty(FOAF.depiction, depictionUriResource)
+      depictionUriResource.addProperty(FOAF.page, pageUriResource)
+    }
+  }
+
+  def addFlickrDBpediaSearchResultsToDBpediaSearchRDFGraph(flickrSearchResultsList: List[SearchResult], targetResource: String) {
+    for (resultElem <- flickrSearchResultsList) {
+      val depictionUriResource = FlickrWrappr2.dbpediaRDFGraph.createResource(resultElem.depictionUri)
+      val pageUriResource = FlickrWrappr2.dbpediaRDFGraph.createResource(resultElem.pageUri)
+      dbpediaResourceFullUriResource.addProperty(FOAF.depiction, depictionUriResource)
+      depictionUriResource.addProperty(FOAF.page, pageUriResource)
+    }
+  }
   def performFlickrGeoSearch(latitude: String = lat, longitude: String = lon, searchRadius: String = radius) {
   }
 
