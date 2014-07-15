@@ -174,7 +174,13 @@ object FlickrWrappr2 extends App {
       depictionUriResource.addProperty(FOAF.page, pageUriResource)
     }
   }
+
+  // FIXME: buggy
   def performFlickrGeoSearch(latitude: String = lat, longitude: String = lon, searchRadius: String = radius) {
+    addNameSpacesToGeoSearchRDFGraph()
+    addFlickrGeoSearchResultsToGeoSearchRDFGraph(generateUrisForFlickrSearchResponse(flickrOAuthSession.getFlickrSearchResponse(searchText = "", latitude, longitude, radius, license, signRequest)))
+    addGeoSearchDocumentMetadataToGeoRDFGraph
+    addGeoSearchLocationMetadataToGeoRDFGraph
   }
 
   // TODO: implement stub
