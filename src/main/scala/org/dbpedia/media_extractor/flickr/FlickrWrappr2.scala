@@ -71,7 +71,6 @@ class FlickrWrappr2(val serverRootUri: String) {
     serverRootUriResource.addProperty(RDFS.label, flickrwrapprLiteral)
   }
 
-  // TODO: implement stub
   def addDBpediaSearchDocumentMetadataToRDFGraph {
     val foafDocumentResource2 = FlickrWrappr2.dbpediaRDFGraph.createResource(dbpediaResourceFullUri)
     foafDocumentResource2.addProperty(RDF.`type`, FlickrWrappr2.foaf + "Document")
