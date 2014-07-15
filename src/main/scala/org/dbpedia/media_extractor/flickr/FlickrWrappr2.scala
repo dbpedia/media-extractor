@@ -51,7 +51,6 @@ class FlickrWrappr2(val serverRootUri: String) {
     //spatialThingResource.addProperty(geoLatProperty,lat)
   }
 
-  // TODO: implement stub
   def addGeoSearchDocumentMetadataToRDFGraph {
     val locationFullUriResource = FlickrWrappr2.geoRDFGraph.createResource(locationFullUri)
 
