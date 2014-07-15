@@ -63,12 +63,14 @@ class FlickrOAuthSession(val credentialsFile: String) {
     request.send()
   }
 
-  def getFlickrSearchResponse(text: String = "", latitude: String = "", longitude: String = "", license: String = "", signRequest: Boolean = true): Response = {
+  def getFlickrSearchResponse(searchText: String = "", latitude: String = "", longitude: String = "", radius: String = "", license: String = "", signRequest: Boolean = true): Response = {
     val searchRequest = new OAuthRequest(Verb.POST, FlickrOAuthSession.endPointUri.toString())
 
     searchRequest.addQuerystringParameter("method", "flickr.photos.search")
+    searchRequest.addQuerystringParameter("text", searchText)
     searchRequest.addQuerystringParameter("lat", latitude)
     searchRequest.addQuerystringParameter("lon", longitude)
+    searchRequest.addQuerystringParameter("radius", radius)
     searchRequest.addQuerystringParameter("license", license)
     searchRequest.addQuerystringParameter("per_page", "30") // maximum according to FlickrAPI's TOU
     searchRequest.addQuerystringParameter("sort", "relevance")
