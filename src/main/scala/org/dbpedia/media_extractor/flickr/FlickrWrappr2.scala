@@ -22,8 +22,8 @@ object FlickrWrappr2 extends App {
 
   val outputMode = "RDF/XML"
 
-  val geoRDFGraph = ModelFactory.createDefaultModel()
-  val dbpediaRDFGraph = ModelFactory.createDefaultModel()
+  val geoSearch: FlickrSearch = new FlickrGeoSearch
+  val dbpediaSearch: FlickrSearch = new FlickrDBpediaSearch
 
   def apply(serverRootUri: String = "http://localhost/flickrwrappr/", flickrCredentialsFile: String = "/flickr.setup.properties") =
     new FlickrWrappr2(serverRootUri, flickrCredentialsFile)

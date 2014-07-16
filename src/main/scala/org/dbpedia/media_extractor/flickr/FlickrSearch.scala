@@ -31,7 +31,7 @@ class FlickrSearch {
     "dcterms" -> dcterms,
     "rdfs" -> rdfs)
 
-  val rdfGraph: Model
+  val rdfGraph = ModelFactory.createDefaultModel()
 
   def addNameSpacesToRDFGraph(nsMap: Map[String, String]) =
     nsMap.foreach { case (k, v) => rdfGraph.setNsPrefix(k, v) }
@@ -55,8 +55,8 @@ case class FlickrGeoSearch(
   val locationFullUri = locationRootUri + geoPath
   val dataFullUri = dataRootUri + geoPath
 
-  val dataFullUriResource = FlickrWrappr2.geoRDFGraph.createResource(dataFullUri)
-  val locationFullUriResource = FlickrWrappr2.geoRDFGraph.createResource(locationFullUri)
+  val dataFullUriResource = rdfGraph.createResource(dataFullUri)
+  val locationFullUriResource = rdfGraph.createResource(locationFullUri)
 
   private val geoNamespacesMap = Map( //"geonames"-> geonames,
     "geo" -> geo,
@@ -83,10 +83,10 @@ case class FlickrGeoSearch(
 
   // FIXME: make literals work
   private def addLocationMetadataToRDFGraph() = {
-    val spatialThingResource = FlickrWrappr2.geoRDFGraph.createResource(locationFullUri)
+    val spatialThingResource = rdfGraph.createResource(locationFullUri)
     spatialThingResource.addProperty(RDF.`type`, geoNamespacesMap("geo") + "SpatialThing")
 
-    val geoTypeProperty = FlickrWrappr2.geoRDFGraph.createProperty("type", geoNamespacesMap("geo") + "type")
+    val geoTypeProperty = rdfGraph.createProperty("type", geoNamespacesMap("geo") + "type")
     spatialThingResource.addProperty(geoTypeProperty, "SpatialThing")
 
     // FIXME: make literals work
@@ -100,22 +100,22 @@ case class FlickrGeoSearch(
   }
 
   private def addDocumentMetadataToRDFGraph() = {
-    val locationFullUriResource = FlickrWrappr2.geoRDFGraph.createResource(locationFullUri)
+    val locationFullUriResource = rdfGraph.createResource(locationFullUri)
 
-    val foafDocumentResource = FlickrWrappr2.geoRDFGraph.createResource(locationFullUri)
+    val foafDocumentResource = rdfGraph.createResource(locationFullUri)
     foafDocumentResource.addProperty(RDF.`type`, commonNamespacesMap("foaf") + "Document")
 
     val label = "Photos taken within " + radius + " meters of geographic location lat=" + lat + " long=" + lon
-    val labelLiteral = FlickrWrappr2.geoRDFGraph.createLiteral(label, "en")
+    val labelLiteral = rdfGraph.createLiteral(label, "en")
     foafDocumentResource.addProperty(RDFS.label, labelLiteral)
     foafDocumentResource.addProperty(FOAF.primaryTopic, locationFullUriResource)
-    val flickrTOUResource = FlickrWrappr2.geoRDFGraph.createResource(FlickrWrappr2.flickrTermsUri)
+    val flickrTOUResource = rdfGraph.createResource(FlickrWrappr2.flickrTermsUri)
     foafDocumentResource.addProperty(DCTerms.license, flickrTOUResource)
 
     dataFullUriResource.addProperty(RDFS.label, labelLiteral)
 
-    val flickrwrapprLiteral = FlickrWrappr2.geoRDFGraph.createLiteral(FlickrWrappr2.flickrwrappr, "en")
-    val serverRootUriResource = FlickrWrappr2.geoRDFGraph.createResource(serverRootUri)
+    val flickrwrapprLiteral = rdfGraph.createLiteral(FlickrWrappr2.flickrwrappr, "en")
+    val serverRootUriResource = rdfGraph.createResource(serverRootUri)
     serverRootUriResource.addProperty(RDFS.label, flickrwrapprLiteral)
   }
 
@@ -132,12 +132,12 @@ case class FlickrDBpediaSearch(
   val dbpediaResourceUri = "http://dbpedia.org/resource/"
   val dbpediaResourceFullUri = dbpediaResourceUri + searchText.trim.replaceAll(" ", "_").replaceAll("%2F", "/").replaceAll("%3A", ":")
 
-  val dbpediaResourceFullUriResource = FlickrWrappr2.dbpediaRDFGraph.createResource(dbpediaResourceFullUri)
+  val dbpediaResourceFullUriResource = rdfGraph.createResource(dbpediaResourceFullUri)
 
   def addFlickrDBpediaSearchResultsToDBpediaSearchRDFGraph(flickrSearchResultsList: List[FlickrSearchResult], targetResource: String) {
     for (resultElem <- flickrSearchResultsList) {
-      val depictionUriResource = FlickrWrappr2.dbpediaRDFGraph.createResource(resultElem.depictionUri)
-      val pageUriResource = FlickrWrappr2.dbpediaRDFGraph.createResource(resultElem.pageUri)
+      val depictionUriResource = rdfGraph.createResource(resultElem.depictionUri)
+      val pageUriResource = rdfGraph.createResource(resultElem.pageUri)
       dbpediaResourceFullUriResource.addProperty(FOAF.depiction, depictionUriResource)
       depictionUriResource.addProperty(FOAF.page, pageUriResource)
     }
@@ -151,22 +151,22 @@ case class FlickrDBpediaSearch(
   }
 
   private def addDocumentMetadataToRDFGraph() = {
-    val foafDocumentResource2 = FlickrWrappr2.dbpediaRDFGraph.createResource(dbpediaResourceFullUri)
+    val foafDocumentResource2 = rdfGraph.createResource(dbpediaResourceFullUri)
     foafDocumentResource2.addProperty(RDF.`type`, commonNamespacesMap("foaf") + "Document")
 
     val label2 = "Photos for Dbpedia resource " + searchText
-    val labelLiteral2 = FlickrWrappr2.dbpediaRDFGraph.createLiteral(label2, "en")
+    val labelLiteral2 = rdfGraph.createLiteral(label2, "en")
     foafDocumentResource2.addProperty(RDFS.label, labelLiteral2)
 
     foafDocumentResource2.addProperty(FOAF.primaryTopic, dbpediaResourceFullUriResource)
 
-    val flickrTOUResource2 = FlickrWrappr2.dbpediaRDFGraph.createResource(FlickrWrappr2.flickrTermsUri)
+    val flickrTOUResource2 = rdfGraph.createResource(FlickrWrappr2.flickrTermsUri)
     foafDocumentResource2.addProperty(DCTerms.license, flickrTOUResource2)
 
     dbpediaResourceFullUriResource.addProperty(RDFS.label, labelLiteral2)
 
-    val flickrwrapprLiteral2 = FlickrWrappr2.dbpediaRDFGraph.createLiteral(FlickrWrappr2.flickrwrappr, "en")
-    val serverRootUriResource2 = FlickrWrappr2.dbpediaRDFGraph.createResource(serverRootUri)
+    val flickrwrapprLiteral2 = rdfGraph.createLiteral(FlickrWrappr2.flickrwrappr, "en")
+    val serverRootUriResource2 = rdfGraph.createResource(serverRootUri)
     serverRootUriResource2.addProperty(RDFS.label, flickrwrapprLiteral2)
   }
 
