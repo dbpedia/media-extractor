@@ -11,7 +11,7 @@ import com.hp.hpl.jena.vocabulary.DCTerms
 
 case class FlickrSearchResult(depictionUri: String, pageUri: String)
 
-class FlickrSearch {
+abstract class FlickrSearch {
   // Namespaces
   protected val foaf = "http://xmlns.com/foaf/0.1/"
   protected val dcterms = "http://purl.org/dc/terms/"
