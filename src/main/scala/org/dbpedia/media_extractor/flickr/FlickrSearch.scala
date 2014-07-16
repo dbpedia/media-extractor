@@ -120,13 +120,13 @@ case class FlickrGeoSearch(
 // By default, search for Brussels
 case class FlickrDBpediaSearch(
 
-  val searchText: String = "Brussels",
+  val targetResource: String = "Brussels",
   val serverRootUri: String)
 
   extends FlickrSearch {
 
   val dbpediaResourceUri = "http://dbpedia.org/resource/"
-  val dbpediaResourceFullUri = dbpediaResourceUri + searchText.trim.replaceAll(" ", "_").replaceAll("%2F", "/").replaceAll("%3A", ":")
+  val dbpediaResourceFullUri = dbpediaResourceUri + targetResource.trim.replaceAll(" ", "_").replaceAll("%2F", "/").replaceAll("%3A", ":")
 
   val dbpediaResourceFullUriResource = rdfGraph.createResource(dbpediaResourceFullUri)
 
@@ -150,7 +150,7 @@ case class FlickrDBpediaSearch(
     val foafDocumentResource2 = rdfGraph.createResource(dbpediaResourceFullUri)
     foafDocumentResource2.addProperty(RDF.`type`, namespacesMap("foaf") + "Document")
 
-    val label2 = "Photos for Dbpedia resource " + searchText
+    val label2 = "Photos for Dbpedia resource " + targetResource
     val labelLiteral2 = rdfGraph.createLiteral(label2, "en")
     foafDocumentResource2.addProperty(RDFS.label, labelLiteral2)
 
