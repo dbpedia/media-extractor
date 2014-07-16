@@ -12,9 +12,6 @@ class FlickrWrappr2(val serverRootUri: String = "http://localhost/flickrwrappr/"
 
 object FlickrWrappr2 extends App {
 
-  val geoSearch = new FlickrSearch()
-  val dbpediaSearch = new FlickrSearch()
-
   val flickrTermsUri = "http://www.flickr.com/terms.gne"
   val flickrwrappr = "flickr(tm) wrappr"
 
