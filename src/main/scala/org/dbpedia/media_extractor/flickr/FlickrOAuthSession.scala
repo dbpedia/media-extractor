@@ -103,6 +103,6 @@ object FlickrOAuthSession {
   }
 
   def validateFlickrSearchResponse(flickrSearchResponse: Response): Boolean = {
-    flickrSearchResponse.getCode().equals("200")
+    flickrSearchResponse.getMessage().equals("OK")
   }
 }
