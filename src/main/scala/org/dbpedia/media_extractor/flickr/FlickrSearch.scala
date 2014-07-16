@@ -27,16 +27,18 @@ abstract class FlickrSearch {
   protected val dc = "http://purl.org/dc/elements/1.1/"
   protected val vcard = "http://www.w3.org/2001/vcard-rdf/3.0#"
 
-  protected val commonNamespacesMap = Map("foaf" -> foaf,
+  protected val namespacesMap = Map("foaf" -> foaf,
     "dcterms" -> dcterms,
     "rdfs" -> rdfs)
 
   val rdfGraph = ModelFactory.createDefaultModel()
 
-  def addNameSpacesToRDFGraph(nsMap: Map[String, String]) =
+  protected def addNameSpacesToRDFGraphFromMap(nsMap: Map[String, String]) =
     nsMap.foreach { case (k, v) => rdfGraph.setNsPrefix(k, v) }
 
   def addMetadataToRDFGraph() = ???
+
+  def addNameSpacesToRDFGraph() = addNameSpacesToRDFGraphFromMap(namespacesMap)
 }
 
 // By default, search for Brussels
@@ -58,18 +60,13 @@ case class FlickrGeoSearch(
   val dataFullUriResource = rdfGraph.createResource(dataFullUri)
   val locationFullUriResource = rdfGraph.createResource(locationFullUri)
 
-  private val geoNamespacesMap = Map( //"geonames"-> geonames,
+  override protected val namespacesMap = super.namespacesMap ++ Map( //"geonames"-> geonames,
     "geo" -> geo,
     "georss" -> georss)
 
   def addMetadataToRDFGraph() {
     addLocationMetadataToRDFGraph()
     addDocumentMetadataToRDFGraph()
-  }
-
-  def addNameSpacesToRDFGraph() = {
-    super.addNameSpacesToRDFGraph(commonNamespacesMap)
-    super.addNameSpacesToRDFGraph(geoNamespacesMap)
   }
 
   def addFlickrGeoSearchResultsToGeoSearchRDFGraph(flickrSearchResultsList: List[FlickrSearchResult]) {
@@ -84,9 +81,9 @@ case class FlickrGeoSearch(
   // FIXME: make literals work
   private def addLocationMetadataToRDFGraph() = {
     val spatialThingResource = rdfGraph.createResource(locationFullUri)
-    spatialThingResource.addProperty(RDF.`type`, geoNamespacesMap("geo") + "SpatialThing")
+    spatialThingResource.addProperty(RDF.`type`, namespacesMap("geo") + "SpatialThing")
 
-    val geoTypeProperty = rdfGraph.createProperty("type", geoNamespacesMap("geo") + "type")
+    val geoTypeProperty = rdfGraph.createProperty("type", namespacesMap("geo") + "type")
     spatialThingResource.addProperty(geoTypeProperty, "SpatialThing")
 
     // FIXME: make literals work
@@ -103,7 +100,7 @@ case class FlickrGeoSearch(
     val locationFullUriResource = rdfGraph.createResource(locationFullUri)
 
     val foafDocumentResource = rdfGraph.createResource(locationFullUri)
-    foafDocumentResource.addProperty(RDF.`type`, commonNamespacesMap("foaf") + "Document")
+    foafDocumentResource.addProperty(RDF.`type`, namespacesMap("foaf") + "Document")
 
     val label = "Photos taken within " + radius + " meters of geographic location lat=" + lat + " long=" + lon
     val labelLiteral = rdfGraph.createLiteral(label, "en")
@@ -144,7 +141,7 @@ case class FlickrDBpediaSearch(
   }
 
   def addNameSpacesToDBpediaSearchRDFGraph() =
-    super.addNameSpacesToRDFGraph(commonNamespacesMap)
+    super.addNameSpacesToRDFGraphFromMap(namespacesMap)
 
   def addMetadataToRDFGraph() {
     addDocumentMetadataToRDFGraph()
@@ -152,7 +149,7 @@ case class FlickrDBpediaSearch(
 
   private def addDocumentMetadataToRDFGraph() = {
     val foafDocumentResource2 = rdfGraph.createResource(dbpediaResourceFullUri)
-    foafDocumentResource2.addProperty(RDF.`type`, commonNamespacesMap("foaf") + "Document")
+    foafDocumentResource2.addProperty(RDF.`type`, namespacesMap("foaf") + "Document")
 
     val label2 = "Photos for Dbpedia resource " + searchText
     val labelLiteral2 = rdfGraph.createLiteral(label2, "en")
