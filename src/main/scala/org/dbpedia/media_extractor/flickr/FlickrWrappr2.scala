@@ -19,8 +19,8 @@ object FlickrWrappr2 extends App {
 
   val outputMode = "RDF/XML"
 
-  val flickrGeoSearch: FlickrSearch = new FlickrGeoSearch
-  val flickrDBpediaSearch: FlickrSearch = new FlickrDBpediaSearch
+  var flickrGeoSearch: FlickrGeoSearch = null
+  var flickrDBpediaSearch: FlickrDBpediaSearch = null
 
   def apply(serverRootUri: String = "http://localhost/flickrwrappr/", flickrCredentialsFile: String = "/flickr.setup.properties") =
     new FlickrWrappr2(serverRootUri, flickrCredentialsFile)
@@ -38,14 +38,22 @@ object FlickrWrappr2 extends App {
   }
 
   // FIXME: how to access flickrOAuthSession?
-  def performFlickrGeoSearch(latitude: String = lat, longitude: String = lon, searchRadius: String = radius) {
+  // FIXME: how to access the members of the companion class?
+  def performFlickrGeoSearch(lat: String, lon: String, radius: String) = {
+    flickrGeoSearch = new FlickrGeoSearch(lat, lon, radius, FlickrWrappr2.locationRootUri, FlickrWrappr2.dataRootUri, FlickrWrappr2.serverRootUri)
     flickrGeoSearch.addNameSpacesToRDFGraph()
     flickrGeoSearch.addMetadataToRDFGraph()
     flickrGeoSearch.addFlickrSearchResultsToRDFGraph(generateUrisForFlickrSearchResponse(flickrOAuthSession.getFlickrSearchResponse(searchText = "", latitude, longitude, radius, license, signRequest)))
   }
 
-  // TODO: implement stub
-  def performFlickrDBpediaSearch(targetResource: String, searchRadius: String = radius) {
+  // FIXME: how to access flickrOAuthSession?
+  // FIXME: how to access the members of the companion class?
+  def performFlickrDBpediaSearch(targetResource: String, radius: String) {
+    flickrDBpediaSearch = new FlickrDBpediaSearch(targetResource, radius, FlickrWrappr2.serverRootUri)
+    flickrDBpediaSearch.addNameSpacesToRDFGraph()
+    flickrDBpediaSearch.addMetadataToRDFGraph()
+    flickrDBpediaSearch.addFlickrSearchResultsToRDFGraph(generateUrisForFlickrSearchResponse(flickrOAuthSession.getFlickrSearchResponse(searchText = "", latitude, longitude, radius, license, signRequest)))
+
   }
 
 }
