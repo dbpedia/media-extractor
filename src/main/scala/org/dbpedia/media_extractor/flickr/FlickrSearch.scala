@@ -39,6 +39,8 @@ abstract class FlickrSearch {
   def addMetadataToRDFGraph() = ???
 
   def addNameSpacesToRDFGraph() = addNameSpacesToRDFGraphFromMap(namespacesMap)
+
+  def addFlickrSearchResultsToRDFGraph(flickrSearchResultsList: List[FlickrSearchResult]) = ???
 }
 
 // By default, search for Brussels
@@ -69,7 +71,7 @@ case class FlickrGeoSearch(
     addDocumentMetadataToRDFGraph()
   }
 
-  def addFlickrGeoSearchResultsToGeoSearchRDFGraph(flickrSearchResultsList: List[FlickrSearchResult]) {
+  def addFlickrSearchResultsToRDFGraph(flickrSearchResultsList: List[FlickrSearchResult]) {
     for (resultElem <- flickrSearchResultsList) {
       val depictionUriResource = rdfGraph.createResource(resultElem.depictionUri)
       val pageUriResource = rdfGraph.createResource(resultElem.pageUri)
@@ -131,7 +133,7 @@ case class FlickrDBpediaSearch(
 
   val dbpediaResourceFullUriResource = rdfGraph.createResource(dbpediaResourceFullUri)
 
-  def addFlickrDBpediaSearchResultsToDBpediaSearchRDFGraph(flickrSearchResultsList: List[FlickrSearchResult], targetResource: String) {
+  def addFlickrSearchResultsToRDFGraph(flickrSearchResultsList: List[FlickrSearchResult]) {
     for (resultElem <- flickrSearchResultsList) {
       val depictionUriResource = rdfGraph.createResource(resultElem.depictionUri)
       val pageUriResource = rdfGraph.createResource(resultElem.pageUri)
