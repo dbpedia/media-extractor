@@ -37,12 +37,11 @@ object FlickrWrappr2 extends App {
     resultsListBuffer.toList
   }
 
-  // FIXME: buggy
+  // FIXME: how to access flickrOAuthSession?
   def performFlickrGeoSearch(latitude: String = lat, longitude: String = lon, searchRadius: String = radius) {
-    addNameSpacesToGeoSearchRDFGraph()
-    addFlickrGeoSearchResultsToGeoSearchRDFGraph(generateUrisForFlickrSearchResponse(flickrOAuthSession.getFlickrSearchResponse(searchText = "", latitude, longitude, radius, license, signRequest)))
-    addGeoSearchDocumentMetadataToGeoRDFGraph
-    addGeoSearchLocationMetadataToGeoRDFGraph
+    flickrGeoSearch.addNameSpacesToRDFGraph()
+    flickrGeoSearch.addMetadataToRDFGraph()
+    flickrGeoSearch.addFlickrSearchResultsToRDFGraph(generateUrisForFlickrSearchResponse(flickrOAuthSession.getFlickrSearchResponse(searchText = "", latitude, longitude, radius, license, signRequest)))
   }
 
   // TODO: implement stub
