@@ -30,6 +30,8 @@ abstract class FlickrSearch {
 
   val rdfGraph = ModelFactory.createDefaultModel()
 
+  val radius = "5"
+
   protected def addNameSpacesToRDFGraphFromMap(nsMap: Map[String, String]) =
     nsMap.foreach { case (k, v) => rdfGraph.setNsPrefix(k, v) }
 
@@ -45,7 +47,7 @@ case class FlickrGeoSearch(
 
   val lat: String = "50.85",
   val lon: String = "4.35",
-  val radius: String = "5",
+  radius: String = "5",
   val locationRootUri: String,
   val dataRootUri: String,
   val serverRootUri: String)
