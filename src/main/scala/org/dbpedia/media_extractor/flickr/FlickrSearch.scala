@@ -124,7 +124,9 @@ case class FlickrGeoSearch(
 // By default, search for Brussels
 case class FlickrDBpediaSearch(
 
-  val searchText: String = "Brussels")
+  val searchText: String = "Brussels",
+  val serverRootUri: String,
+  val dataFullUriResource: String)
 
   extends FlickrSearch {
 
