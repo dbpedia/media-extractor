@@ -11,7 +11,7 @@ import com.hp.hpl.jena.vocabulary.DCTerms
 
 case class FlickrSearchResult(depictionUri: String, pageUri: String)
 
-class FlickrSearch() {
+class FlickrSearch {
   // Namespaces
   protected val foaf = "http://xmlns.com/foaf/0.1/"
   protected val dcterms = "http://purl.org/dc/terms/"
@@ -40,7 +40,16 @@ class FlickrSearch() {
 }
 
 // By default, search for Brussels
-case class FlickrGeoSearch(val lat: String = "50.85", val lon: String = "4.35", val radius: String = "5") extends FlickrSearch {
+case class FlickrGeoSearch(
+
+  val lat: String = "50.85",
+  val lon: String = "4.35",
+  val radius: String = "5",
+  val locationRootUri: String,
+  val dataRootUri: String,
+  val serverRootUri: String)
+
+  extends FlickrSearch {
 
   val geoPath = lat + "/" + lon + "/" + radius
   val locationFullUri = locationRootUri + geoPath
@@ -113,7 +122,12 @@ case class FlickrGeoSearch(val lat: String = "50.85", val lon: String = "4.35", 
 }
 
 // By default, search for Brussels
-case class FlickrDBpediaSearch(val searchText: String = "Brussels") extends FlickrSearch {
+case class FlickrDBpediaSearch(
+
+  val searchText: String = "Brussels")
+
+  extends FlickrSearch {
+
   val dbpediaResourceUri = "http://dbpedia.org/resource/"
   val dbpediaResourceFullUri = dbpediaResourceUri + searchText.trim.replaceAll(" ", "_").replaceAll("%2F", "/").replaceAll("%3A", ":")
 
