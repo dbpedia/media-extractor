@@ -84,9 +84,9 @@ case class FlickrGeoSearch(
   // FIXME: make literals work
   private def addLocationMetadataToRDFGraph() = {
     val spatialThingResource = FlickrWrappr2.geoRDFGraph.createResource(locationFullUri)
-    spatialThingResource.addProperty(RDF.`type`, FlickrWrappr2.geo + "SpatialThing")
+    spatialThingResource.addProperty(RDF.`type`, geoNamespacesMap("geo") + "SpatialThing")
 
-    val geoTypeProperty = FlickrWrappr2.geoRDFGraph.createProperty("type", FlickrWrappr2.geo + "type")
+    val geoTypeProperty = FlickrWrappr2.geoRDFGraph.createProperty("type", geoNamespacesMap("geo") + "type")
     spatialThingResource.addProperty(geoTypeProperty, "SpatialThing")
 
     // FIXME: make literals work
@@ -103,7 +103,7 @@ case class FlickrGeoSearch(
     val locationFullUriResource = FlickrWrappr2.geoRDFGraph.createResource(locationFullUri)
 
     val foafDocumentResource = FlickrWrappr2.geoRDFGraph.createResource(locationFullUri)
-    foafDocumentResource.addProperty(RDF.`type`, FlickrWrappr2.foaf + "Document")
+    foafDocumentResource.addProperty(RDF.`type`, geoNamespacesMap("foaf") + "Document")
 
     val label = "Photos taken within " + radius + " meters of geographic location lat=" + lat + " long=" + lon
     val labelLiteral = FlickrWrappr2.geoRDFGraph.createLiteral(label, "en")
