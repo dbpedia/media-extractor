@@ -31,10 +31,10 @@ class FlickrSearch() {
     "dcterms" -> dcterms,
     "rdfs" -> rdfs)
 
-  val RDFGraph: Model
+  val rdfGraph: Model
 
   def addNameSpacesToRDFGraph(nsMap: Map[String, String]) =
-    nsMap.foreach { case (k, v) => RDFGraph.setNsPrefix(k, v) }
+    nsMap.foreach { case (k, v) => rdfGraph.setNsPrefix(k, v) }
 
   def addMetadataToRDFGraph() = ???
 }
@@ -65,8 +65,8 @@ case class FlickrGeoSearch(val lat: String = "50.85", val lon: String = "4.35", 
 
   def addFlickrGeoSearchResultsToGeoSearchRDFGraph(flickrSearchResultsList: List[FlickrSearchResult]) {
     for (resultElem <- flickrSearchResultsList) {
-      val depictionUriResource = geoRDFGraph.createResource(resultElem.depictionUri)
-      val pageUriResource = geoRDFGraph.createResource(resultElem.pageUri)
+      val depictionUriResource = rdfGraph.createResource(resultElem.depictionUri)
+      val pageUriResource = rdfGraph.createResource(resultElem.pageUri)
       locationFullUriResource.addProperty(FOAF.depiction, depictionUriResource)
       depictionUriResource.addProperty(FOAF.page, pageUriResource)
     }
