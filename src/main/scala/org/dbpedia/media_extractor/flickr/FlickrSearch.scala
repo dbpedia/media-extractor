@@ -125,8 +125,7 @@ case class FlickrGeoSearch(
 case class FlickrDBpediaSearch(
 
   val searchText: String = "Brussels",
-  val serverRootUri: String,
-  val dataFullUriResource: String)
+  val serverRootUri: String)
 
   extends FlickrSearch {
 
@@ -164,7 +163,7 @@ case class FlickrDBpediaSearch(
     val flickrTOUResource2 = FlickrWrappr2.dbpediaRDFGraph.createResource(FlickrWrappr2.flickrTermsUri)
     foafDocumentResource2.addProperty(DCTerms.license, flickrTOUResource2)
 
-    dataFullUriResource.addProperty(RDFS.label, labelLiteral2)
+    dbpediaResourceFullUriResource.addProperty(RDFS.label, labelLiteral2)
 
     val flickrwrapprLiteral2 = FlickrWrappr2.dbpediaRDFGraph.createLiteral(FlickrWrappr2.flickrwrappr, "en")
     val serverRootUriResource2 = FlickrWrappr2.dbpediaRDFGraph.createResource(serverRootUri)
