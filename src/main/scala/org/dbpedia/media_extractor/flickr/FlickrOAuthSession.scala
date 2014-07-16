@@ -3,16 +3,17 @@
  */
 package org.dbpedia.media_extractor.flickr
 
-import org.scribe.model.Verifier
-import org.scribe.builder.api.FlickrApi
-import org.scribe.builder.ServiceBuilder
+import java.net.URI
 import java.util.Properties
 import java.util.Scanner
-import org.scribe.model.Token
+
+import org.scribe.builder.ServiceBuilder
+import org.scribe.builder.api.FlickrApi
 import org.scribe.model.OAuthRequest
-import org.scribe.model.Verb
-import java.net.URI
 import org.scribe.model.Response
+import org.scribe.model.Token
+import org.scribe.model.Verb
+import org.scribe.model.Verifier
 
 /**
  * @author allentiak
