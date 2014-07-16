@@ -63,11 +63,6 @@ case class FlickrGeoSearch(
     "geo" -> geo,
     "georss" -> georss)
 
-  def addMetadataToRDFGraph() {
-    addLocationMetadataToRDFGraph()
-    addDocumentMetadataToRDFGraph()
-  }
-
   def addFlickrSearchResultsToRDFGraph(flickrSearchResultsList: List[FlickrSearchResult]) {
     for (resultElem <- flickrSearchResultsList) {
       val depictionUriResource = rdfGraph.createResource(resultElem.depictionUri)
@@ -75,6 +70,11 @@ case class FlickrGeoSearch(
       locationFullUriResource.addProperty(FOAF.depiction, depictionUriResource)
       depictionUriResource.addProperty(FOAF.page, pageUriResource)
     }
+  }
+
+  def addMetadataToRDFGraph() {
+    addLocationMetadataToRDFGraph()
+    addDocumentMetadataToRDFGraph()
   }
 
   // FIXME: make literals work
