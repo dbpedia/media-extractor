@@ -25,9 +25,8 @@ object FlickrWrappr2 extends App {
   val geoRDFGraph = ModelFactory.createDefaultModel()
   val dbpediaRDFGraph = ModelFactory.createDefaultModel()
 
-  def apply(serverRootUri: String = "http://localhost/flickrwrappr/", flickrCredentialsFile: String = "/flickr.setup.properties") = {
-    new FlickrWrappr2(serverRootUri,flickrCredentialsFile)
-  }
+  def apply(serverRootUri: String = "http://localhost/flickrwrappr/", flickrCredentialsFile: String = "/flickr.setup.properties") =
+    new FlickrWrappr2(serverRootUri, flickrCredentialsFile)
 
   def generateUrisForFlickrSearchResponse(myXml: Elem): List[FlickrSearchResult] = {
     val resultsListBuffer = new ListBuffer[FlickrSearchResult]
