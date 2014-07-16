@@ -151,7 +151,7 @@ case class FlickrDBpediaSearch(
     addDocumentMetadataToRDFGraph()
   }
 
-  private def addDocumentMetadataToRDFGraph = {
+  private def addDocumentMetadataToRDFGraph() = {
     val foafDocumentResource2 = FlickrWrappr2.dbpediaRDFGraph.createResource(dbpediaResourceFullUri)
     foafDocumentResource2.addProperty(RDF.`type`, commonNamespacesMap("foaf") + "Document")
 
