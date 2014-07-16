@@ -103,7 +103,7 @@ case class FlickrGeoSearch(
     val locationFullUriResource = FlickrWrappr2.geoRDFGraph.createResource(locationFullUri)
 
     val foafDocumentResource = FlickrWrappr2.geoRDFGraph.createResource(locationFullUri)
-    foafDocumentResource.addProperty(RDF.`type`, geoNamespacesMap("foaf") + "Document")
+    foafDocumentResource.addProperty(RDF.`type`, commonNamespacesMap("foaf") + "Document")
 
     val label = "Photos taken within " + radius + " meters of geographic location lat=" + lat + " long=" + lon
     val labelLiteral = FlickrWrappr2.geoRDFGraph.createLiteral(label, "en")
@@ -151,7 +151,7 @@ case class FlickrDBpediaSearch(
 
   private def addDocumentMetadataToRDFGraph = {
     val foafDocumentResource2 = FlickrWrappr2.dbpediaRDFGraph.createResource(dbpediaResourceFullUri)
-    foafDocumentResource2.addProperty(RDF.`type`, FlickrWrappr2.foaf + "Document")
+    foafDocumentResource2.addProperty(RDF.`type`, commonNamespacesMap("foaf") + "Document")
 
     val label2 = "Photos for Dbpedia resource " + searchText
     val labelLiteral2 = FlickrWrappr2.dbpediaRDFGraph.createLiteral(label2, "en")
