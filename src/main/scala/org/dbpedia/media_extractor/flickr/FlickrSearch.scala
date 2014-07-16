@@ -30,6 +30,7 @@ abstract class FlickrSearch {
 
   val rdfGraph = ModelFactory.createDefaultModel()
 
+  val license = "1,2"
   val radius = "5"
 
   protected def addNameSpacesToRDFGraphFromMap(nsMap: Map[String, String]) =
