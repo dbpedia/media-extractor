@@ -7,11 +7,11 @@ import scala.xml.Elem
 class FlickrWrappr2(val serverRootUri: String = "http://localhost/flickrwrappr/", val flickrCredentialsFile: String = "/flickr.setup.properties") {
   val locationRootUri = serverRootUri + "location/"
   val dataRootUri = serverRootUri + "data/photosDepictingLocation/"
+  val flickrOAuthSession = FlickrOAuthSession(flickrCredentialsFile)
 }
 
 object FlickrWrappr2 extends App {
 
-  val flickrOAuthSession = FlickrOAuthSession()
   val geoSearch = new FlickrSearch()
   val dbpediaSearch = new FlickrSearch()
 
