@@ -10,9 +10,6 @@ case class FlickrSearchResult(depictionUri: String, pageUri: String)
 
 abstract class FlickrSearch {
   // Namespaces
-  //protected val geonames = "http://www.geonames.org/ontology#"
-  protected val geo = "http://www.w3.org/2003/01/geo/wgs84_pos#"
-  protected val georss = "http://www.georss.org/georss/"
 
   // Auto-generated Namespaces
   protected val rdf = "http://www.w3.org/1999/02/22-rdf-syntax-ns#"
@@ -60,9 +57,10 @@ case class FlickrGeoSearch(
   val dataFullUriResource = rdfGraph.createResource(dataFullUri)
   val locationFullUriResource = rdfGraph.createResource(locationFullUri)
 
-  override protected val namespacesMap = super.namespacesMap ++ Map( //"geonames"-> geonames,
-    "geo" -> geo,
-    "georss" -> georss)
+  override protected val namespacesMap = super.namespacesMap ++ Map(
+    //"geonames"-> "http://www.geonames.org/ontology#",
+    "geo" -> "http://www.w3.org/2003/01/geo/wgs84_pos#",
+    "georss" -> "http://www.georss.org/georss/")
 
   def addFlickrSearchResultsToRDFGraph(flickrSearchResultsList: List[FlickrSearchResult]) {
     for (resultElem <- flickrSearchResultsList) {
