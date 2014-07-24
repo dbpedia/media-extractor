@@ -146,15 +146,13 @@ case class FlickrGeoSearch(
   }
   
   // FIXME: how to access flickrOAuthSession?
-  // FIXME: how to access the members of the companion class?
+  // TODO: correctly perform the (Geo) search
   def performFlickrSearch(lat: String, lon: String, radius: String) = {
     flickrGeoSearch = new FlickrGeoSearch(lat, lon, radius, FlickrWrappr2.locationRootUri, FlickrWrappr2.dataRootUri, FlickrWrappr2.serverRootUri)
-    flickrGeoSearch.addNameSpacesToRDFGraph()
-    flickrGeoSearch.addMetadataToRDFGraph()
-    flickrGeoSearch.addFlickrSearchResultsToRDFGraph(generateUrisForFlickrSearchResponse(flickrOAuthSession.getFlickrSearchResponse(searchText = "", latitude, longitude, radius, license, signRequest)))
+    addNameSpacesToRDFGraph()
+    addMetadataToRDFGraph()
+    addFlickrSearchResultsToRDFGraph(generateUrisForFlickrSearchResponse(flickrOAuthSession.getFlickrSearchResponse(searchText = "", latitude, longitude, radius, license, signRequest)))
   }
-
-}
 
 // By default, search for Brussels
 case class FlickrDBpediaSearch(
@@ -203,12 +201,12 @@ case class FlickrDBpediaSearch(
   }
 
   // FIXME: how to access flickrOAuthSession?
-  // FIXME: how to access the members of the companion class?
+  // TODO: correctly perform the (DBpedia) search
   def performFlickrSearch(targetResource: String, radius: String) {
     flickrDBpediaSearch = new FlickrDBpediaSearch(targetResource, radius, FlickrWrappr2.serverRootUri)
-    flickrDBpediaSearch.addNameSpacesToRDFGraph()
-    flickrDBpediaSearch.addMetadataToRDFGraph()
-    flickrDBpediaSearch.addFlickrSearchResultsToRDFGraph(generateUrisForFlickrSearchResponse(flickrOAuthSession.getFlickrSearchResponse(searchText = "", latitude, longitude, radius, license, signRequest)))
+    addNameSpacesToRDFGraph()
+    addMetadataToRDFGraph()
+    addFlickrSearchResultsToRDFGraph(generateUrisForFlickrSearchResponse(flickrOAuthSession.getFlickrSearchResponse(searchText = "", latitude, longitude, radius, license, signRequest)))
 
   
 }
