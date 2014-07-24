@@ -20,12 +20,9 @@ trait FlickrSearch {
   val license = "1,2"
   val radius = "5"
 
-  protected def addNameSpacesToRDFGraphFromMap(nsMap: Map[String, String]) =
-    nsMap.foreach { case (k, v) => rdfGraph.setNsPrefix(k, v) }
-
   def addMetadataToRDFGraph() = ???
 
-  def addNameSpacesToRDFGraph() = addNameSpacesToRDFGraphFromMap(namespacesMap)
+  def addNameSpacesToRDFGraph() = namespacesMap.foreach { case (k, v) => rdfGraph.setNsPrefix(k, v) }
 
   def addFlickrSearchResultsToRDFGraph(flickrSearchResultsList: List[FlickrSearchResult]) = ???
 }
@@ -129,9 +126,6 @@ case class FlickrDBpediaSearch(
       depictionUriResource.addProperty(FOAF.page, pageUriResource)
     }
   }
-
-  def addNameSpacesToDBpediaSearchRDFGraph() =
-    super.addNameSpacesToRDFGraphFromMap(namespacesMap)
 
   def addMetadataToRDFGraph() {
     addDocumentMetadataToRDFGraph()
