@@ -1,9 +1,6 @@
 package org.dbpedia.media_extractor.flickr
 
-import scala.collection.mutable.ListBuffer
 import com.hp.hpl.jena.rdf.model.ModelFactory
-import scala.xml.Elem
-
 class FlickrWrappr2(val serverRootUri: String = "http://localhost/flickrwrappr/", val flickrCredentialsFile: String = "/flickr.setup.properties") {
   val locationRootUri = serverRootUri + "location/"
   val dataRootUri = serverRootUri + "data/photosDepictingLocation/"
@@ -24,18 +21,6 @@ object FlickrWrappr2 extends App {
 
   def apply(serverRootUri: String = "http://localhost/flickrwrappr/", flickrCredentialsFile: String = "/flickr.setup.properties") =
     new FlickrWrappr2(serverRootUri, flickrCredentialsFile)
-
-  def generateUrisForFlickrSearchResponse(myXml: Elem): List[FlickrSearchResult] = {
-    val resultsListBuffer = new ListBuffer[FlickrSearchResult]
-    (myXml \\ "rsp" \ "photos" \ "photo") foreach {
-      photo =>
-        val depictionUri = "https://farm" + (photo \ "@farm") + ".staticflickr.com/" + (photo \ "@server") + "/" + (photo \ "@id") + "_" + (photo \ "@secret") + ".jpg"
-        val pageUri = "https://flickr.com/photos/" + (photo \ "@owner") + "/" + (photo \ "@id")
-
-        resultsListBuffer += FlickrSearchResult(depictionUri, pageUri)
-    }
-    resultsListBuffer.toList
-  }
 
   // FIXME: how to access flickrOAuthSession?
   // FIXME: how to access the members of the companion class?

@@ -5,6 +5,9 @@ import com.hp.hpl.jena.sparql.vocabulary.FOAF
 import com.hp.hpl.jena.vocabulary.DCTerms
 import com.hp.hpl.jena.vocabulary.RDF
 import com.hp.hpl.jena.vocabulary.RDFS
+import org.scribe.model.Response
+import scala.collection.mutable.ListBuffer
+import scala.xml.XML
 
 case class FlickrSearchResult(depictionUri: String, pageUri: String)
 
@@ -40,6 +43,19 @@ trait FlickrSearch {
 
   def validateFlickrSearchResponse(flickrSearchResponse: Response): Boolean = {
     flickrSearchResponse.getMessage().equals("OK")
+  }
+
+  def generateUrisForFlickrSearchResponse(flickrSearchResponse: Response): List[FlickrSearchResult] = {
+    val myXml = XML.loadString(flickrSearchResponse.getBody())
+    val resultsListBuffer = new ListBuffer[FlickrSearchResult]
+    (myXml \\ "rsp" \ "photos" \ "photo") foreach {
+      photo =>
+        val depictionUri = "https://farm" + (photo \ "@farm") + ".staticflickr.com/" + (photo \ "@server") + "/" + (photo \ "@id") + "_" + (photo \ "@secret") + ".jpg"
+        val pageUri = "https://flickr.com/photos/" + (photo \ "@owner") + "/" + (photo \ "@id")
+
+        resultsListBuffer += FlickrSearchResult(depictionUri, pageUri)
+    }
+    resultsListBuffer.toList
   }
 
   def addMetadataToRDFGraph() = ???
