@@ -21,6 +21,8 @@ trait FlickrSearch {
 
   val license = "1,2"
   val radius = "5"
+  
+  def performFlickrSearch()
 
   def getFlickrSearchResponse(searchText: String = "", latitude: String = "", longitude: String = "", radius: String = "", license: String = "", signRequest: Boolean = true): Response = {
     val searchRequest = new OAuthRequest(Verb.POST, FlickrOAuthSession.endPointUri.toString())
@@ -140,6 +142,15 @@ case class FlickrGeoSearch(
     val serverRootUriResource = rdfGraph.createResource(serverRootUri)
     serverRootUriResource.addProperty(RDFS.label, flickrwrapprLiteral)
   }
+  
+  // FIXME: how to access flickrOAuthSession?
+  // FIXME: how to access the members of the companion class?
+  def performFlickrSearch(lat: String, lon: String, radius: String) = {
+    flickrGeoSearch = new FlickrGeoSearch(lat, lon, radius, FlickrWrappr2.locationRootUri, FlickrWrappr2.dataRootUri, FlickrWrappr2.serverRootUri)
+    flickrGeoSearch.addNameSpacesToRDFGraph()
+    flickrGeoSearch.addMetadataToRDFGraph()
+    flickrGeoSearch.addFlickrSearchResultsToRDFGraph(generateUrisForFlickrSearchResponse(flickrOAuthSession.getFlickrSearchResponse(searchText = "", latitude, longitude, radius, license, signRequest)))
+  }
 
 }
 
@@ -189,4 +200,13 @@ case class FlickrDBpediaSearch(
     serverRootUriResource2.addProperty(RDFS.label, flickrwrapprLiteral2)
   }
 
+  // FIXME: how to access flickrOAuthSession?
+  // FIXME: how to access the members of the companion class?
+  def performFlickrSearch(targetResource: String, radius: String) {
+    flickrDBpediaSearch = new FlickrDBpediaSearch(targetResource, radius, FlickrWrappr2.serverRootUri)
+    flickrDBpediaSearch.addNameSpacesToRDFGraph()
+    flickrDBpediaSearch.addMetadataToRDFGraph()
+    flickrDBpediaSearch.addFlickrSearchResultsToRDFGraph(generateUrisForFlickrSearchResponse(flickrOAuthSession.getFlickrSearchResponse(searchText = "", latitude, longitude, radius, license, signRequest)))
+
+  
 }

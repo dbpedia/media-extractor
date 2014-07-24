@@ -21,24 +21,5 @@ object FlickrWrappr2 extends App {
   def apply(serverRootUri: String = "http://localhost/flickrwrappr/", flickrCredentialsFile: String = "/flickr.setup.properties") =
     new FlickrWrappr2(serverRootUri, flickrCredentialsFile)
 
-  // FIXME: how to access flickrOAuthSession?
-  // FIXME: how to access the members of the companion class?
-  def performFlickrGeoSearch(lat: String, lon: String, radius: String) = {
-    flickrGeoSearch = new FlickrGeoSearch(lat, lon, radius, FlickrWrappr2.locationRootUri, FlickrWrappr2.dataRootUri, FlickrWrappr2.serverRootUri)
-    flickrGeoSearch.addNameSpacesToRDFGraph()
-    flickrGeoSearch.addMetadataToRDFGraph()
-    flickrGeoSearch.addFlickrSearchResultsToRDFGraph(generateUrisForFlickrSearchResponse(flickrOAuthSession.getFlickrSearchResponse(searchText = "", latitude, longitude, radius, license, signRequest)))
-  }
-
-  // FIXME: how to access flickrOAuthSession?
-  // FIXME: how to access the members of the companion class?
-  def performFlickrDBpediaSearch(targetResource: String, radius: String) {
-    flickrDBpediaSearch = new FlickrDBpediaSearch(targetResource, radius, FlickrWrappr2.serverRootUri)
-    flickrDBpediaSearch.addNameSpacesToRDFGraph()
-    flickrDBpediaSearch.addMetadataToRDFGraph()
-    flickrDBpediaSearch.addFlickrSearchResultsToRDFGraph(generateUrisForFlickrSearchResponse(flickrOAuthSession.getFlickrSearchResponse(searchText = "", latitude, longitude, radius, license, signRequest)))
-
-  }
-
 }
 
