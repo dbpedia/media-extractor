@@ -8,7 +8,7 @@ import com.hp.hpl.jena.vocabulary.RDFS
 
 case class FlickrSearchResult(depictionUri: String, pageUri: String)
 
-abstract class FlickrSearch {
+trait FlickrSearch {
 
   protected val namespacesMap = Map(
     "foaf" -> "http://xmlns.com/foaf/0.1/",
