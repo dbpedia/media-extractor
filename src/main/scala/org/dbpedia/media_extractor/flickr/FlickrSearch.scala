@@ -23,9 +23,11 @@ trait FlickrSearch {
 
   val license = "1,2"
   val radius = "5"
-  
+  val signRequest = true
+
   def performFlickrSearch()
 
+  // FIXME: how to access flickrOAuthSession?
   def getFlickrSearchResponse(searchText: String = "", latitude: String = "", longitude: String = "", radius: String = "", license: String = "", signRequest: Boolean = true): Response = {
     val searchRequest = new OAuthRequest(Verb.POST, FlickrOAuthSession.endPointUri.toString())
 
@@ -144,15 +146,13 @@ case class FlickrGeoSearch(
     val serverRootUriResource = rdfGraph.createResource(serverRootUri)
     serverRootUriResource.addProperty(RDFS.label, flickrwrapprLiteral)
   }
-  
-  // FIXME: how to access flickrOAuthSession?
-  // TODO: correctly perform the (Geo) search
+
   def performFlickrSearch(lat: String, lon: String, radius: String) = {
-    flickrGeoSearch = new FlickrGeoSearch(lat, lon, radius, FlickrWrappr2.locationRootUri, FlickrWrappr2.dataRootUri, FlickrWrappr2.serverRootUri)
     addNameSpacesToRDFGraph()
     addMetadataToRDFGraph()
-    addFlickrSearchResultsToRDFGraph(generateUrisForFlickrSearchResponse(flickrOAuthSession.getFlickrSearchResponse(searchText = "", latitude, longitude, radius, license, signRequest)))
+    addFlickrSearchResultsToRDFGraph(generateUrisForFlickrSearchResponse(getFlickrSearchResponse(searchText = "", latitude = lat, longitude = lon, radius, license, signRequest)))
   }
+}
 
 // By default, search for Brussels
 case class FlickrDBpediaSearch(
@@ -200,13 +200,11 @@ case class FlickrDBpediaSearch(
     serverRootUriResource2.addProperty(RDFS.label, flickrwrapprLiteral2)
   }
 
-  // FIXME: how to access flickrOAuthSession?
-  // TODO: correctly perform the (DBpedia) search
   def performFlickrSearch(targetResource: String, radius: String) {
-    flickrDBpediaSearch = new FlickrDBpediaSearch(targetResource, radius, FlickrWrappr2.serverRootUri)
     addNameSpacesToRDFGraph()
     addMetadataToRDFGraph()
-    addFlickrSearchResultsToRDFGraph(generateUrisForFlickrSearchResponse(flickrOAuthSession.getFlickrSearchResponse(searchText = "", latitude, longitude, radius, license, signRequest)))
+    addFlickrSearchResultsToRDFGraph(generateUrisForFlickrSearchResponse(getFlickrSearchResponse(searchText = "", latitude = "", longitude = "", radius, license, signRequest)))
+  }
 
-  
 }
+
