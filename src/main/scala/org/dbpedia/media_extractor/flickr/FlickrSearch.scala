@@ -19,6 +19,29 @@ trait FlickrSearch {
   val license = "1,2"
   val radius = "5"
 
+  def getFlickrSearchResponse(searchText: String = "", latitude: String = "", longitude: String = "", radius: String = "", license: String = "", signRequest: Boolean = true): Response = {
+    val searchRequest = new OAuthRequest(Verb.POST, FlickrOAuthSession.endPointUri.toString())
+
+    searchRequest.addQuerystringParameter("method", "flickr.photos.search")
+    searchRequest.addQuerystringParameter("text", searchText)
+    searchRequest.addQuerystringParameter("lat", latitude)
+    searchRequest.addQuerystringParameter("lon", longitude)
+    searchRequest.addQuerystringParameter("radius", radius)
+    searchRequest.addQuerystringParameter("license", license)
+    searchRequest.addQuerystringParameter("per_page", "30") // maximum according to FlickrAPI's TOU
+    searchRequest.addQuerystringParameter("sort", "relevance")
+    searchRequest.addQuerystringParameter("min_taken_date", "1800-01-01 00:00:00") // limiting agent to avoid "parameterless searches"
+
+    // This request does not need to be signed
+    if (signRequest)
+      myFlickrService.signRequest(accessToken, searchRequest)
+    searchRequest.send()
+  }
+
+  def validateFlickrSearchResponse(flickrSearchResponse: Response): Boolean = {
+    flickrSearchResponse.getMessage().equals("OK")
+  }
+
   def addMetadataToRDFGraph() = ???
 
   def addNameSpacesToRDFGraph() = namespacesMap.foreach { case (k, v) => rdfGraph.setNsPrefix(k, v) }
@@ -49,29 +72,6 @@ case class FlickrGeoSearch(
     //"geonames"-> "http://www.geonames.org/ontology#",
     "geo" -> "http://www.w3.org/2003/01/geo/wgs84_pos#",
     "georss" -> "http://www.georss.org/georss/")
-
-  def getFlickrSearchResponse(searchText: String = "", latitude: String = "", longitude: String = "", radius: String = "", license: String = "", signRequest: Boolean = true): Response = {
-    val searchRequest = new OAuthRequest(Verb.POST, FlickrOAuthSession.endPointUri.toString())
-
-    searchRequest.addQuerystringParameter("method", "flickr.photos.search")
-    searchRequest.addQuerystringParameter("text", searchText)
-    searchRequest.addQuerystringParameter("lat", latitude)
-    searchRequest.addQuerystringParameter("lon", longitude)
-    searchRequest.addQuerystringParameter("radius", radius)
-    searchRequest.addQuerystringParameter("license", license)
-    searchRequest.addQuerystringParameter("per_page", "30") // maximum according to FlickrAPI's TOU
-    searchRequest.addQuerystringParameter("sort", "relevance")
-    searchRequest.addQuerystringParameter("min_taken_date", "1800-01-01 00:00:00") // limiting agent to avoid "parameterless searches"
-
-    // This request does not need to be signed
-    if (signRequest)
-      myFlickrService.signRequest(accessToken, searchRequest)
-    searchRequest.send()
-  }
-
-  def validateFlickrSearchResponse(flickrSearchResponse: Response): Boolean = {
-    flickrSearchResponse.getMessage().equals("OK")
-  }
 
   def addFlickrSearchResultsToRDFGraph(flickrSearchResultsList: List[FlickrSearchResult]) {
     for (resultElem <- flickrSearchResultsList) {
