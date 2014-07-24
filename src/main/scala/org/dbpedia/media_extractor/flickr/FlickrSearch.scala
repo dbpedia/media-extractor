@@ -8,6 +8,8 @@ import com.hp.hpl.jena.vocabulary.RDFS
 import org.scribe.model.Response
 import scala.collection.mutable.ListBuffer
 import scala.xml.XML
+import org.scribe.model.OAuthRequest
+import org.scribe.model.Verb
 
 case class FlickrSearchResult(depictionUri: String, pageUri: String)
 
