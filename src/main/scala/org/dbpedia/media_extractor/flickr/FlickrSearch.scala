@@ -200,6 +200,7 @@ case class FlickrDBpediaSearch(
     serverRootUriResource2.addProperty(RDFS.label, flickrwrapprLiteral2)
   }
 
+  // FIXME: logic is incorrect
   def performFlickrSearch(targetResource: String, radius: String) {
     addNameSpacesToRDFGraph()
     addMetadataToRDFGraph()
