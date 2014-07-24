@@ -52,7 +52,8 @@ class FlickrOAuthSession(val credentialsFile: String) {
 
   val accessToken = myFlickrService.getAccessToken(requestToken, verifier)
   println("Authentication success")
-
+  
+  //TODO: move to a test? this is for testing purposes only...
   //e. g. method = "flickr.test.login"
   def invoke_parameterless_method(method: String = null, signRequest: Boolean = true): Response = {
     val request = new OAuthRequest(Verb.POST, FlickrOAuthSession.endPointUri.toString())
