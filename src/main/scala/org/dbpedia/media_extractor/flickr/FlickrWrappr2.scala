@@ -1,6 +1,5 @@
 package org.dbpedia.media_extractor.flickr
 
-import com.hp.hpl.jena.rdf.model.ModelFactory
 class FlickrWrappr2(val serverRootUri: String = "http://localhost/flickrwrappr/", val flickrCredentialsFile: String = "/flickr.setup.properties") {
   val locationRootUri = serverRootUri + "location/"
   val dataRootUri = serverRootUri + "data/photosDepictingLocation/"
