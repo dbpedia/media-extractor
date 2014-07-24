@@ -10,9 +10,6 @@ case class FlickrSearchResult(depictionUri: String, pageUri: String)
 
 abstract class FlickrSearch {
   // Namespaces
-  protected val foaf = "http://xmlns.com/foaf/0.1/"
-  protected val dcterms = "http://purl.org/dc/terms/"
-  protected val rdfs = "http://www.w3.org/2000/01/rdf-schema#"
   //protected val geonames = "http://www.geonames.org/ontology#"
   protected val geo = "http://www.w3.org/2003/01/geo/wgs84_pos#"
   protected val georss = "http://www.georss.org/georss/"
@@ -24,9 +21,10 @@ abstract class FlickrSearch {
   protected val dc = "http://purl.org/dc/elements/1.1/"
   protected val vcard = "http://www.w3.org/2001/vcard-rdf/3.0#"
 
-  protected val namespacesMap = Map("foaf" -> foaf,
-    "dcterms" -> dcterms,
-    "rdfs" -> rdfs)
+  protected val namespacesMap = Map(
+    "foaf" -> "http://xmlns.com/foaf/0.1/",
+    "dcterms" -> "http://purl.org/dc/terms/",
+    "rdfs" -> "http://www.w3.org/2000/01/rdf-schema#")
 
   val rdfGraph = ModelFactory.createDefaultModel()
 
