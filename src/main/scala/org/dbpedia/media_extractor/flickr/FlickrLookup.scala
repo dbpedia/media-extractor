@@ -17,7 +17,7 @@ import com.hp.hpl.jena.vocabulary.RDFS
 
 case class FlickrSearchResult(depictionUri: String, pageUri: String)
 
-trait FlickrLookup {
+abstract class FlickrLookup(val flickrOAuthSession: FlickrOAuthSession) {
 
   val flickrTermsUri = "https://secure.flickr.com/help/terms/"
   val lookupFooter = "flickr(tm) wrappr"
@@ -32,7 +32,6 @@ trait FlickrLookup {
     "rdfs" -> "http://www.w3.org/2000/01/rdf-schema#")
 
   val flickrCredentialsFile: String = "/flickr.setup.properties"
-  val flickrOAuthSession = FlickrOAuthSession(flickrCredentialsFile)
 
   val license = "1,2"
   val radius = "5"
@@ -93,9 +92,10 @@ case class FlickrGeoLookup(
   radius: String = "5",
   val locationRootUri: String,
   val dataRootUri: String,
-  val serverRootUri: String)
+  val serverRootUri: String,
+  val flickrOAuthSession: FlickrOAuthSession)
 
-  extends FlickrLookup {
+  extends FlickrLookup(flickrOAuthSession) {
 
   val geoPath = lat + "/" + lon + "/" + radius
   val locationFullUri = locationRootUri + geoPath
@@ -178,9 +178,10 @@ case class FlickrGeoLookup(
 case class FlickrDBpediaLookup(
 
   val targetResource: String = "Brussels",
-  val serverRootUri: String)
+  val serverRootUri: String,
+  val flickrOAuthSession: FlickrOAuthSession)
 
-  extends FlickrLookup {
+  extends FlickrLookup(flickrOAuthSession) {
 
   val dbpediaResourceUri = "http://dbpedia.org/resource/"
   val dbpediaResourceFullUri = dbpediaResourceUri + targetResource.trim.replaceAll(" ", "_").replaceAll("%2F", "/").replaceAll("%3A", ":")
@@ -228,7 +229,7 @@ case class FlickrDBpediaLookup(
     addNameSpacesToRDFGraph(rdfGraph: Model)
     addMetadataToRDFGraph(rdfGraph: Model, dbpediaResourceFullUriResource)
     addFlickrSearchResultsToRDFGraph(rdfGraph, flickrSearchResults)
-    
+
     rdfGraph
   }
 
