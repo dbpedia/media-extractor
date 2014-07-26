@@ -15,7 +15,7 @@ case class FlickrSearchResult(depictionUri: String, pageUri: String)
 
 trait FlickrLookup {
 
-  val flickrTermsUri = "http://www.flickr.com/terms.gne"
+  val flickrTermsUri = "https://secure.flickr.com/help/terms/"
   val lookupFooter = "flickr(tm) wrappr"
 
   val myPath = "/media/allentiak/dbpedia.git/media-extractor/src/test/resources/"
