@@ -30,14 +30,14 @@ class FlickrOAuthSession(val credentialsFile: String) {
   val myApiKey = accessCredentials.getProperty("apiKey")
   val myApiKeySecret = accessCredentials.getProperty("apiKeySecret")
 
-  val myFlickrService = new ServiceBuilder()
+  val flickrOAuthService = new ServiceBuilder()
     .provider(classOf[FlickrApi])
     .apiKey(myApiKey)
     .apiSecret(myApiKeySecret)
     .build()
 
-  val requestToken = myFlickrService.getRequestToken()
-  val authorizationUri = myFlickrService.getAuthorizationUrl(requestToken)
+  val requestToken = flickrOAuthService.getRequestToken()
+  val authorizationUri = flickrOAuthService.getAuthorizationUrl(requestToken)
 
   println("Follow this authorization URL to authorise yourself on Flickr:")
   println(authorizationUri)
@@ -50,7 +50,7 @@ class FlickrOAuthSession(val credentialsFile: String) {
 
   println("")
 
-  val accessToken = myFlickrService.getAccessToken(requestToken, verifier)
+  val accessToken = flickrOAuthService.getAccessToken(requestToken, verifier)
   println("Authentication success")
   
   //TODO: move to a test? this is for testing purposes only...
@@ -60,7 +60,7 @@ class FlickrOAuthSession(val credentialsFile: String) {
     request.addQuerystringParameter("method", method)
 
     if (signRequest)
-      myFlickrService.signRequest(accessToken, request)
+      flickrOAuthService.signRequest(accessToken, request)
 
     request.send()
   }
