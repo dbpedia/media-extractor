@@ -14,6 +14,14 @@ import org.scribe.model.Verb
 case class FlickrSearchResult(depictionUri: String, pageUri: String)
 
 trait FlickrLookup {
+
+  val flickrTermsUri = "http://www.flickr.com/terms.gne"
+  val lookupFooter = "flickr(tm) wrappr"
+
+  val myPath = "/media/allentiak/dbpedia.git/media-extractor/src/test/resources/"
+
+  val outputMode = "RDF/XML"
+
   protected val namespacesMap = Map(
     "foaf" -> "http://xmlns.com/foaf/0.1/",
     "dcterms" -> "http://purl.org/dc/terms/",
@@ -137,12 +145,12 @@ case class FlickrGeoLookup(
     val labelLiteral = rdfGraph.createLiteral(label, "en")
     foafDocumentResource.addProperty(RDFS.label, labelLiteral)
     foafDocumentResource.addProperty(FOAF.primaryTopic, locationFullUriResource)
-    val flickrTOUResource = rdfGraph.createResource(FlickrWrappr2.flickrTermsUri)
+    val flickrTOUResource = rdfGraph.createResource(flickrTermsUri)
     foafDocumentResource.addProperty(DCTerms.license, flickrTOUResource)
 
     dataFullUriResource.addProperty(RDFS.label, labelLiteral)
 
-    val flickrwrapprLiteral = rdfGraph.createLiteral(FlickrWrappr2.flickrwrappr, "en")
+    val flickrwrapprLiteral = rdfGraph.createLiteral(lookupFooter, "en")
     val serverRootUriResource = rdfGraph.createResource(serverRootUri)
     serverRootUriResource.addProperty(RDFS.label, flickrwrapprLiteral)
   }
@@ -190,12 +198,12 @@ case class FlickrDBpediaLookup(
 
     foafDocumentResource2.addProperty(FOAF.primaryTopic, dbpediaResourceFullUriResource)
 
-    val flickrTOUResource2 = rdfGraph.createResource(FlickrWrappr2.flickrTermsUri)
+    val flickrTOUResource2 = rdfGraph.createResource(flickrTermsUri)
     foafDocumentResource2.addProperty(DCTerms.license, flickrTOUResource2)
 
     dbpediaResourceFullUriResource.addProperty(RDFS.label, labelLiteral2)
 
-    val flickrwrapprLiteral2 = rdfGraph.createLiteral(FlickrWrappr2.flickrwrappr, "en")
+    val flickrwrapprLiteral2 = rdfGraph.createLiteral(lookupFooter, "en")
     val serverRootUriResource2 = rdfGraph.createResource(serverRootUri)
     serverRootUriResource2.addProperty(RDFS.label, flickrwrapprLiteral2)
   }
