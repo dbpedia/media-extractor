@@ -59,7 +59,7 @@ trait FlickrLookup {
     flickrSearchResponse.getMessage().equals("OK")
   }
 
-  def generateUrisForFlickrSearchResponse(flickrSearchResponse: Response): List[FlickrSearchResult] = {
+  def getFlickrSearchResults(flickrSearchResponse: Response): List[FlickrSearchResult] = {
     val myXml = XML.loadString(flickrSearchResponse.getBody())
     val resultsListBuffer = new ListBuffer[FlickrSearchResult]
     (myXml \\ "rsp" \ "photos" \ "photo") foreach {
@@ -158,7 +158,7 @@ case class FlickrGeoLookup(
   def performFlickrLookup(lat: String, lon: String, radius: String) = {
     addNameSpacesToRDFGraph()
     addMetadataToRDFGraph()
-    addFlickrSearchResultsToRDFGraph(generateUrisForFlickrSearchResponse(getFlickrSearchResponse(searchText = "", latitude = lat, longitude = lon, radius, license, signRequest)))
+    addFlickrSearchResultsToRDFGraph(getFlickrSearchResults(getFlickrSearchResponse(searchText = "", latitude = lat, longitude = lon, radius, license, signRequest)))
   }
 }
 
@@ -212,7 +212,7 @@ case class FlickrDBpediaLookup(
   def performFlickrLookup(targetResource: String, radius: String) {
     addNameSpacesToRDFGraph()
     addMetadataToRDFGraph()
-    addFlickrSearchResultsToRDFGraph(generateUrisForFlickrSearchResponse(getFlickrSearchResponse(searchText = "", latitude = "", longitude = "", radius, license, signRequest)))
+    addFlickrSearchResultsToRDFGraph(getFlickrSearchResults(getFlickrSearchResponse(searchText = "", latitude = "", longitude = "", radius, license, signRequest)))
   }
 
 }
