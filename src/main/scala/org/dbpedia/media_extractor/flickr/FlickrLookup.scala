@@ -13,7 +13,7 @@ import org.scribe.model.Verb
 
 case class FlickrSearchResult(depictionUri: String, pageUri: String)
 
-trait FlickrSearch {
+trait FlickrLookup {
   protected val namespacesMap = Map(
     "foaf" -> "http://xmlns.com/foaf/0.1/",
     "dcterms" -> "http://purl.org/dc/terms/",
@@ -25,7 +25,7 @@ trait FlickrSearch {
   val radius = "5"
   val signRequest = true
 
-  def performFlickrSearch()
+  def performFlickrLookup()
 
   // FIXME: how to access flickrOAuthSession?
   def getFlickrSearchResponse(searchText: String = "", latitude: String = "", longitude: String = "", radius: String = "", license: String = "", signRequest: Boolean = true): Response = {
@@ -72,7 +72,7 @@ trait FlickrSearch {
 }
 
 // By default, search for Brussels
-case class FlickrGeoSearch(
+case class FlickrGeoLookup(
 
   val lat: String = "50.85",
   val lon: String = "4.35",
@@ -81,7 +81,7 @@ case class FlickrGeoSearch(
   val dataRootUri: String,
   val serverRootUri: String)
 
-  extends FlickrSearch {
+  extends FlickrLookup {
 
   val geoPath = lat + "/" + lon + "/" + radius
   val locationFullUri = locationRootUri + geoPath
@@ -147,7 +147,7 @@ case class FlickrGeoSearch(
     serverRootUriResource.addProperty(RDFS.label, flickrwrapprLiteral)
   }
 
-  def performFlickrSearch(lat: String, lon: String, radius: String) = {
+  def performFlickrLookup(lat: String, lon: String, radius: String) = {
     addNameSpacesToRDFGraph()
     addMetadataToRDFGraph()
     addFlickrSearchResultsToRDFGraph(generateUrisForFlickrSearchResponse(getFlickrSearchResponse(searchText = "", latitude = lat, longitude = lon, radius, license, signRequest)))
@@ -155,12 +155,12 @@ case class FlickrGeoSearch(
 }
 
 // By default, search for Brussels
-case class FlickrDBpediaSearch(
+case class FlickrDBpediaLookup(
 
   val targetResource: String = "Brussels",
   val serverRootUri: String)
 
-  extends FlickrSearch {
+  extends FlickrLookup {
 
   val dbpediaResourceUri = "http://dbpedia.org/resource/"
   val dbpediaResourceFullUri = dbpediaResourceUri + targetResource.trim.replaceAll(" ", "_").replaceAll("%2F", "/").replaceAll("%3A", ":")
@@ -201,7 +201,7 @@ case class FlickrDBpediaSearch(
   }
 
   // FIXME: logic is incorrect
-  def performFlickrSearch(targetResource: String, radius: String) {
+  def performFlickrLookup(targetResource: String, radius: String) {
     addNameSpacesToRDFGraph()
     addMetadataToRDFGraph()
     addFlickrSearchResultsToRDFGraph(generateUrisForFlickrSearchResponse(getFlickrSearchResponse(searchText = "", latitude = "", longitude = "", radius, license, signRequest)))
