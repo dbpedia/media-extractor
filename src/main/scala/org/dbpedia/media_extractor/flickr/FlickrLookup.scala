@@ -1,15 +1,19 @@
 package org.dbpedia.media_extractor.flickr
 
+import scala.collection.mutable.ListBuffer
+import scala.xml.XML
+
+import org.scribe.model.OAuthRequest
+import org.scribe.model.Response
+import org.scribe.model.Verb
+
+import com.hp.hpl.jena.rdf.model.Model
 import com.hp.hpl.jena.rdf.model.ModelFactory
+import com.hp.hpl.jena.rdf.model.Resource
 import com.hp.hpl.jena.sparql.vocabulary.FOAF
 import com.hp.hpl.jena.vocabulary.DCTerms
 import com.hp.hpl.jena.vocabulary.RDF
 import com.hp.hpl.jena.vocabulary.RDFS
-import org.scribe.model.Response
-import scala.collection.mutable.ListBuffer
-import scala.xml.XML
-import org.scribe.model.OAuthRequest
-import org.scribe.model.Verb
 
 case class FlickrSearchResult(depictionUri: String, pageUri: String)
 
@@ -27,13 +31,14 @@ trait FlickrLookup {
     "dcterms" -> "http://purl.org/dc/terms/",
     "rdfs" -> "http://www.w3.org/2000/01/rdf-schema#")
 
-  val rdfGraph = ModelFactory.createDefaultModel()
+  val flickrCredentialsFile: String = "/flickr.setup.properties"
+  val flickrOAuthSession = FlickrOAuthSession(flickrCredentialsFile)
 
   val license = "1,2"
   val radius = "5"
   val signRequest = true
 
-  def performFlickrLookup()
+  def performFlickrLookup(): Model
 
   // FIXME: how to access flickrOAuthSession?
   def getFlickrSearchResponse(searchText: String = "", latitude: String = "", longitude: String = "", radius: String = "", license: String = "", signRequest: Boolean = true): Response = {
@@ -51,7 +56,8 @@ trait FlickrLookup {
 
     // This request does not need to be signed
     if (signRequest)
-      myFlickrService.signRequest(accessToken, searchRequest)
+      flickrOAuthSession.flickrOAuthService.signRequest(flickrOAuthSession.accessToken, searchRequest)
+
     searchRequest.send()
   }
 
@@ -74,9 +80,9 @@ trait FlickrLookup {
 
   def addMetadataToRDFGraph() = ???
 
-  def addNameSpacesToRDFGraph() = namespacesMap.foreach { case (k, v) => rdfGraph.setNsPrefix(k, v) }
+  def addNameSpacesToRDFGraph(rdfGraph: Model) = namespacesMap.foreach { case (k, v) => rdfGraph.setNsPrefix(k, v) }
 
-  def addFlickrSearchResultsToRDFGraph(flickrSearchResultsList: List[FlickrSearchResult]) = ???
+  def addFlickrSearchResultsToRDFGraph(rdfGraph: Model, flickrSearchResultsList: List[FlickrSearchResult]) = ???
 }
 
 // By default, search for Brussels
@@ -95,15 +101,12 @@ case class FlickrGeoLookup(
   val locationFullUri = locationRootUri + geoPath
   val dataFullUri = dataRootUri + geoPath
 
-  val dataFullUriResource = rdfGraph.createResource(dataFullUri)
-  val locationFullUriResource = rdfGraph.createResource(locationFullUri)
-
   override protected val namespacesMap = super.namespacesMap ++ Map(
     //"geonames"-> "http://www.geonames.org/ontology#",
     "geo" -> "http://www.w3.org/2003/01/geo/wgs84_pos#",
     "georss" -> "http://www.georss.org/georss/")
 
-  def addFlickrSearchResultsToRDFGraph(flickrSearchResultsList: List[FlickrSearchResult]) {
+  def addFlickrSearchResultsToRDFGraph(rdfGraph: Model, flickrSearchResultsList: List[FlickrSearchResult], locationFullUriResource: Resource) {
     for (resultElem <- flickrSearchResultsList) {
       val depictionUriResource = rdfGraph.createResource(resultElem.depictionUri)
       val pageUriResource = rdfGraph.createResource(resultElem.pageUri)
@@ -112,13 +115,15 @@ case class FlickrGeoLookup(
     }
   }
 
-  def addMetadataToRDFGraph() {
-    addLocationMetadataToRDFGraph()
-    addDocumentMetadataToRDFGraph()
+  def addMetadataToRDFGraph(rdfGraph: Model) {
+    val dataFullUriResource = rdfGraph.createResource(dataFullUri)
+
+    addLocationMetadataToRDFGraph(rdfGraph)
+    addDocumentMetadataToRDFGraph(rdfGraph, dataFullUriResource)
   }
 
   // FIXME: make literals work
-  private def addLocationMetadataToRDFGraph() = {
+  private def addLocationMetadataToRDFGraph(rdfGraph: Model) = {
     val spatialThingResource = rdfGraph.createResource(locationFullUri)
     spatialThingResource.addProperty(RDF.`type`, namespacesMap("geo") + "SpatialThing")
 
@@ -135,7 +140,7 @@ case class FlickrGeoLookup(
     //spatialThingResource.addProperty(geoLatProperty,lat)
   }
 
-  private def addDocumentMetadataToRDFGraph() = {
+  private def addDocumentMetadataToRDFGraph(rdfGraph: Model, dataFullUriResource: Resource) = {
     val locationFullUriResource = rdfGraph.createResource(locationFullUri)
 
     val foafDocumentResource = rdfGraph.createResource(locationFullUri)
@@ -155,10 +160,17 @@ case class FlickrGeoLookup(
     serverRootUriResource.addProperty(RDFS.label, flickrwrapprLiteral)
   }
 
-  def performFlickrLookup(lat: String, lon: String, radius: String) = {
-    addNameSpacesToRDFGraph()
-    addMetadataToRDFGraph()
-    addFlickrSearchResultsToRDFGraph(getFlickrSearchResults(getFlickrSearchResponse(searchText = "", latitude = lat, longitude = lon, radius, license, signRequest)))
+  def performFlickrLookup(lat: String, lon: String, radius: String): Model = {
+    val rdfGraph = ModelFactory.createDefaultModel()
+    val locationFullUriResource = rdfGraph.createResource(locationFullUri)
+
+    val flickrSearchResults = getFlickrSearchResults(getFlickrSearchResponse(searchText = "", latitude = lat, longitude = lon, radius, license, signRequest))
+
+    addNameSpacesToRDFGraph(rdfGraph)
+    addMetadataToRDFGraph(rdfGraph)
+    addFlickrSearchResultsToRDFGraph(rdfGraph, flickrSearchResults, locationFullUriResource)
+
+    rdfGraph
   }
 }
 
@@ -173,9 +185,7 @@ case class FlickrDBpediaLookup(
   val dbpediaResourceUri = "http://dbpedia.org/resource/"
   val dbpediaResourceFullUri = dbpediaResourceUri + targetResource.trim.replaceAll(" ", "_").replaceAll("%2F", "/").replaceAll("%3A", ":")
 
-  val dbpediaResourceFullUriResource = rdfGraph.createResource(dbpediaResourceFullUri)
-
-  def addFlickrSearchResultsToRDFGraph(flickrSearchResultsList: List[FlickrSearchResult]) {
+  def addFlickrSearchResultsToRDFGraph(rdfGraph: Model, flickrSearchResultsList: List[FlickrSearchResult], dbpediaResourceFullUriResource: Resource) {
     for (resultElem <- flickrSearchResultsList) {
       val depictionUriResource = rdfGraph.createResource(resultElem.depictionUri)
       val pageUriResource = rdfGraph.createResource(resultElem.pageUri)
@@ -184,11 +194,11 @@ case class FlickrDBpediaLookup(
     }
   }
 
-  def addMetadataToRDFGraph() {
-    addDocumentMetadataToRDFGraph()
+  def addMetadataToRDFGraph(rdfGraph: Model, dbpediaResourceFullUriResource: Resource) {
+    addDocumentMetadataToRDFGraph(rdfGraph, dbpediaResourceFullUriResource)
   }
 
-  private def addDocumentMetadataToRDFGraph() = {
+  private def addDocumentMetadataToRDFGraph(rdfGraph: Model, dbpediaResourceFullUriResource: Resource) = {
     val foafDocumentResource2 = rdfGraph.createResource(dbpediaResourceFullUri)
     foafDocumentResource2.addProperty(RDF.`type`, namespacesMap("foaf") + "Document")
 
@@ -209,10 +219,17 @@ case class FlickrDBpediaLookup(
   }
 
   // FIXME: logic is incorrect
-  def performFlickrLookup(targetResource: String, radius: String) {
-    addNameSpacesToRDFGraph()
-    addMetadataToRDFGraph()
-    addFlickrSearchResultsToRDFGraph(getFlickrSearchResults(getFlickrSearchResponse(searchText = "", latitude = "", longitude = "", radius, license, signRequest)))
+  def performFlickrLookup(targetResource: String, radius: String): Model = {
+    val rdfGraph = ModelFactory.createDefaultModel()
+    val dbpediaResourceFullUriResource = rdfGraph.createResource(dbpediaResourceFullUri)
+
+    val flickrSearchResults = getFlickrSearchResults(getFlickrSearchResponse(searchText = "", latitude = "", longitude = "", radius, license, signRequest))
+
+    addNameSpacesToRDFGraph(rdfGraph: Model)
+    addMetadataToRDFGraph(rdfGraph: Model, dbpediaResourceFullUriResource)
+    addFlickrSearchResultsToRDFGraph(rdfGraph, flickrSearchResults)
+    
+    rdfGraph
   }
 
 }
