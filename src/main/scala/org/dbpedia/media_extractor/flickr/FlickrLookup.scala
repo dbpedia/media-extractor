@@ -227,7 +227,8 @@ case class FlickrDBpediaLookup(
 
     addNameSpacesToRDFGraph(rdfGraph: Model)
     addMetadataToRDFGraph(rdfGraph: Model, dbpediaResourceFullUriResource)
-    addFlickrSearchResultsToRDFGraph(rdfGraph, flickrSearchResults)
+
+    addFlickrSearchResultsToRDFGraph(rdfGraph, flickrSearchResults, dbpediaResourceFullUriResource)
 
     rdfGraph
   }
