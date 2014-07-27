@@ -11,17 +11,19 @@ import org.scalatest.FunSpec
  */
 class FlickrRestApiTest extends FunSpec {
 
-  describe("A FlickrOAuthSession instance should be created") {
+  describe("A FlickrOAuthSession instance") {
+    describe("should be created") {
+      it("without requiring the user's intervention (from a presaved pair <Access Token, Flickr API Key>)") {
+        val automaticallyGeneratedFlickrOAuthSession = FlickrOAuthSession(credentialsFile = "/flickr.setup.properties", accessTokenFile = "/flickr.accessToken.properties")
+        assert(automaticallyGeneratedFlickrOAuthSession.isInstanceOf[FlickrOAuthSession])
+      }
 
-    describe("without requiring the user's intervention (from a presaved pair <Access Token, Flickr API Key>)") {
-      val automaticallyGeneratedFlickrOAuthSession = FlickrOAuthSession(credentialsFile = "/flickr.setup.properties", accessTokenFile = "/flickr.accessToken.properties")
-      assert(automaticallyGeneratedFlickrOAuthSession.isInstanceOf[FlickrOAuthSession])
+      it("requiring the user's intervention (to generate the Access Token from a presaved Flickr API Key)") {
+        val manuallyGeneratedFlickrOAuthSession = FlickrOAuthSession(credentialsFile = "/flickr.setup.properties", accessTokenFile = "")
+        assert(manuallyGeneratedFlickrOAuthSession.isInstanceOf[FlickrOAuthSession])
+      }
     }
 
-    describe("requiring the user's intervention (to generate the Access Token from a presaved Flickr API Key)") {
-      val manuallyGeneratedFlickrOAuthSession = FlickrOAuthSession(credentialsFile = "/flickr.setup.properties", accessTokenFile = "")
-      assert(manuallyGeneratedFlickrOAuthSession.isInstanceOf[FlickrOAuthSession])
-    }
     val flickrOAuthSession = FlickrOAuthSession(credentialsFile = "/flickr.setup.properties", accessTokenFile = "/flickr.accessToken.properties")
 
     it("should load an already created access token from a file") {
