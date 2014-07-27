@@ -20,11 +20,14 @@ import org.scribe.model.Verifier
  *
  */
 
-class FlickrOAuthSession(val credentialsFile: String) {
-  val accessCredentials = loadPropertyFromFile(credentialsFile)
+class FlickrOAuthSession(
+  val credentialsFile: String = "/flickr.setup.properties",
+  val accessTokenFile: String = "/flickr.accessToken.properties") {
 
-  val myApiKey = accessCredentials.getProperty("apiKey")
-  val myApiKeySecret = accessCredentials.getProperty("apiKeySecret")
+  val accessCredentialsProperties = loadPropertyFromFile(credentialsFile)
+
+  val myApiKey = accessCredentialsProperties.getProperty("apiKey")
+  val myApiKeySecret = accessCredentialsProperties.getProperty("apiKeySecret")
 
   val flickrOAuthService = new ServiceBuilder()
     .provider(classOf[FlickrApi])
@@ -32,22 +35,27 @@ class FlickrOAuthSession(val credentialsFile: String) {
     .apiSecret(myApiKeySecret)
     .build()
 
-  val requestToken = flickrOAuthService.getRequestToken()
-  val authorizationUri = flickrOAuthService.getAuthorizationUrl(requestToken)
+  if (accessTokenFile.isEmpty) {
+    val requestToken = flickrOAuthService.getRequestToken()
+    val authorizationUri = flickrOAuthService.getAuthorizationUrl(requestToken)
 
-  println("Follow this authorization URL to authorise yourself on Flickr:")
-  println(authorizationUri)
-  println("Paste here the verifier it gives you:")
-  print(">>")
+    println("Follow this authorization URL to authorise yourself on Flickr:")
+    println(authorizationUri)
+    println("Paste here the verifier it gives you:")
+    print(">>")
 
-  val scanner = new Scanner(System.in)
-  val verifier = new Verifier(scanner.nextLine())
-  scanner.close()
+    val scanner = new Scanner(System.in)
+    val verifier = new Verifier(scanner.nextLine())
+    scanner.close()
 
-  println("")
+    println("")
 
-  val accessToken = flickrOAuthService.getAccessToken(requestToken, verifier)
-  println("Authentication success")
+    val accessToken = flickrOAuthService.getAccessToken(requestToken, verifier)
+    println("Authentication success")
+
+  } else {
+    val accessToken = getSavedFlickrAccessToken(accessTokenFile)
+  }
 
   def loadPropertyFromFile(propertyFile: String): Properties = {
     val propertyInputStream = this.getClass().getResourceAsStream(propertyFile)
