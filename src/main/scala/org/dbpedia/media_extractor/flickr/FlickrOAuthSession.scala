@@ -27,6 +27,7 @@ class FlickrOAuthSession(val credentialsFile: String) {
 
   accessCredentials.load(accessCredentialsInputStream)
   accessCredentialsInputStream.close()
+  
   val myApiKey = accessCredentials.getProperty("apiKey")
   val myApiKeySecret = accessCredentials.getProperty("apiKeySecret")
 
@@ -52,7 +53,21 @@ class FlickrOAuthSession(val credentialsFile: String) {
 
   val accessToken = flickrOAuthService.getAccessToken(requestToken, verifier)
   println("Authentication success")
-  
+
+  def getSavedFlickrAccessToken(accessTokenFile: String): Token = {
+
+    val accessCredentialsInputStream = this.getClass().getResourceAsStream(accessTokenFile)
+    val accessCredentials = new Properties()
+
+    accessCredentials.load(accessCredentialsInputStream)
+    accessCredentialsInputStream.close()
+
+    val accessToken = accessCredentials.getProperty("accessToken")
+    val accessSecret = accessCredentials.getProperty("accessSecret")
+
+    new Token(accessToken, accessSecret)
+  }
+
   //TODO: move to a test? this is for testing purposes only...
   //e. g. method = "flickr.test.login"
   def invoke_parameterless_method(method: String = null, signRequest: Boolean = true): Response = {
@@ -72,17 +87,5 @@ object FlickrOAuthSession {
   val endPointUri = new URI("https://api.flickr.com/services/rest/")
 
   def apply(credentialsFile: String) = new FlickrOAuthSession(credentialsFile)
-
-  def getSavedFlickrAccessToken(accessTokenFile: String): Token = {
-    val accessCredentials = new Properties()
-    val inputFile = this.getClass().getResourceAsStream(accessTokenFile)
-    accessCredentials.load(inputFile)
-    inputFile.close()
-
-    val accessToken = accessCredentials.getProperty("accessToken")
-    val accessSecret = accessCredentials.getProperty("accessSecret")
-
-    new Token(accessToken, accessSecret)
-  }
 
 }
