@@ -37,8 +37,6 @@ abstract class FlickrLookup(val flickrOAuthSession: FlickrOAuthSession) {
   val radius = "5"
   val signRequest = true
 
-  def performFlickrLookup(): Model = ???
-
   // FIXME: how to access flickrOAuthSession?
   def getFlickrSearchResponse(searchText: String = "", latitude: String = "", longitude: String = "", radius: String = "", license: String = "", signRequest: Boolean = true): Response = {
     val searchRequest = new OAuthRequest(Verb.POST, FlickrOAuthSession.endPointUri.toString())
@@ -77,11 +75,8 @@ abstract class FlickrLookup(val flickrOAuthSession: FlickrOAuthSession) {
     resultsListBuffer.toList
   }
 
-  def addMetadataToRDFGraph() = ???
-
   def addNameSpacesToRDFGraph(rdfGraph: Model) = namespacesMap.foreach { case (k, v) => rdfGraph.setNsPrefix(k, v) }
 
-  def addFlickrSearchResultsToRDFGraph(rdfGraph: Model, flickrSearchResultsList: List[FlickrSearchResult]) = ???
 }
 
 // By default, search for Brussels
