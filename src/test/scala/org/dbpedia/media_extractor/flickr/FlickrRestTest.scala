@@ -18,7 +18,7 @@ class FlickrRestApiTest extends FunSpec {
         assert(automaticallyGeneratedFlickrOAuthSession.isInstanceOf[FlickrOAuthSession])
       }
 
-      it("requiring the user's intervention (to generate the Access Token from a presaved Flickr API Key)") {
+      ignore("requiring the user's intervention (to generate the Access Token from a presaved Flickr API Key)") {
         val manuallyGeneratedFlickrOAuthSession = FlickrOAuthSession(credentialsFile = "/flickr.setup.properties", accessTokenFile = "")
         assert(manuallyGeneratedFlickrOAuthSession.isInstanceOf[FlickrOAuthSession])
       }
