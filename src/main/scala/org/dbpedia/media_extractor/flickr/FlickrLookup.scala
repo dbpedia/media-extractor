@@ -224,6 +224,10 @@ case class FlickrDBpediaLookup(
     val rdfGraph = ModelFactory.createDefaultModel()
     val dbpediaResourceFullUriResource = rdfGraph.createResource(dbpediaResourceFullUri)
 
+    // TODO: perform SPARQL query
+
+    // TODO: process query results
+
     val flickrSearchResults = getFlickrSearchResults(getFlickrSearchResponse(searchText = "", latitude = "", longitude = "", radius, license, signRequest))
 
     addNameSpacesToRDFGraph(rdfGraph: Model)
