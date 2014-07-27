@@ -21,7 +21,7 @@ class FlickrRestApiTest extends FunSpec {
 
       it("should load an already created access token from a file") {
         val generatedToken = flickrOAuthSession.accessToken
-        val savedToken = FlickrOAuthSession.getSavedFlickrAccessToken("/flickr.accessToken.properties")
+        val savedToken = flickrOAuthSession.getSavedFlickrAccessToken("/flickr.accessToken.properties")
         assert(generatedToken === savedToken)
       }
 
