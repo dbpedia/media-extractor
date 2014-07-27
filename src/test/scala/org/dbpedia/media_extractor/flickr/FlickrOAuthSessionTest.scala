@@ -9,7 +9,7 @@ import org.scalatest.FunSpec
  * @author allentiak
  *
  */
-class FlickrRestApiTest extends FunSpec {
+class FlickrOAuthSessionTest extends FunSpec {
 
   describe("A FlickrOAuthSession instance") {
     describe("should be created") {
@@ -109,16 +109,6 @@ class FlickrRestApiTest extends FunSpec {
         }
       }
     }
-
-    describe("should generate RDF graphs") {
-      describe("for Geo Search")(pending)
-      describe("for DBpedia Search")(pending)
-    }
-
-    describe("should generate valid RDF graphs") {
-      describe("for Geo Search")(pending)
-      describe("for DBpedia Search")(pending)
-    }
-
   }
+
 }
