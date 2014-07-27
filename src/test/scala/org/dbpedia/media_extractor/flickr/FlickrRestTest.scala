@@ -4,7 +4,6 @@
 package org.dbpedia.media_extractor.flickr
 
 import org.scalatest.FunSpec
-import scala.xml.XML
 
 /**
  * @author allentiak
@@ -67,22 +66,31 @@ class FlickrRestApiTest extends FunSpec {
         val radius = "5"
         val license = "1,2"
 
+        // TODO: replace val for a singleton?
+        val flickrGeoLookup = new FlickrGeoLookup(
+          lat = lat,
+          lon = lon,
+          radius = radius,
+          locationRootUri = "",
+          dataRootUri = "",
+          serverRootUri = "",
+          flickrOAuthSession: FlickrOAuthSession)
+
         it("method 'flickr.photos.search' (unsigned)") {
-          val unsignedSearchResponse = FlickrLookup.getFlickrSearchResponse(searchText, lat, lon, radius, license, false)
+          val unsignedSearchResponse = flickrGeoLookup.getFlickrSearchResponse(searchText, lat, lon, radius, license, false)
           assert(unsignedSearchResponse.getMessage() === "OK")
         }
 
         it("method 'flickr.photos.search' (signed)") {
-          val signedSearchResponse = flickrOAuthSession.getFlickrSearchResponse(searchText, lat, lon, radius, license, true)
+          val signedSearchResponse = flickrGeoLookup.getFlickrSearchResponse(searchText, lat, lon, radius, license, true)
           assert(signedSearchResponse.getMessage() === "OK")
         }
 
         describe("should generate and show the photos' links") {
-          val signedSearchResponse = flickrOAuthSession.getFlickrSearchResponse(searchText, lat, lon, radius, license, true)
+          val signedSearchResponse = flickrGeoLookup.getFlickrSearchResponse(searchText, lat, lon, radius, license, true)
           assert(signedSearchResponse.getMessage() === "OK")
 
-          val flickrXmlResponse = XML.loadString(signedSearchResponse.getBody())
-          val resultElemList = FlickrWrappr2.generateUrisForFlickrSearchResponse(flickrXmlResponse)
+          val resultElemList = flickrGeoLookup.getFlickrSearchResults(signedSearchResponse)
 
           println("Generated URIs for a simple Flickr search:")
           for (resultElem <- resultElemList) {
