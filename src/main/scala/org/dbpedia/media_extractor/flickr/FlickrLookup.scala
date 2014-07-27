@@ -26,7 +26,7 @@ abstract class FlickrLookup(val flickrOAuthSession: FlickrOAuthSession) {
 
   val outputMode = "RDF/XML"
 
-  protected val namespacesMap = Map(
+  protected def namespacesMap = Map(
     "foaf" -> "http://xmlns.com/foaf/0.1/",
     "dcterms" -> "http://purl.org/dc/terms/",
     "rdfs" -> "http://www.w3.org/2000/01/rdf-schema#")
@@ -37,7 +37,7 @@ abstract class FlickrLookup(val flickrOAuthSession: FlickrOAuthSession) {
   val radius = "5"
   val signRequest = true
 
-  def performFlickrLookup(): Model
+  def performFlickrLookup(): Model = ???
 
   // FIXME: how to access flickrOAuthSession?
   def getFlickrSearchResponse(searchText: String = "", latitude: String = "", longitude: String = "", radius: String = "", license: String = "", signRequest: Boolean = true): Response = {
@@ -89,11 +89,11 @@ case class FlickrGeoLookup(
 
   val lat: String = "50.85",
   val lon: String = "4.35",
-  radius: String = "5",
+  override val radius: String = "5",
   val locationRootUri: String,
   val dataRootUri: String,
   val serverRootUri: String,
-  val flickrOAuthSession: FlickrOAuthSession)
+  override val flickrOAuthSession: FlickrOAuthSession)
 
   extends FlickrLookup(flickrOAuthSession) {
 
@@ -179,7 +179,7 @@ case class FlickrDBpediaLookup(
 
   val targetResource: String = "Brussels",
   val serverRootUri: String,
-  val flickrOAuthSession: FlickrOAuthSession)
+  override val flickrOAuthSession: FlickrOAuthSession)
 
   extends FlickrLookup(flickrOAuthSession) {
 
