@@ -97,16 +97,17 @@ class FlickrOAuthSessionTest extends FunSpec {
       describe("should generate and show the photos' links") {
         val signedSearchResponse = flickrGeoLookup.getFlickrSearchResponse(searchText, lat, lon, radius, license, true)
         assert(signedSearchResponse.getMessage() === "OK")
-
-        val resultElemList = flickrGeoLookup.getFlickrSearchResults(signedSearchResponse)
-
-        println("Generated URIs for a simple Flickr search:")
-        for (resultElem <- resultElemList) {
-          println("Picture" + " " + (resultElemList.indexOf(resultElem) + 1) + "/" + resultElemList.size + ":")
-          println("Page Uri: " + resultElem.pageUri)
-          println("Depiction Uri: " + resultElem.depictionUri)
-          // FIXME: I don't know how to "assert" this
-        }
+        // FIXME: refactor this code into a more basic test?  
+        //There is no need to show the actual links anymore
+        //        val resultElemList = flickrGeoLookup.getFlickrSearchResults(signedSearchResponse)
+        //
+        //        println("Generated URIs for a simple Flickr search:")
+        //        for (resultElem <- resultElemList) {
+        //          println("Picture" + " " + (resultElemList.indexOf(resultElem) + 1) + "/" + resultElemList.size + ":")
+        //          println("Page Uri: " + resultElem.pageUri)
+        //          println("Depiction Uri: " + resultElem.depictionUri)
+        //          // FIXME: I don't know how to "assert" this
+        //        }
       }
     }
   }
