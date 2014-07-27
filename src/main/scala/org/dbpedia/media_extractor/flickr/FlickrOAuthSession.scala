@@ -35,11 +35,12 @@ class FlickrOAuthSession(
     .apiSecret(myApiKeySecret)
     .build()
 
-  if (!(accessTokenFile.isEmpty)) {
-    val accessToken = getSavedFlickrAccessToken(accessTokenFile)
-  } else {
     val requestToken = flickrOAuthService.getRequestToken()
     val authorizationUri = flickrOAuthService.getAuthorizationUrl(requestToken)
+  val accessToken: Token =
+    if (!(getSavedFlickrAccessToken(savedAccessTokenFile).isEmpty))
+      getSavedFlickrAccessToken(savedAccessTokenFile)
+    else {
 
     println("Follow this authorization URL to authorise yourself on Flickr:")
     println(authorizationUri)
@@ -52,9 +53,12 @@ class FlickrOAuthSession(
 
     println("")
 
-    val accessToken = flickrOAuthService.getAccessToken(requestToken, verifier)
-    println("Authentication success")
-  }
+      // Just to make sure we inform the user the authentication was successful 
+      flickrOAuthService.getAccessToken(requestToken, verifier)
+      println("Authentication success")
+
+      flickrOAuthService.getAccessToken(requestToken, verifier)
+    }
 
   def loadPropertyFromFile(propertyFile: String): Properties = {
     val propertyInputStream = this.getClass().getResourceAsStream(propertyFile)
