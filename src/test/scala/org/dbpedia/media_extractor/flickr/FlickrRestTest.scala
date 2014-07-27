@@ -14,8 +14,6 @@ class FlickrRestApiTest extends FunSpec {
   describe("A FlickrOAuthSession instance") {
 
     describe("should load non-empty Flickr credentials from an external file, generate a session with those credentials and use that session to invoke Flickr methods") {
-      // I don't know how to correctly test whether the instance was successfully created
-      // Maybe adding a return type of 0 (zero) to the constructor?
       val flickrOAuthSession = FlickrOAuthSession(credentialsFile = "/flickr.setup.properties", accessTokenFile = "")
 
       it("should load an already created access token from a file") {
