@@ -52,10 +52,7 @@ class FlickrOAuthSession(
       scanner.close()
 
       println("")
-
-      // Just to make sure we inform the user the authentication was successful 
-      flickrOAuthService.getAccessToken(requestToken, verifier)
-      println("Authentication success")
+      println("If it does not crash immediately after this line, authentication is success")
 
       flickrOAuthService.getAccessToken(requestToken, verifier)
     }
