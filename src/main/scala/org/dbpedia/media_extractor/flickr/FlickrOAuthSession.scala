@@ -21,13 +21,13 @@ import org.scribe.model.Verifier
  */
 
 class FlickrOAuthSession(
-  val credentialsFile: String = "/flickr.setup.properties",
-  val accessTokenFile: String = "/flickr.accessToken.properties") {
+  val savedCredentialsFile: String = "/flickr.setup.properties",
+  val savedAccessTokenFile: String = "/flickr.accessToken.properties") {
 
-  val accessCredentialsProperties = loadPropertyFromFile(credentialsFile)
+  val savedAccessCredentialsProperties = loadPropertyFromFile(savedCredentialsFile)
 
-  val myApiKey = accessCredentialsProperties.getProperty("apiKey")
-  val myApiKeySecret = accessCredentialsProperties.getProperty("apiKeySecret")
+  val myApiKey = savedAccessCredentialsProperties.getProperty("apiKey")
+  val myApiKeySecret = savedAccessCredentialsProperties.getProperty("apiKeySecret")
 
   val flickrOAuthService = new ServiceBuilder()
     .provider(classOf[FlickrApi])
@@ -66,11 +66,11 @@ class FlickrOAuthSession(
     myProperty
   }
 
-  def getSavedFlickrAccessToken(accessTokenFile: String): Token = {
-    val accessCredentials = loadPropertyFromFile(accessTokenFile)
+  def getSavedFlickrAccessToken(savedAccessTokenFile: String): Token = {
+    val accessCredentialsProperties = loadPropertyFromFile(savedAccessTokenFile)
 
-    val accessToken = accessCredentials.getProperty("accessToken")
-    val accessSecret = accessCredentials.getProperty("accessSecret")
+    val accessToken = accessCredentialsProperties.getProperty("accessToken")
+    val accessSecret = accessCredentialsProperties.getProperty("accessSecret")
 
     new Token(accessToken, accessSecret)
   }
