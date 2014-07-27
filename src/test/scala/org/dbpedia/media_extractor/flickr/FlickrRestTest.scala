@@ -82,7 +82,7 @@ class FlickrRestApiTest extends FunSpec {
         locationRootUri = "",
         dataRootUri = "",
         serverRootUri = "",
-        flickrOAuthSession: FlickrOAuthSession)
+        flickrOAuthSession)
 
       it("method 'flickr.photos.search' (unsigned)") {
         val unsignedSearchResponse = flickrGeoLookup.getFlickrSearchResponse(searchText, lat, lon, radius, license, false)
