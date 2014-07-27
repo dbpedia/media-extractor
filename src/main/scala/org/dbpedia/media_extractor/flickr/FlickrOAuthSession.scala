@@ -36,7 +36,7 @@ class FlickrOAuthSession(
     .build()
 
   val accessToken: Token =
-    if (!(getSavedFlickrAccessToken(savedAccessTokenFile).isEmpty))
+    if ((!savedAccessTokenFile.isEmpty()) && (!(getSavedFlickrAccessToken(savedAccessTokenFile).isEmpty)))
       getSavedFlickrAccessToken(savedAccessTokenFile)
     else {
       val requestToken = flickrOAuthService.getRequestToken()
