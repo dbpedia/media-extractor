@@ -101,7 +101,7 @@ case class FlickrGeoLookup(
     "geo" -> "http://www.w3.org/2003/01/geo/wgs84_pos#",
     "georss" -> "http://www.georss.org/georss/")
 
-  def addFlickrSearchResultsToRDFGraph(rdfGraph: Model, flickrSearchResultsList: List[FlickrSearchResult], locationFullUriResource: Resource) {
+  def addFlickrSearchResultsToRDFGraph(rdfGraph: Model, flickrSearchResultsList: List[FlickrSearchResult], locationFullUriResource: Resource) = {
     for (resultElem <- flickrSearchResultsList) {
       val depictionUriResource = rdfGraph.createResource(resultElem.depictionUri)
       val pageUriResource = rdfGraph.createResource(resultElem.pageUri)
@@ -110,7 +110,7 @@ case class FlickrGeoLookup(
     }
   }
 
-  def addMetadataToRDFGraph(rdfGraph: Model) {
+  def addMetadataToRDFGraph(rdfGraph: Model) = {
     val dataFullUriResource = rdfGraph.createResource(dataFullUri)
 
     addLocationMetadataToRDFGraph(rdfGraph)
@@ -190,7 +190,7 @@ case class FlickrDBpediaLookup(
     }
   }
 
-  def addMetadataToRDFGraph(rdfGraph: Model, dbpediaResourceFullUriResource: Resource) {
+  def addMetadataToRDFGraph(rdfGraph: Model, dbpediaResourceFullUriResource: Resource) = {
     addDocumentMetadataToRDFGraph(rdfGraph, dbpediaResourceFullUriResource)
   }
 
