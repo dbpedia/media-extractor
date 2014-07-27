@@ -94,7 +94,7 @@ class FlickrRestApiTest extends FunSpec {
 
           println("Generated URIs for a simple Flickr search:")
           for (resultElem <- resultElemList) {
-            println("Picture" + " " + resultElemList.indexOf(resultElem) + 1 + "/" + resultElemList.size + ":")
+            println("Picture" + " " + (resultElemList.indexOf(resultElem) + 1) + "/" + resultElemList.size + ":")
             println("Page Uri: " + resultElem.pageUri)
             println("Depiction Uri: " + resultElem.depictionUri)
             // FIXME: I don't know how to "assert" this
