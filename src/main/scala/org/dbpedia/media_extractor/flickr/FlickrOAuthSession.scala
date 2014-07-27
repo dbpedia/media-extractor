@@ -21,13 +21,8 @@ import org.scribe.model.Verifier
  */
 
 class FlickrOAuthSession(val credentialsFile: String) {
+  val accessCredentials = loadPropertyFromFile(credentialsFile)
 
-  val accessCredentialsInputStream = this.getClass().getResourceAsStream(credentialsFile)
-  val accessCredentials = new Properties()
-
-  accessCredentials.load(accessCredentialsInputStream)
-  accessCredentialsInputStream.close()
-  
   val myApiKey = accessCredentials.getProperty("apiKey")
   val myApiKeySecret = accessCredentials.getProperty("apiKeySecret")
 
@@ -54,13 +49,18 @@ class FlickrOAuthSession(val credentialsFile: String) {
   val accessToken = flickrOAuthService.getAccessToken(requestToken, verifier)
   println("Authentication success")
 
+  def loadPropertyFromFile(propertyFile: String): Properties = {
+    val propertyInputStream = this.getClass().getResourceAsStream(propertyFile)
+    val myProperty = new Properties()
+
+    myProperty.load(propertyInputStream)
+    propertyInputStream.close()
+
+    myProperty
+  }
+
   def getSavedFlickrAccessToken(accessTokenFile: String): Token = {
-
-    val accessCredentialsInputStream = this.getClass().getResourceAsStream(accessTokenFile)
-    val accessCredentials = new Properties()
-
-    accessCredentials.load(accessCredentialsInputStream)
-    accessCredentialsInputStream.close()
+    val accessCredentials = loadPropertyFromFile(accessTokenFile)
 
     val accessToken = accessCredentials.getProperty("accessToken")
     val accessSecret = accessCredentials.getProperty("accessSecret")
