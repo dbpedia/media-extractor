@@ -1,9 +1,12 @@
 package org.dbpedia.media_extractor.flickr
 
-class FlickrWrappr2(val serverRootUri: String = "http://localhost/flickrwrappr/", val flickrCredentialsFile: String = "/flickr.setup.properties") {
+class FlickrWrappr2(val serverRootUri: String = "http://localhost/flickrwrappr/",
+  val flickrSavedCredentialsFile: String = "/flickr.setup.properties",
+  val flickrSavedAccessTokenFile: String = "/flickr.accessToken.properties") {
+
   val locationRootUri = serverRootUri + "location/"
   val dataRootUri = serverRootUri + "data/photosDepictingLocation/"
-  val flickrOAuthSession = FlickrOAuthSession(flickrCredentialsFile)
+  val flickrOAuthSession = FlickrOAuthSession(flickrSavedCredentialsFile, flickrSavedAccessTokenFile)
 
   // TODO: allow user to input search parameters.
   // (For now, search for Brussels by default)
@@ -34,8 +37,8 @@ class FlickrWrappr2(val serverRootUri: String = "http://localhost/flickrwrappr/"
 object FlickrWrappr2 extends App {
   def apply(
     serverRootUri: String = "http://localhost/flickrwrappr/",
-    flickrCredentialsFile: String = "/flickr.setup.properties"
-    ) = 
-      new FlickrWrappr2(serverRootUri, flickrCredentialsFile)
+    flickrSavedCredentialsFile: String = "/flickr.setup.properties",
+    flickrSavedAccessTokenFile: String = "/flickr.accessToken.properties") =
+    new FlickrWrappr2(serverRootUri, flickrSavedCredentialsFile, flickrSavedAccessTokenFile)
 }
 

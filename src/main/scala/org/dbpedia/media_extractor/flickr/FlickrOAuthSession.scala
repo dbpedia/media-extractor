@@ -35,23 +35,23 @@ class FlickrOAuthSession(
     .apiSecret(myApiKeySecret)
     .build()
 
-    val requestToken = flickrOAuthService.getRequestToken()
-    val authorizationUri = flickrOAuthService.getAuthorizationUrl(requestToken)
   val accessToken: Token =
     if (!(getSavedFlickrAccessToken(savedAccessTokenFile).isEmpty))
       getSavedFlickrAccessToken(savedAccessTokenFile)
     else {
+      val requestToken = flickrOAuthService.getRequestToken()
+      val authorizationUri = flickrOAuthService.getAuthorizationUrl(requestToken)
 
-    println("Follow this authorization URL to authorise yourself on Flickr:")
-    println(authorizationUri)
-    println("Paste here the verifier it gives you:")
-    print(">>")
+      println("Follow this authorization URL to authorise yourself on Flickr:")
+      println(authorizationUri)
+      println("Paste here the verifier it gives you:")
+      print(">>")
 
-    val scanner = new Scanner(System.in)
-    val verifier = new Verifier(scanner.nextLine())
-    scanner.close()
+      val scanner = new Scanner(System.in)
+      val verifier = new Verifier(scanner.nextLine())
+      scanner.close()
 
-    println("")
+      println("")
 
       // Just to make sure we inform the user the authentication was successful 
       flickrOAuthService.getAccessToken(requestToken, verifier)
@@ -97,6 +97,8 @@ object FlickrOAuthSession {
 
   val endPointUri = new URI("https://api.flickr.com/services/rest/")
 
-  def apply(credentialsFile: String) = new FlickrOAuthSession(credentialsFile)
+  def apply(credentialsFile: String,
+    accessTokenFile: String) =
+    new FlickrOAuthSession(credentialsFile, accessTokenFile)
 
 }
