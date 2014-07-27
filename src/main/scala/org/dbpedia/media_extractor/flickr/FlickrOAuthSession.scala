@@ -22,11 +22,11 @@ import org.scribe.model.Verifier
 
 class FlickrOAuthSession(val credentialsFile: String) {
 
-  val inputFile = this.getClass().getResourceAsStream(credentialsFile)
+  val accessCredentialsInputStream = this.getClass().getResourceAsStream(credentialsFile)
   val accessCredentials = new Properties()
 
-  accessCredentials.load(inputFile)
-  inputFile.close()
+  accessCredentials.load(accessCredentialsInputStream)
+  accessCredentialsInputStream.close()
   val myApiKey = accessCredentials.getProperty("apiKey")
   val myApiKeySecret = accessCredentials.getProperty("apiKeySecret")
 
