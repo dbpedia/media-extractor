@@ -7,7 +7,7 @@ class FlickrWrappr2(val serverRootUri: String = "http://localhost/flickrwrappr/"
 }
 
 object FlickrWrappr2 extends App {
-
+  val flickrOAuthSession = FlickrWrappr2.flickrOAuthSession(flickrCredentialsFile)
   var flickrGeoSearch: FlickrGeoSearch = null
   var flickrDBpediaSearch: FlickrDBpediaSearch = null
 
