@@ -32,8 +32,10 @@ class FlickrWrappr2(val serverRootUri: String = "http://localhost/flickrwrappr/"
 }
 
 object FlickrWrappr2 extends App {
-  def apply(serverRootUri: String = "http://localhost/flickrwrappr/", flickrCredentialsFile: String = "/flickr.setup.properties") =
-    new FlickrWrappr2(serverRootUri, flickrCredentialsFile)
-
+  def apply(
+    serverRootUri: String = "http://localhost/flickrwrappr/",
+    flickrCredentialsFile: String = "/flickr.setup.properties"
+    ) = 
+      new FlickrWrappr2(serverRootUri, flickrCredentialsFile)
 }
 
