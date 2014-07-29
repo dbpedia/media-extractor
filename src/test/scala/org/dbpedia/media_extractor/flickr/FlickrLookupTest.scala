@@ -24,6 +24,7 @@ class FlickrLookupTest extends FunSpec {
       // GeoLookup for Brussels
       val lat = "50.85"
       val lon = "4.35"
+
       val locationRootUri = serverRootUri + "location/"
       val dataRootUri = serverRootUri + "data/photosDepictingLocation/"
 
