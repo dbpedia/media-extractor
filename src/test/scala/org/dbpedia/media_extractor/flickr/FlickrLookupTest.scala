@@ -36,13 +36,13 @@ class FlickrLookupTest extends FunSpec {
         serverRootUri,
         flickrOAuthSession)
 
-      val myRDFGraph = flickrGeoLookup.performFlickrLookup(lat, lon, radius)
+      val geoLookupRdfGraph = flickrGeoLookup.performFlickrLookup(lat, lon, radius)
 
-      val geoOutputXml = new FileOutputStream(localPath + "FlickrLookupTest.output.geo.xml")
-      myRDFGraph.write(geoOutputXml, "RDF/XML")
+      val geoLookupXmlOutputStream = new FileOutputStream(localPath + "FlickrLookupTest.output.geo.xml")
+      geoLookupRdfGraph.write(geoLookupXmlOutputStream, "RDF/XML")
 
-      val geoOutputNt = new FileOutputStream(localPath + "FlickrLookupTest.output.geo.nt")
-      myRDFGraph.write(geoOutputNt, "N-TRIPLES")
+      val geoNtOutputStream = new FileOutputStream(localPath + "FlickrLookupTest.output.geo.nt")
+      geoLookupRdfGraph.write(geoNtOutputStream, "N-TRIPLES")
 
     }
   }
