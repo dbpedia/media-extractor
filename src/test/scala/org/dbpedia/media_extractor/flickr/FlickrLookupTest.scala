@@ -21,7 +21,7 @@ class FlickrLookupTest extends FunSpec {
 
     describe("should generate an RDF graph") {
 
-      // Geo default parameters:
+      // GeoLookup for Brussels
       val lat = "50.85"
       val lon = "4.35"
       val locationRootUri = serverRootUri + "location/"
