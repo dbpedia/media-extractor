@@ -27,13 +27,13 @@ class FlickrLookupTest extends FunSpec {
       val dataRootUri = serverRootUri + "data/photosDepictingLocation/"
 
       val flickrGeoLookup = new FlickrGeoLookup(
-        lat = lat,
-        lon = lon,
-        radius = radius,
-        locationRootUri = locationRootUri,
-        dataRootUri = dataRootUri,
-        serverRootUri = serverRootUri,
-        flickrOAuthSession = flickrOAuthSession)
+        lat,
+        lon,
+        radius,
+        locationRootUri,
+        dataRootUri,
+        serverRootUri,
+        flickrOAuthSession)
 
       val myRDFGraph = flickrGeoLookup.performFlickrLookup(lat, lon, radius)
 
