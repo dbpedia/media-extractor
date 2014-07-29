@@ -13,6 +13,7 @@ import org.scalatest.FunSpec
 class FlickrLookupTest extends FunSpec {
 
   val flickrOAuthSession = FlickrOAuthSession(credentialsFile = "/flickr.setup.properties", accessTokenFile = "/flickr.accessToken.properties")
+  val serverRootUri = "http://localhost/flickrwrappr/"
 
   describe("a FlickrGeoLookup instance") {
 
@@ -22,7 +23,7 @@ class FlickrLookupTest extends FunSpec {
       val lat = "50.85"
       val lon = "4.35"
       val radius = "5"
-      val serverRootUri: String = "http://localhost/flickrwrappr/"
+
       val locationRootUri = serverRootUri + "location/"
       val dataRootUri = serverRootUri + "data/photosDepictingLocation/"
 
