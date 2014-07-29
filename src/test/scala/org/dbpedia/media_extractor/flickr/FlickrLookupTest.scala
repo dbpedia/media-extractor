@@ -48,6 +48,25 @@ class FlickrLookupTest extends FunSpec {
   }
 
   describe("a FlickrDBpediaLookup instance") {
-    describe("should generate an RDF graph")(pending)
+
+    describe("should generate an RDF graph") {
+
+      val targetResource = "Brussels"
+
+      val flickrDBpediaLookup = new FlickrDBpediaLookup(
+        targetResource,
+        serverRootUri,
+        flickrOAuthSession)
+
+      val dbpediaRdfGraph = flickrDBpediaLookup.performFlickrLookup(targetResource, radius)
+
+      val dbpediaXmlOutputStream = new FileOutputStream(localPath + "FlickrLookupTest.output.dbpedia.xml")
+      dbpediaRdfGraph.write(dbpediaXmlOutputStream, "RDF/XML")
+
+      val dbpediaNtOutputStream = new FileOutputStream(localPath + "FlickrLookupTest.output.dbpedia.nt")
+      dbpediaRdfGraph.write(dbpediaNtOutputStream, "N-TRIPLES")
+    }
+
   }
+
 }
