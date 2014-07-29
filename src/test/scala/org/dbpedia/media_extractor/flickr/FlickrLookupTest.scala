@@ -4,6 +4,7 @@
 package org.dbpedia.media_extractor.flickr
 
 import java.io.FileOutputStream
+
 import org.scalatest.FunSpec
 
 /**
@@ -40,10 +41,10 @@ class FlickrLookupTest extends FunSpec {
 
       val myPath = "/media/allentiak/dbpedia.git/media-extractor/src/test/resources/"
 
-      val geoOutputXml = new FileOutputStream(myPath + "FlickrWrappr2Test.output.geo.xml")
+      val geoOutputXml = new FileOutputStream(myPath + "FlickrLookupTest.output.geo.xml")
       myRDFGraph.write(geoOutputXml, "RDF/XML")
 
-      val geoOutputNt = new FileOutputStream(myPath + "FlickrWrappr2Test.output.geo.nt")
+      val geoOutputNt = new FileOutputStream(myPath + "FlickrLookupTest.output.geo.nt")
       myRDFGraph.write(geoOutputNt, "N-TRIPLES")
 
     }
