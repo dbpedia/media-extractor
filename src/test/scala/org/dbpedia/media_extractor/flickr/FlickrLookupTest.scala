@@ -14,6 +14,7 @@ import org.scalatest.FunSpec
 class FlickrLookupTest extends FunSpec {
 
   describe("a FlickrGeoLookup instance") {
+    
     describe("should generate an RDF graph") {
 
       // Geo default parameters:
