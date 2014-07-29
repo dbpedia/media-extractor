@@ -26,8 +26,6 @@ class FlickrLookupTest extends FunSpec {
 
       val flickrOAuthSession = FlickrOAuthSession(credentialsFile = "/flickr.setup.properties", accessTokenFile = "/flickr.accessToken.properties")
 
-      //val flickrWrappr2 = FlickrWrappr2()
-
       val flickrGeoLookup = new FlickrGeoLookup(
         lat = lat,
         lon = lon,
