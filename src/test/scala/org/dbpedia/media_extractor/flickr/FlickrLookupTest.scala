@@ -4,7 +4,6 @@
 package org.dbpedia.media_extractor.flickr
 
 import java.io.FileOutputStream
-
 import org.scalatest.FunSpec
 
 /**
@@ -13,8 +12,10 @@ import org.scalatest.FunSpec
  */
 class FlickrLookupTest extends FunSpec {
 
+  val flickrOAuthSession = FlickrOAuthSession(credentialsFile = "/flickr.setup.properties", accessTokenFile = "/flickr.accessToken.properties")
+
   describe("a FlickrGeoLookup instance") {
-    
+
     describe("should generate an RDF graph") {
 
       // Geo default parameters:
@@ -24,8 +25,6 @@ class FlickrLookupTest extends FunSpec {
       val serverRootUri: String = "http://localhost/flickrwrappr/"
       val locationRootUri = serverRootUri + "location/"
       val dataRootUri = serverRootUri + "data/photosDepictingLocation/"
-
-      val flickrOAuthSession = FlickrOAuthSession(credentialsFile = "/flickr.setup.properties", accessTokenFile = "/flickr.accessToken.properties")
 
       val flickrGeoLookup = new FlickrGeoLookup(
         lat = lat,
