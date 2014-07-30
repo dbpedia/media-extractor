@@ -26,7 +26,6 @@ case class FlickrGeoLookup(
 
   override protected val namespacesMap = super.namespacesMap ++ Map(
     //"geonames"-> "http://www.geonames.org/ontology#",
-    "wgs84_pos" -> "http://www.w3.org/2003/01/geo/wgs84_pos#",
     "georss" -> "http://www.georss.org/georss/")
 
   def addFlickrSearchResultsToRDFGraph(rdfGraph: Model, flickrSearchResultsList: List[FlickrSearchResult], locationFullUriResource: Resource) = {

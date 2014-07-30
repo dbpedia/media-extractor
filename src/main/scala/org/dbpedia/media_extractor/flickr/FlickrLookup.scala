@@ -21,7 +21,8 @@ abstract class FlickrLookup(val flickrOAuthSession: FlickrOAuthSession) {
   protected def namespacesMap = Map(
     "foaf" -> "http://xmlns.com/foaf/0.1/",
     "dcterms" -> "http://purl.org/dc/terms/",
-    "rdfs" -> "http://www.w3.org/2000/01/rdf-schema#")
+    "rdfs" -> "http://www.w3.org/2000/01/rdf-schema#",
+    "wgs84_pos" -> "http://www.w3.org/2003/01/geo/wgs84_pos#")
 
   val flickrCredentialsFile: String = "/flickr.setup.properties"
 
