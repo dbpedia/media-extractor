@@ -78,18 +78,18 @@ case class FlickrGeoLookup(
     val foafDocumentResource = rdfGraph.createResource(locationFullUri)
     foafDocumentResource.addProperty(RDF.`type`, namespacesMap("foaf") + "Document")
 
-    val label = "Photos taken within " + radius + " meters of geographic location lat=" + lat + " long=" + lon
-    val labelLiteral = rdfGraph.createLiteral(label, "en")
-    foafDocumentResource.addProperty(RDFS.label, labelLiteral)
+    val lookupHeader = "Photos taken within " + radius + " meters of geographic location lat=" + lat + " long=" + lon
+    val lookupHeaderLiteral = rdfGraph.createLiteral(lookupHeader, "en")
+    foafDocumentResource.addProperty(RDFS.label, lookupHeaderLiteral)
     foafDocumentResource.addProperty(FOAF.primaryTopic, locationFullUriResource)
     val flickrTOUResource = rdfGraph.createResource(flickrTermsUri)
     foafDocumentResource.addProperty(DCTerms.license, flickrTOUResource)
 
-    dataFullUriResource.addProperty(RDFS.label, labelLiteral)
+    dataFullUriResource.addProperty(RDFS.label, lookupHeaderLiteral)
 
-    val flickrwrapprLiteral = rdfGraph.createLiteral(lookupFooter, "en")
+    val lookupFooterLiteral = rdfGraph.createLiteral(lookupFooter, "en")
     val serverRootUriResource = rdfGraph.createResource(serverRootUri)
-    serverRootUriResource.addProperty(RDFS.label, flickrwrapprLiteral)
+    serverRootUriResource.addProperty(RDFS.label, lookupFooterLiteral)
   }
 
   def performFlickrLookup(lat: String, lon: String, radius: String): Model = {

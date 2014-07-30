@@ -36,23 +36,23 @@ case class FlickrDBpediaLookup(
 
   private def addDocumentMetadataToRDFGraph(rdfGraph: Model) = {
     val dbpediaResourceFullUriResource = rdfGraph.createResource(dbpediaResourceFullUri)
-    val foafDocumentResource2 = rdfGraph.createResource(dbpediaResourceFullUri)
-    foafDocumentResource2.addProperty(RDF.`type`, namespacesMap("foaf") + "Document")
+    val foafDocumentResource = rdfGraph.createResource(dbpediaResourceFullUri)
+    foafDocumentResource.addProperty(RDF.`type`, namespacesMap("foaf") + "Document")
 
-    val label2 = "Photos for Dbpedia resource " + targetResource
-    val labelLiteral2 = rdfGraph.createLiteral(label2, "en")
-    foafDocumentResource2.addProperty(RDFS.label, labelLiteral2)
+    val lookupHeader = "Photos for Dbpedia resource " + targetResource
+    val lookupHeaderLiteral = rdfGraph.createLiteral(lookupHeader, "en")
+    foafDocumentResource.addProperty(RDFS.label, lookupHeaderLiteral)
 
-    foafDocumentResource2.addProperty(FOAF.primaryTopic, dbpediaResourceFullUriResource)
+    foafDocumentResource.addProperty(FOAF.primaryTopic, dbpediaResourceFullUriResource)
 
-    val flickrTOUResource2 = rdfGraph.createResource(flickrTermsUri)
-    foafDocumentResource2.addProperty(DCTerms.license, flickrTOUResource2)
+    val flickrTOUResource = rdfGraph.createResource(flickrTermsUri)
+    foafDocumentResource.addProperty(DCTerms.license, flickrTOUResource)
 
-    dbpediaResourceFullUriResource.addProperty(RDFS.label, labelLiteral2)
+    dbpediaResourceFullUriResource.addProperty(RDFS.label, lookupHeaderLiteral)
 
-    val flickrwrapprLiteral2 = rdfGraph.createLiteral(lookupFooter, "en")
-    val serverRootUriResource2 = rdfGraph.createResource(serverRootUri)
-    serverRootUriResource2.addProperty(RDFS.label, flickrwrapprLiteral2)
+    val lookupFooterLiteral = rdfGraph.createLiteral(lookupFooter, "en")
+    val serverRootUriResource = rdfGraph.createResource(serverRootUri)
+    serverRootUriResource.addProperty(RDFS.label, lookupFooterLiteral)
   }
 
   // FIXME: logic is incorrect
