@@ -20,7 +20,7 @@ case class FlickrDBpediaLookup(
   val dbpediaResourceUri = dbpediaRootUri + "resource/"
   val dbpediaResourceFullUri = dbpediaResourceUri + targetResource.trim.replaceAll(" ", "_").replaceAll("%2F", "/").replaceAll("%3A", ":")
 
-  def addFlickrSearchResultsToRDFGraph(rdfGraph: Model, flickrSearchResultsList: List[FlickrSearchResult]) {
+  def addFlickrSearchResultsToRDFGraph(flickrSearchResultsList: List[FlickrSearchResult], rdfGraph: Model) {
     val dbpediaResourceFullUriResource = rdfGraph.createResource(dbpediaResourceFullUri)
     for (resultElem <- flickrSearchResultsList) {
       val depictionUriResource = rdfGraph.createResource(resultElem.depictionUri)
