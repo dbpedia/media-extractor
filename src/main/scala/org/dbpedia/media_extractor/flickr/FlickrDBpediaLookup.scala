@@ -19,7 +19,8 @@ case class FlickrDBpediaLookup(
   val dbpediaResourceUri = "http://dbpedia.org/resource/"
   val dbpediaResourceFullUri = dbpediaResourceUri + targetResource.trim.replaceAll(" ", "_").replaceAll("%2F", "/").replaceAll("%3A", ":")
 
-  def addFlickrSearchResultsToRDFGraph(rdfGraph: Model, flickrSearchResultsList: List[FlickrSearchResult], dbpediaResourceFullUriResource: Resource) {
+  def addFlickrSearchResultsToRDFGraph(rdfGraph: Model, flickrSearchResultsList: List[FlickrSearchResult], dbpediaResourceFullUri: String) {
+    val dbpediaResourceFullUriResource = rdfGraph.createResource(dbpediaResourceFullUri)
     for (resultElem <- flickrSearchResultsList) {
       val depictionUriResource = rdfGraph.createResource(resultElem.depictionUri)
       val pageUriResource = rdfGraph.createResource(resultElem.pageUri)
@@ -28,11 +29,12 @@ case class FlickrDBpediaLookup(
     }
   }
 
-  def addMetadataToRDFGraph(rdfGraph: Model, dbpediaResourceFullUriResource: Resource) = {
-    addDocumentMetadataToRDFGraph(rdfGraph, dbpediaResourceFullUriResource)
+  def addMetadataToRDFGraph(rdfGraph: Model, dbpediaResourceFullUri: String) = {
+    addDocumentMetadataToRDFGraph(rdfGraph, dbpediaResourceFullUri)
   }
 
-  private def addDocumentMetadataToRDFGraph(rdfGraph: Model, dbpediaResourceFullUriResource: Resource) = {
+  private def addDocumentMetadataToRDFGraph(rdfGraph: Model, dbpediaResourceFullUri: String) = {
+    val dbpediaResourceFullUriResource = rdfGraph.createResource(dbpediaResourceFullUri)
     val foafDocumentResource2 = rdfGraph.createResource(dbpediaResourceFullUri)
     foafDocumentResource2.addProperty(RDF.`type`, namespacesMap("foaf") + "Document")
 
@@ -64,9 +66,9 @@ case class FlickrDBpediaLookup(
     val flickrSearchResults = getFlickrSearchResults(flickrOAuthSession.getFlickrSearchResponse(searchText = "", latitude = "", longitude = "", radius, license, signRequest))
 
     addNameSpacesToRDFGraph(rdfGraph: Model)
-    addMetadataToRDFGraph(rdfGraph: Model, dbpediaResourceFullUriResource)
+    addMetadataToRDFGraph(rdfGraph: Model, dbpediaResourceFullUri)
 
-    addFlickrSearchResultsToRDFGraph(rdfGraph, flickrSearchResults, dbpediaResourceFullUriResource)
+    addFlickrSearchResultsToRDFGraph(rdfGraph, flickrSearchResults, dbpediaResourceFullUri)
 
     rdfGraph
   }
