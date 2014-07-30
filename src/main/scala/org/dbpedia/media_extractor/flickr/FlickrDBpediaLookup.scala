@@ -1,7 +1,10 @@
 package org.dbpedia.media_extractor.flickr
 
+import scala.collection.mutable.ArrayBuffer
+
 import com.hp.hpl.jena.query.QueryExecutionFactory
 import com.hp.hpl.jena.query.QueryFactory
+import com.hp.hpl.jena.query.ResultSetFormatter
 import com.hp.hpl.jena.rdf.model.Model
 import com.hp.hpl.jena.rdf.model.ModelFactory
 import com.hp.hpl.jena.sparql.vocabulary.FOAF
@@ -66,7 +69,7 @@ case class FlickrDBpediaLookup(
     val sparqlQueryString =
       "PREFIX rdfs: <" + RDFS.getURI() + "> " +
         "PREFIX wgs84_pos: <" + namespacesMap("wgs84_pos") + "> " +
-        "SELECT ?label ?lat ?long" +
+        "SELECT ?label ?lat ?long " +
         "FROM <" + dbpediaRootUri + "> " +
         "WHERE { " +
         "	<" + dbpediaResourceFullUri + "> rdfs:label ?label . " +
@@ -84,21 +87,35 @@ case class FlickrDBpediaLookup(
       // Execute the SPARQL query
       val sparqlQueryResultSet = sparqlQueryExecution.execSelect()
 
+      val noResults = !sparqlQueryResultSet.hasNext()
+
+      // One label could be common to more than one language
+      val processedLabels = ArrayBuffer[String]()
+
+      ResultSetFormatter.asRDF(rdfGraph, sparqlQueryResultSet);
+
       // For each solution to the query
       while (sparqlQueryResultSet.hasNext()) {
         val querySolution = sparqlQueryResultSet.nextSolution()
 
-        // 1) Perform a Flickr search
-        val flickrSearchResponse = flickrOAuthSession.getFlickrSearchResponse(
-          searchText = querySolution.getLiteral("label").toString(),
-          latitude = querySolution.getLiteral("lat").toString(),
-          longitude = querySolution.getLiteral("long").toString(),
-          radius,
-          license,
-          signRequest)
+        // Skip duplicated labels
+        if (!(processedLabels.contains(querySolution.getLiteral("label").toString()))) {
 
-        // 2) Add the Flickr results to the RDF graph
-        addFlickrSearchResultsToRDFGraph(getFlickrSearchResults(flickrSearchResponse), rdfGraph)
+          // 1) Perform a Flickr search
+          val flickrSearchResults = getFlickrSearchResults(
+            flickrOAuthSession.getFlickrSearchResponse(
+              searchText = querySolution.getLiteral("label").toString(),
+              latitude = querySolution.getLiteral("lat").toString(),
+              longitude = querySolution.getLiteral("long").toString(),
+              radius,
+              license,
+              signRequest))
+
+          // 2) Add the Flickr results to the RDF graph
+          addFlickrSearchResultsToRDFGraph(flickrSearchResults, rdfGraph)
+
+          processedLabels += querySolution.getLiteral("label").toString()
+        }
       }
 
     } finally
