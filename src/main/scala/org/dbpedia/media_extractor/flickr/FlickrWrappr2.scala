@@ -41,4 +41,3 @@ object FlickrWrappr2 extends App {
     flickrSavedAccessTokenFile: String = "/flickr.accessToken.properties") =
     new FlickrWrappr2(serverRootUri, flickrSavedCredentialsFile, flickrSavedAccessTokenFile)
 }
-
