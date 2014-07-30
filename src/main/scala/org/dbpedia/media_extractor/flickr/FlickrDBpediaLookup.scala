@@ -89,7 +89,7 @@ case class FlickrDBpediaLookup(
 
       val noResults = !sparqlQueryResultSet.hasNext()
 
-      // One label could be common to more than one language
+      // Some labels are common to many languages (e.g. "Buenos Aires")
       val processedLabels = ArrayBuffer[String]()
 
       ResultSetFormatter.asRDF(rdfGraph, sparqlQueryResultSet);
