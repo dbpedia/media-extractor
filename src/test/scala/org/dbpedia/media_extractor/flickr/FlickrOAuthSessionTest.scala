@@ -85,17 +85,17 @@ class FlickrOAuthSessionTest extends FunSpec {
         flickrOAuthSession)
 
       it("method 'flickr.photos.search' (unsigned)") {
-        val unsignedSearchResponse = flickrGeoLookup.getFlickrSearchResponse(searchText, lat, lon, radius, license, false)
+        val unsignedSearchResponse = flickrOAuthSession.getFlickrSearchResponse(searchText, lat, lon, radius, license, false)
         assert(unsignedSearchResponse.getMessage() === "OK")
       }
 
       it("method 'flickr.photos.search' (signed)") {
-        val signedSearchResponse = flickrGeoLookup.getFlickrSearchResponse(searchText, lat, lon, radius, license, true)
+        val signedSearchResponse = flickrOAuthSession.getFlickrSearchResponse(searchText, lat, lon, radius, license, true)
         assert(signedSearchResponse.getMessage() === "OK")
       }
 
       describe("should generate and show the photos' links") {
-        val signedSearchResponse = flickrGeoLookup.getFlickrSearchResponse(searchText, lat, lon, radius, license, true)
+        val signedSearchResponse = flickrOAuthSession.getFlickrSearchResponse(searchText, lat, lon, radius, license, true)
         assert(signedSearchResponse.getMessage() === "OK")
         // FIXME: refactor this code into a more basic test?  
         //There is no need to show the actual links anymore

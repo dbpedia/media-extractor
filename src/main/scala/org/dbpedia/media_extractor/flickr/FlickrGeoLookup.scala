@@ -87,7 +87,7 @@ case class FlickrGeoLookup(
     val rdfGraph = ModelFactory.createDefaultModel()
     val locationFullUriResource = rdfGraph.createResource(locationFullUri)
 
-    val flickrSearchResults = getFlickrSearchResults(getFlickrSearchResponse(searchText = "", latitude = lat, longitude = lon, radius, license, signRequest))
+    val flickrSearchResults = getFlickrSearchResults(flickrOAuthSession.getFlickrSearchResponse(searchText = "", latitude = lat, longitude = lon, radius, license, signRequest))
 
     addNameSpacesToRDFGraph(rdfGraph)
     addMetadataToRDFGraph(rdfGraph)

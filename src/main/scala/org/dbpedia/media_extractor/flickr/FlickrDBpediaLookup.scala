@@ -61,7 +61,7 @@ case class FlickrDBpediaLookup(
 
     // TODO: process query results
 
-    val flickrSearchResults = getFlickrSearchResults(getFlickrSearchResponse(searchText = "", latitude = "", longitude = "", radius, license, signRequest))
+    val flickrSearchResults = getFlickrSearchResults(flickrOAuthSession.getFlickrSearchResponse(searchText = "", latitude = "", longitude = "", radius, license, signRequest))
 
     addNameSpacesToRDFGraph(rdfGraph: Model)
     addMetadataToRDFGraph(rdfGraph: Model, dbpediaResourceFullUriResource)

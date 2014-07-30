@@ -3,9 +3,7 @@ package org.dbpedia.media_extractor.flickr
 import scala.collection.mutable.ListBuffer
 import scala.xml.XML
 
-import org.scribe.model.OAuthRequest
 import org.scribe.model.Response
-import org.scribe.model.Verb
 
 import com.hp.hpl.jena.rdf.model.Model
 
@@ -30,27 +28,6 @@ abstract class FlickrLookup(val flickrOAuthSession: FlickrOAuthSession) {
   val license = "1,2"
   val radius = "5"
   val signRequest = true
-
-  // FIXME: how to access flickrOAuthSession?
-  def getFlickrSearchResponse(searchText: String = "", latitude: String = "", longitude: String = "", radius: String = "", license: String = "", signRequest: Boolean = true): Response = {
-    val searchRequest = new OAuthRequest(Verb.POST, FlickrOAuthSession.endPointUri.toString())
-
-    searchRequest.addQuerystringParameter("method", "flickr.photos.search")
-    searchRequest.addQuerystringParameter("text", searchText)
-    searchRequest.addQuerystringParameter("lat", latitude)
-    searchRequest.addQuerystringParameter("lon", longitude)
-    searchRequest.addQuerystringParameter("radius", radius)
-    searchRequest.addQuerystringParameter("license", license)
-    searchRequest.addQuerystringParameter("per_page", "30") // maximum according to FlickrAPI's TOU
-    searchRequest.addQuerystringParameter("sort", "relevance")
-    searchRequest.addQuerystringParameter("min_taken_date", "1800-01-01 00:00:00") // limiting agent to avoid "parameterless searches"
-
-    // This request does not need to be signed
-    if (signRequest)
-      flickrOAuthSession.flickrOAuthService.signRequest(flickrOAuthSession.accessToken, searchRequest)
-
-    searchRequest.send()
-  }
 
   def validateFlickrSearchResponse(flickrSearchResponse: Response): Boolean = {
     flickrSearchResponse.getMessage().equals("OK")
