@@ -28,7 +28,8 @@ case class FlickrGeoLookup(
     //"geonames"-> "http://www.geonames.org/ontology#",
     "georss" -> "http://www.georss.org/georss/")
 
-  def addFlickrSearchResultsToRDFGraph(rdfGraph: Model, flickrSearchResultsList: List[FlickrSearchResult], locationFullUriResource: Resource) = {
+  def addFlickrSearchResultsToRDFGraph(flickrSearchResultsList: List[FlickrSearchResult], rdfGraph: Model) = {
+    val locationFullUriResource = rdfGraph.createResource(locationFullUri)
     for (resultElem <- flickrSearchResultsList) {
       val depictionUriResource = rdfGraph.createResource(resultElem.depictionUri)
       val pageUriResource = rdfGraph.createResource(resultElem.pageUri)
@@ -38,10 +39,8 @@ case class FlickrGeoLookup(
   }
 
   def addMetadataToRDFGraph(rdfGraph: Model) = {
-    val dataFullUriResource = rdfGraph.createResource(dataFullUri)
-
     addLocationMetadataToRDFGraph(rdfGraph)
-    addDocumentMetadataToRDFGraph(rdfGraph, dataFullUriResource)
+    addDocumentMetadataToRDFGraph(rdfGraph)
   }
 
   private def addLocationMetadataToRDFGraph(rdfGraph: Model) = {
@@ -72,7 +71,7 @@ case class FlickrGeoLookup(
     spatialThingResource.addProperty(radiusProperty, radiusLiteral)
   }
 
-  private def addDocumentMetadataToRDFGraph(rdfGraph: Model, dataFullUriResource: Resource) = {
+  private def addDocumentMetadataToRDFGraph(rdfGraph: Model) = {
     val locationFullUriResource = rdfGraph.createResource(locationFullUri)
 
     val foafDocumentResource = rdfGraph.createResource(locationFullUri)
@@ -85,6 +84,7 @@ case class FlickrGeoLookup(
     val flickrTOUResource = rdfGraph.createResource(flickrTermsUri)
     foafDocumentResource.addProperty(DCTerms.license, flickrTOUResource)
 
+    val dataFullUriResource = rdfGraph.createResource(dataFullUri)
     dataFullUriResource.addProperty(RDFS.label, lookupHeaderLiteral)
 
     val lookupFooterLiteral = rdfGraph.createLiteral(lookupFooter, "en")
@@ -100,7 +100,7 @@ case class FlickrGeoLookup(
 
     addNameSpacesToRDFGraph(rdfGraph)
     addMetadataToRDFGraph(rdfGraph)
-    addFlickrSearchResultsToRDFGraph(rdfGraph, flickrSearchResults, locationFullUriResource)
+    addFlickrSearchResultsToRDFGraph(flickrSearchResults, rdfGraph)
 
     rdfGraph
   }
