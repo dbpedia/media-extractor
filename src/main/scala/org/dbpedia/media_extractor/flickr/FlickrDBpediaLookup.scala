@@ -66,13 +66,14 @@ case class FlickrDBpediaLookup(
     val sparqlQueryString =
       "PREFIX rdfs: <" + RDFS.getURI() + "> " +
         "PREFIX wgs84_pos: <" + namespacesMap("wgs84_pos") + "> " +
-        "SELECT ?label ?lat ?long FROM <" + dbpediaRootUri + "> " +
-        "		WHERE { " +
-        "			<" + dbpediaResourceFullUri + "> rdfs:label ?label . " +
-        "			OPTIONAL { " +
-        "					<" + dbpediaResourceFullUri + "> wgs84_pos:lat ?lat . " +
-        "					<" + dbpediaResourceFullUri + "> wgs84_pos:long ?long " +
-        "					} " +
+        "SELECT ?label ?lat ?long" +
+        "FROM <" + dbpediaRootUri + "> " +
+        "WHERE { " +
+        "	<" + dbpediaResourceFullUri + "> rdfs:label ?label . " +
+        "	OPTIONAL { " +
+        "		<" + dbpediaResourceFullUri + "> wgs84_pos:lat ?lat . " +
+        "		<" + dbpediaResourceFullUri + "> wgs84_pos:long ?long " +
+        "	} " +
         "}"
 
     // Prepare the SPARQL query
