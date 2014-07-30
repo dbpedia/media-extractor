@@ -19,7 +19,7 @@ class FlickrWrappr2(val serverRootUri: String = "http://localhost/flickrwrappr/"
   // DBpedia default parameter:
   val targetResource = "Brussels"
 
-  val flickrGeoLookup: FlickrLookup = FlickrGeoLookup(
+  val flickrGeoLookup = FlickrGeoLookup(
     lat = lat,
     lon = lon,
     radius = radius,
@@ -28,7 +28,7 @@ class FlickrWrappr2(val serverRootUri: String = "http://localhost/flickrwrappr/"
     serverRootUri = serverRootUri,
     flickrOAuthSession = flickrOAuthSession)
 
-  val flickrDBpediaLookup: FlickrLookup = FlickrDBpediaLookup(
+  val flickrDBpediaLookup = FlickrDBpediaLookup(
     targetResource = targetResource,
     serverRootUri = serverRootUri,
     flickrOAuthSession = flickrOAuthSession)
