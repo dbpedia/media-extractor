@@ -16,7 +16,8 @@ case class FlickrDBpediaLookup(
 
   extends FlickrLookup(flickrOAuthSession) {
 
-  val dbpediaResourceUri = "http://dbpedia.org/resource/"
+  val dbpediaRootUri = "http://dbpedia.org/"
+  val dbpediaResourceUri = dbpediaRootUri + "resource/"
   val dbpediaResourceFullUri = dbpediaResourceUri + targetResource.trim.replaceAll(" ", "_").replaceAll("%2F", "/").replaceAll("%3A", ":")
 
   def addFlickrSearchResultsToRDFGraph(rdfGraph: Model, flickrSearchResultsList: List[FlickrSearchResult], dbpediaResourceFullUri: String) {
