@@ -94,7 +94,6 @@ case class FlickrGeoLookup(
 
   def performFlickrLookup(lat: String, lon: String, radius: String): Model = {
     val rdfGraph = ModelFactory.createDefaultModel()
-    val locationFullUriResource = rdfGraph.createResource(locationFullUri)
 
     addNameSpacesToRDFGraph(rdfGraph)
     addMetadataToRDFGraph(rdfGraph)
