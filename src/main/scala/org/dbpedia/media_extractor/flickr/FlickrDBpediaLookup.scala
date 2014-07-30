@@ -59,7 +59,7 @@ case class FlickrDBpediaLookup(
     serverRootUriResource.addProperty(RDFS.label, lookupFooterLiteral)
   }
 
-  def performFlickrLookup(targetResource: String, radius: String): Model = {
+  def performFlickrLookup(targetResource: String = targetResource, radius: String = radius): Model = {
     val rdfGraph = ModelFactory.createDefaultModel()
 
     addNameSpacesToRDFGraph(rdfGraph)

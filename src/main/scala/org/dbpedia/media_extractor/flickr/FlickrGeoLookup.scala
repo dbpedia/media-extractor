@@ -92,7 +92,7 @@ case class FlickrGeoLookup(
     serverRootUriResource.addProperty(RDFS.label, lookupFooterLiteral)
   }
 
-  def performFlickrLookup(lat: String, lon: String, radius: String): Model = {
+  def performFlickrLookup(lat: String = lat, lon: String = lon, radius: String = radius): Model = {
     val rdfGraph = ModelFactory.createDefaultModel()
 
     addNameSpacesToRDFGraph(rdfGraph)
