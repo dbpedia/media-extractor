@@ -20,7 +20,7 @@ case class FlickrDBpediaLookup(
   val dbpediaResourceUri = dbpediaRootUri + "resource/"
   val dbpediaResourceFullUri = dbpediaResourceUri + targetResource.trim.replaceAll(" ", "_").replaceAll("%2F", "/").replaceAll("%3A", ":")
 
-  def addFlickrSearchResultsToRDFGraph(rdfGraph: Model, flickrSearchResultsList: List[FlickrSearchResult], dbpediaResourceFullUri: String) {
+  def addFlickrSearchResultsToRDFGraph(rdfGraph: Model, flickrSearchResultsList: List[FlickrSearchResult]) {
     val dbpediaResourceFullUriResource = rdfGraph.createResource(dbpediaResourceFullUri)
     for (resultElem <- flickrSearchResultsList) {
       val depictionUriResource = rdfGraph.createResource(resultElem.depictionUri)
@@ -30,11 +30,11 @@ case class FlickrDBpediaLookup(
     }
   }
 
-  def addMetadataToRDFGraph(rdfGraph: Model, dbpediaResourceFullUri: String) = {
-    addDocumentMetadataToRDFGraph(rdfGraph, dbpediaResourceFullUri)
+  def addMetadataToRDFGraph(rdfGraph: Model) = {
+    addDocumentMetadataToRDFGraph(rdfGraph)
   }
 
-  private def addDocumentMetadataToRDFGraph(rdfGraph: Model, dbpediaResourceFullUri: String) = {
+  private def addDocumentMetadataToRDFGraph(rdfGraph: Model) = {
     val dbpediaResourceFullUriResource = rdfGraph.createResource(dbpediaResourceFullUri)
     val foafDocumentResource2 = rdfGraph.createResource(dbpediaResourceFullUri)
     foafDocumentResource2.addProperty(RDF.`type`, namespacesMap("foaf") + "Document")
