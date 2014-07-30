@@ -92,6 +92,9 @@ case class FlickrDBpediaLookup(
       // Some labels are common to many languages (e.g. "Buenos Aires")
       val processedLabels = ArrayBuffer[String]()
 
+      // FIXME: save the whole triple (label, lat, long) as "processed".
+      // Some labels have different coordinates across languages (e.g. "La Paz")
+
       ResultSetFormatter.asRDF(rdfGraph, sparqlQueryResultSet);
 
       // For each solution to the query
