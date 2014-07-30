@@ -26,7 +26,7 @@ case class FlickrGeoLookup(
 
   override protected val namespacesMap = super.namespacesMap ++ Map(
     //"geonames"-> "http://www.geonames.org/ontology#",
-    "geo" -> "http://www.w3.org/2003/01/geo/wgs84_pos#",
+    "wgs84_pos" -> "http://www.w3.org/2003/01/geo/wgs84_pos#",
     "georss" -> "http://www.georss.org/georss/")
 
   def addFlickrSearchResultsToRDFGraph(rdfGraph: Model, flickrSearchResultsList: List[FlickrSearchResult], locationFullUriResource: Resource) = {
@@ -48,9 +48,9 @@ case class FlickrGeoLookup(
   // FIXME: make literals work
   private def addLocationMetadataToRDFGraph(rdfGraph: Model) = {
     val spatialThingResource = rdfGraph.createResource(locationFullUri)
-    spatialThingResource.addProperty(RDF.`type`, namespacesMap("geo") + "SpatialThing")
+    spatialThingResource.addProperty(RDF.`type`, namespacesMap("wgs84_pos") + "SpatialThing")
 
-    val geoTypeProperty = rdfGraph.createProperty("type", namespacesMap("geo") + "type")
+    val geoTypeProperty = rdfGraph.createProperty("type", namespacesMap("wgs84_pos") + "type")
     spatialThingResource.addProperty(geoTypeProperty, "SpatialThing")
 
     // FIXME: make literals work
@@ -59,7 +59,7 @@ case class FlickrGeoLookup(
     //val radiusLiteral = geoResultsModel.createTypedLiteral(new Integer(radius.toInt))
 
     //val latProperty = spa
-    //val geo_lat = geoResultsModel.add (geo + "lat")
+    //val geo_lat = geoResultsModel.add (namespacesMap("wgs84_pos") + "lat")
     //spatialThingResource.addProperty(geoLatProperty,lat)
   }
 
