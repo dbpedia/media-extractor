@@ -45,22 +45,32 @@ case class FlickrGeoLookup(
     addDocumentMetadataToRDFGraph(rdfGraph, dataFullUriResource)
   }
 
-  // FIXME: make literals work
   private def addLocationMetadataToRDFGraph(rdfGraph: Model) = {
     val spatialThingResource = rdfGraph.createResource(locationFullUri)
     spatialThingResource.addProperty(RDF.`type`, namespacesMap("wgs84_pos") + "SpatialThing")
 
-    val geoTypeProperty = rdfGraph.createProperty("type", namespacesMap("wgs84_pos") + "type")
-    spatialThingResource.addProperty(geoTypeProperty, "SpatialThing")
+    val wgs84_posTypeProperty = rdfGraph.createProperty("type", namespacesMap("wgs84_pos") + "type")
+    spatialThingResource.addProperty(wgs84_posTypeProperty, "SpatialThing")
 
-    // FIXME: make literals work
-    //val latLiteral = geoResultsModel.createTypedLiteral(new Float(lat.toFloat))
-    //val lonLiteral = geoResultsModel.createTypedLiteral(new Integer(lon.toInt))
-    //val radiusLiteral = geoResultsModel.createTypedLiteral(new Integer(radius.toInt))
+    val latFloat = lat.toFloat
+    val lonFloat = lon.toFloat
+    val radiusFloat = radius.toFloat
 
-    //val latProperty = spa
-    //val geo_lat = geoResultsModel.add (namespacesMap("wgs84_pos") + "lat")
-    //spatialThingResource.addProperty(geoLatProperty,lat)
+    val latLiteral = rdfGraph.createTypedLiteral(latFloat, "Float")
+    val longLiteral = rdfGraph.createTypedLiteral(lonFloat, "Float")
+    val radiusLiteral = rdfGraph.createTypedLiteral(radiusFloat, "Float")
+
+    val wgs84_posLatUri = namespacesMap("wgs84_pos") + "lat"
+    val wgs84_posLongUri = namespacesMap("wgs84_pos") + "long"
+    val wgs84_posRadiusUri = namespacesMap("wgs84_pos") + "radius"
+
+    val latProperty = rdfGraph.createProperty(wgs84_posLatUri, "lat")
+    val longProperty = rdfGraph.createProperty(wgs84_posLongUri, "long")
+    val radiusProperty = rdfGraph.createProperty(wgs84_posRadiusUri, "radius")
+
+    spatialThingResource.addProperty(latProperty, latLiteral)
+    spatialThingResource.addProperty(longProperty, longLiteral)
+    spatialThingResource.addProperty(radiusProperty, radiusLiteral)
   }
 
   private def addDocumentMetadataToRDFGraph(rdfGraph: Model, dataFullUriResource: Resource) = {
