@@ -1,2 +1,2 @@
-Token = <Token>
-secret = <secret>
+accessToken = <Token>
+accessSecret = <secret>

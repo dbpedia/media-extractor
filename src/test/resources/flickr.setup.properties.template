@@ -1,2 +1,2 @@
 apiKey = <your API key>
-secret = <your secret>
+apiKeySecret = <your secret>

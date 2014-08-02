@@ -2,7 +2,7 @@ name := "media-extractor"
 
 version := "0.0.1"
 
-scalaVersion := "2.11.0"
+scalaVersion := "2.11.2"
 
 resolvers += "scribe-java-mvn-repo" at "https://raw.github.com/fernandezpablo85/scribe-java/mvn-repo/"
 
