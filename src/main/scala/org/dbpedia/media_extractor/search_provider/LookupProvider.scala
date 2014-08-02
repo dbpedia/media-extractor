@@ -8,14 +8,14 @@ package org.dbpedia.media_extractor.search_provider
  *
  */
 
-abstract trait SearchBehavior {
+abstract trait LookupBehavior {
   def search()
 }
-trait GeoSearchBehavior extends SearchBehavior {
+trait GeoLookupBehavior extends LookupBehavior {
   //TODO: implement stub
   override def search = ???
 }
-trait SemanticSearchBehavior extends SearchBehavior {
+trait SemanticLookupBehavior extends LookupBehavior {
   //TODO: implement stub
   override def search = ???
 }
@@ -23,6 +23,7 @@ trait SemanticSearchBehavior extends SearchBehavior {
 abstract trait AuthenticationBehavior {
   def authenticate()
 }
+
 trait OAuthBehavior extends AuthenticationBehavior {
   //TODO: implement stub
   override def authenticate = ???
@@ -31,33 +32,33 @@ trait OAuthBehavior extends AuthenticationBehavior {
 // The singleton to generate, store and load access credentials
 object OAuthSession
 
-abstract class SearchProvider {
-  def performSearchBehavior()
-  def setSearchBehavior()
+abstract class LookupProvider {
+  def performLookupBehavior()
+  def setLookupBehavior()
   def performAuthenticationBehavior()
   def setAuthenticationBehavior()
 }
 
 //TODO: implement stubs
-case class FlickrSearchProvider() extends SearchProvider {
-  override def performSearchBehavior = ???
-  override def setSearchBehavior = ???
+case class FlickrSearchProvider() extends LookupProvider {
+  override def performLookupBehavior = ???
+  override def setLookupBehavior = ???
   override def performAuthenticationBehavior = ???
   override def setAuthenticationBehavior = ???
 }
 
 //TODO: implement stubs
-case class CreativeCommonsSearchProvider() extends SearchProvider {
-  override def performSearchBehavior = ???
-  override def setSearchBehavior = ???
+case class CreativeCommonsLookupProvider() extends LookupProvider {
+  override def performLookupBehavior = ???
+  override def setLookupBehavior = ???
   override def performAuthenticationBehavior = ???
   override def setAuthenticationBehavior = ???
 }
 
 //TODO: implement stubs
-case class YouTubeSearchProvider() extends SearchProvider {
-  override def performSearchBehavior = ???
-  override def setSearchBehavior = ???
+case class YouTubeLookupProvider() extends LookupProvider {
+  override def performLookupBehavior = ???
+  override def setLookupBehavior = ???
   override def performAuthenticationBehavior = ???
   override def setAuthenticationBehavior = ???
 }
