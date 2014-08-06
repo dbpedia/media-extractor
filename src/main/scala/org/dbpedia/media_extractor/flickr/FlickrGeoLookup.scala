@@ -8,6 +8,11 @@ import com.hp.hpl.jena.vocabulary.DCTerms
 import com.hp.hpl.jena.vocabulary.RDF
 import com.hp.hpl.jena.vocabulary.RDFS
 
+/**
+ * @author "Leandro Doctors (ldoctors at gmail dot com)"
+ *
+ */
+
 case class FlickrGeoLookup(
   // By default, search for Brussels
   val lat: String = "50.85",
