@@ -12,11 +12,6 @@ import com.hp.hpl.jena.vocabulary.DCTerms
 import com.hp.hpl.jena.vocabulary.RDF
 import com.hp.hpl.jena.vocabulary.RDFS
 
-/**
- * @author Leandro Doctors (ldoctors at gmail dot com)
- *
- */
-
 case class FlickrDBpediaLookup(
   // By default, search for Brussels
   val targetResource: String = "Brussels",

@@ -1,6 +1,3 @@
-/**
- *
- */
 package org.dbpedia.media_extractor.flickr
 
 import java.net.URI
@@ -14,11 +11,6 @@ import org.scribe.model.Response
 import org.scribe.model.Token
 import org.scribe.model.Verb
 import org.scribe.model.Verifier
-
-/**
- * @author Leandro Doctors (ldoctors at gmail dot com)
- *
- */
 
 class FlickrOAuthSession(
   val savedCredentialsFile: String = "/flickr.setup.properties",

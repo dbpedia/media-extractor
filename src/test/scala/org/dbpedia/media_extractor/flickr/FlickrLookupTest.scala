@@ -1,15 +1,8 @@
-/**
- *
- */
 package org.dbpedia.media_extractor.flickr
 
 import java.io.FileOutputStream
 import org.scalatest.FunSpec
 
-/**
- * @author Leandro Doctors (ldoctors at gmail dot com)
- *
- */
 class FlickrLookupTest extends FunSpec {
 
   val flickrOAuthSession = FlickrOAuthSession(credentialsFile = "/flickr.setup.properties", accessTokenFile = "/flickr.accessToken.properties")

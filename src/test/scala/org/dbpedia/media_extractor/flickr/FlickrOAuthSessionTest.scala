@@ -1,14 +1,7 @@
-/**
- *
- */
 package org.dbpedia.media_extractor.flickr
 
 import org.scalatest.FunSpec
 
-/**
- * @author Leandro Doctors (ldoctors at gmail dot com)
- *
- */
 class FlickrOAuthSessionTest extends FunSpec {
 
   describe("A FlickrOAuthSession instance") {
