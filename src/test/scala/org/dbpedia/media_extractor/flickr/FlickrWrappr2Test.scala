@@ -6,7 +6,8 @@ package org.dbpedia.media_extractor.flickr
 import org.scalatest.FunSpec
 
 /**
- * @author allentiak
+ * @author Leandro Doctors (ldoctors at gmail dot com)
+ *
  *
  */
 class FlickrWrappr2Test extends FunSpec {

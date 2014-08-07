@@ -6,7 +6,7 @@ package org.dbpedia.media_extractor.search_provider
 import org.scribe.oauth.OAuthService
 
 /**
- * @author "Leandro Doctors (ldoctors at gmail dot com)"
+ * @author Leandro Doctors (ldoctors at gmail dot com)
  *
  */
 

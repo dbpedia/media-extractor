@@ -8,7 +8,7 @@ import org.scribe.model.Response
 import com.hp.hpl.jena.rdf.model.Model
 
 /**
- * @author "Leandro Doctors (ldoctors at gmail dot com)"
+ * @author Leandro Doctors (ldoctors at gmail dot com)
  *
  */
 

@@ -13,7 +13,7 @@ import com.hp.hpl.jena.vocabulary.RDF
 import com.hp.hpl.jena.vocabulary.RDFS
 
 /**
- * @author "Leandro Doctors (ldoctors at gmail dot com)"
+ * @author Leandro Doctors (ldoctors at gmail dot com)
  *
  */
 

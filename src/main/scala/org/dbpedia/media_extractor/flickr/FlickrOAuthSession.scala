@@ -16,7 +16,7 @@ import org.scribe.model.Verb
 import org.scribe.model.Verifier
 
 /**
- * @author "Leandro Doctors (ldoctors at gmail dot com)"
+ * @author Leandro Doctors (ldoctors at gmail dot com)
  *
  */
 

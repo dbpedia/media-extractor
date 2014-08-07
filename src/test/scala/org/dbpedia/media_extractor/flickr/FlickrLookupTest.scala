@@ -7,7 +7,7 @@ import java.io.FileOutputStream
 import org.scalatest.FunSpec
 
 /**
- * @author allentiak
+ * @author Leandro Doctors (ldoctors at gmail dot com)
  *
  */
 class FlickrLookupTest extends FunSpec {

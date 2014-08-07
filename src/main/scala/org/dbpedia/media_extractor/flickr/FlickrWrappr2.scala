@@ -1,7 +1,7 @@
 package org.dbpedia.media_extractor.flickr
 
 /**
- * @author "Leandro Doctors (ldoctors at gmail dot com)"
+ * @author Leandro Doctors (ldoctors at gmail dot com)
  *
  */
 
