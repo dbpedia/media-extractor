@@ -79,6 +79,7 @@ object LookupOAuthSession {
 
   def apply(credentialsFile: String,
     accessTokenFile: String) =
-    new FlickrOAuthSession(credentialsFile, accessTokenFile))
+    // FIXME: correctly use the type parameter
+    new LookupOAuthSession[FlickrApi](myApi, credentialsFile, accessTokenFile)
 
 }
