@@ -73,7 +73,7 @@ class LookupOAuthSession[T <: Api] (val myApi:T,
   //TODO: move to a test? this is for testing purposes only...
   //e. g. method = "flickr.test.login"
   def invoke_parameterless_method(method: String = null, signRequest: Boolean = true): Response = {
-    val request = new OAuthRequest(Verb.POST, FlickrOAuthSession.endPointUri.toString())
+    val request = new OAuthRequest(Verb.POST, LookupOAuthSession.endPointUri.toString())
     request.addQuerystringParameter("method", method)
 
     if (signRequest)
@@ -83,7 +83,7 @@ class LookupOAuthSession[T <: Api] (val myApi:T,
   }
 
   def getFlickrSearchResponse(searchText: String = "", latitude: String = "", longitude: String = "", radius: String = "", license: String = "", signRequest: Boolean = true): Response = {
-    val searchRequest = new OAuthRequest(Verb.POST, FlickrOAuthSession.endPointUri.toString())
+    val searchRequest = new OAuthRequest(Verb.POST, LookupOAuthSession.endPointUri.toString())
 
     searchRequest.addQuerystringParameter("method", "flickr.photos.search")
     searchRequest.addQuerystringParameter("text", searchText)
