@@ -1,4 +1,4 @@
-package org.dbpedia.media_extractor.flickr
+package org.dbpedia.media_extractor.flickrwrappr2
 
 import java.net.URI
 import java.util.Properties

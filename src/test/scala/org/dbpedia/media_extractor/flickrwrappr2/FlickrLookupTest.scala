@@ -1,6 +1,7 @@
-package org.dbpedia.media_extractor.flickr
+package org.dbpedia.media_extractor.flickrwrappr2
 
 import java.io.FileOutputStream
+
 import org.scalatest.FunSpec
 
 class FlickrLookupTest extends FunSpec {
