@@ -1,7 +1,6 @@
 package org.dbpedia.media_extractor.lookup_provider
 
-abstract class LookupService(
-  val radius: String = "5") {
+trait LookupService {
   // TODO: complete this empty stub
+  val radius: String = "5"
 }
-  

@@ -2,14 +2,11 @@ package org.dbpedia.media_extractor.lookup_provider
 
 import com.hp.hpl.jena.rdf.model.Model
 
-abstract class GeoLookupService(
-  // By default, search for Brussels
-  val lat: String = "50.85",
-  val lon: String = "4.35",
-  override val radius: String = "5")
+trait GeoLookupService
 
-  extends LookupService(radius) {
+  extends LookupService {
   // TODO: complete this empty stub
 
-  def performGeoLookup(lat: String = lat, lon: String = lon, radius: String = radius): Model
+  // By default, search for Brussels
+  def performGeoLookup(lat: String = "50.85", lon: String = "4.35", radius: String = radius): Model
 }

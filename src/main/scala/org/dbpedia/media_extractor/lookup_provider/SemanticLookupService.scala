@@ -2,13 +2,11 @@ package org.dbpedia.media_extractor.lookup_provider
 
 import com.hp.hpl.jena.rdf.model.Model
 
-class SemanticLookupService(
-  // By default, search for Brussels
-  val targetResource: String = "Brussels",
-  override val radius: String = "5")
+trait SemanticLookupService
 
-  extends LookupService(radius) {
+  extends LookupService {
   // TODO: complete this empty stub
 
-  def performFlickrLookup(targetResource: String = targetResource, radius: String = radius): Model
+  // By default, search for Brussels
+  def performSemanticLookup(targetResource: String = "Brussels", radius: String = radius): Model
 }
