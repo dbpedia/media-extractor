@@ -14,7 +14,8 @@ import org.scribe.builder.api.FlickrApi
 import org.scribe.builder.api.Api
 
 // FIXME: find a more elegant way to pass the class as a parameter
-class LookupOAuthSession[T <: Api] (val myApi:T,
+class LookupOAuthSession[T <: Api](
+  val myApi: T,
   val savedCredentialsFile: String = "/flickr.setup.properties",
   val savedAccessTokenFile: String = "/flickr.accessToken.properties") {
 
