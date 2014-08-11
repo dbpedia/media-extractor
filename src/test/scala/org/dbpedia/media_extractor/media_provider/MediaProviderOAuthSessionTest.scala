@@ -6,13 +6,30 @@ class MediaProviderOAuthSessionTest extends FunSpec {
 
   describe("A MediaProviderOAuthSession instance") {
 
-    it("should be able to connect to Flickr using saved credentials") {
+    describe("Flickr") {
       // TODO: complete stub
 
+      it("should be able to connect to Flickr using saved credentials") {
+        // TODO: complete stub
+      }
+
+      it("should be able to invoke Flickr test methods") {
+        // TODO: complete stub
+      }
+      
     }
 
-    it("should be able to connect to YouTube using saved credentials") {
+    describe("YouTube") {
       // TODO: complete stub
+
+      it("should be able to connect to YouTube using saved credentials") {
+        // TODO: complete stub
+      }
+
+      it("should be able to invoke YouTube test methods") {
+        // TODO: complete stub
+      }
+      
     }
 
   }
