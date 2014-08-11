@@ -1,17 +1,17 @@
 package org.dbpedia.media_extractor.lookup_provider.flickr
 
-import org.dbpedia.media_extractor.lookup_provider.LookupProvider
+import org.dbpedia.media_extractor.lookup_provider.MediaProvider
 import org.dbpedia.media_extractor.lookup_provider.MediaProviderOAuthSession
 import org.scribe.builder.api.FlickrApi
 import org.scribe.model.OAuthRequest
 import org.scribe.model.Response
 import org.scribe.model.Verb
 
-abstract class FlickrLookupProvider(
+abstract class FlickrMediaProvider(
   val targetLicenses: String,
   val mediaProviderOAuthSession: MediaProviderOAuthSession[FlickrApi])
 
-  extends LookupProvider(mediaProviderOAuthSession, targetLicenses) {
+  extends MediaProvider(mediaProviderOAuthSession, targetLicenses) {
   // TODO: complete this empty stub
 
   //TODO: move to a test? this is for testing purposes only...
