@@ -1,7 +1,7 @@
 package org.dbpedia.media_extractor.media_provider.flickr
 
-import org.dbpedia.media_extractor.lookup_provider.MediaProvider
-import org.dbpedia.media_extractor.lookup_provider.MediaProviderOAuthSession
+import org.dbpedia.media_extractor.media_provider.MediaProvider
+import org.dbpedia.media_extractor.media_provider.MediaProviderOAuthSession
 import org.scribe.builder.api.FlickrApi
 import org.scribe.model.OAuthRequest
 import org.scribe.model.Response
