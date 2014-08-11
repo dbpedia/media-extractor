@@ -5,6 +5,7 @@ import org.scalatest.FunSpec
 class FlickrOAuthSessionTest extends FunSpec {
 
   describe("A FlickrOAuthSession instance") {
+
     describe("should be created") {
       it("without requiring the user's intervention (from a presaved pair <Access Token, Flickr API Key>)") {
         val automaticallyGeneratedFlickrOAuthSession = FlickrOAuthSession(credentialsFile = "/flickr.setup.properties", accessTokenFile = "/flickr.accessToken.properties")
