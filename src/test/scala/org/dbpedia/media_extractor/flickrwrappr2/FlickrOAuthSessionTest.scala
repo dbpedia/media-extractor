@@ -1,17 +1,11 @@
-/**
- *
- */
-package org.dbpedia.media_extractor.flickr
+package org.dbpedia.media_extractor.flickrwrappr2
 
 import org.scalatest.FunSpec
 
-/**
- * @author allentiak
- *
- */
 class FlickrOAuthSessionTest extends FunSpec {
 
   describe("A FlickrOAuthSession instance") {
+
     describe("should be created") {
       it("without requiring the user's intervention (from a presaved pair <Access Token, Flickr API Key>)") {
         val automaticallyGeneratedFlickrOAuthSession = FlickrOAuthSession(credentialsFile = "/flickr.setup.properties", accessTokenFile = "/flickr.accessToken.properties")

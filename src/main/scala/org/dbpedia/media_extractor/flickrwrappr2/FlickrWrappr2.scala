@@ -1,4 +1,4 @@
-package org.dbpedia.media_extractor.flickr
+package org.dbpedia.media_extractor.flickrwrappr2
 
 class FlickrWrappr2(val serverRootUri: String = "http://localhost/flickrwrappr/",
   val flickrSavedCredentialsFile: String = "/flickr.setup.properties",
