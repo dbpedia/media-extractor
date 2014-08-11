@@ -1,4 +1,4 @@
-package org.dbpedia.media_extractor.lookup_provider
+package org.dbpedia.media_extractor.media_provider
 
 import com.hp.hpl.jena.rdf.model.Model
 

@@ -1,4 +1,4 @@
-package org.dbpedia.media_extractor.lookup_provider
+package org.dbpedia.media_extractor.media_provider
 
 abstract class LookupService(
   val radius: String = "5") {

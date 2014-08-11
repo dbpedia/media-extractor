@@ -1,4 +1,4 @@
-package org.dbpedia.media_extractor.lookup_provider.flickr
+package org.dbpedia.media_extractor.media_provider.flickr
 
 import org.dbpedia.media_extractor.lookup_provider.MediaProvider
 import org.dbpedia.media_extractor.lookup_provider.MediaProviderOAuthSession
