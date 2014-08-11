@@ -77,7 +77,7 @@ object LookupOAuthSession {
 
   val endPointUri = new URI("https://api.flickr.com/services/rest/")
 
-  def apply(credentialsFile: String,
+  def apply(myApi:FlickrApi,credentialsFile: String,
     accessTokenFile: String) =
     // FIXME: correctly use the type parameter
     new LookupOAuthSession[FlickrApi](myApi, credentialsFile, accessTokenFile)
