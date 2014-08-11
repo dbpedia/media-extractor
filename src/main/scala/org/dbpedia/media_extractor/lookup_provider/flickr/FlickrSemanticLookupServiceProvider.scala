@@ -5,7 +5,7 @@ import org.scribe.builder.api.FlickrApi
 
 class FlickrSemanticLookupServiceProvider(
   override val targetLicenses: String,
-  override val lookupOAuthSession: LookupOAuthSession[FlickrApi],
+  override val mediaProviderOAuthSession: MediaProviderOAuthSession[FlickrApi],
   val targetResource: String = "Brussels",
   override val radius: String = "5")
 

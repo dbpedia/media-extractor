@@ -1,33 +1,33 @@
 package org.dbpedia.media_extractor.lookup_provider.flickr
 
-import org.dbpedia.media_extractor.lookup_provider.LookupOAuthSession
 import org.dbpedia.media_extractor.lookup_provider.LookupProvider
+import org.dbpedia.media_extractor.lookup_provider.MediaProviderOAuthSession
 import org.scribe.builder.api.FlickrApi
 import org.scribe.model.OAuthRequest
-import org.scribe.model.Verb
 import org.scribe.model.Response
+import org.scribe.model.Verb
 
 abstract class FlickrLookupProvider(
   val targetLicenses: String,
-  val lookupOAuthSession: LookupOAuthSession[FlickrApi])
+  val mediaProviderOAuthSession: MediaProviderOAuthSession[FlickrApi])
 
-  extends LookupProvider(lookupOAuthSession, targetLicenses) {
+  extends LookupProvider(mediaProviderOAuthSession, targetLicenses) {
   // TODO: complete this empty stub
 
   //TODO: move to a test? this is for testing purposes only...
   //e. g. method = "flickr.test.login"
   def invoke_parameterless_method(method: String = null, signRequest: Boolean = true): Response = {
-    val request = new OAuthRequest(Verb.POST, LookupOAuthSession.endPointUri.toString())
+    val request = new OAuthRequest(Verb.POST, MediaProviderOAuthSession.endPointUri.toString())
     request.addQuerystringParameter("method", method)
 
     if (signRequest)
-      lookupOAuthSession.flickrOAuthService.signRequest(lookupOAuthSession.accessToken, request)
+      mediaProviderOAuthSession.flickrOAuthService.signRequest(mediaProviderOAuthSession.accessToken, request)
 
     request.send()
   }
 
   def getFlickrSearchResponse(searchText: String = "", latitude: String = "", longitude: String = "", radius: String = "", license: String = "", signRequest: Boolean = true): Response = {
-    val searchRequest = new OAuthRequest(Verb.POST, LookupOAuthSession.endPointUri.toString())
+    val searchRequest = new OAuthRequest(Verb.POST, MediaProviderOAuthSession.endPointUri.toString())
 
     searchRequest.addQuerystringParameter("method", "flickr.photos.search")
     searchRequest.addQuerystringParameter("text", searchText)
@@ -41,7 +41,7 @@ abstract class FlickrLookupProvider(
 
     // This request does not need to be signed
     if (signRequest)
-      lookupOAuthSession.flickrOAuthService.signRequest(lookupOAuthSession.accessToken, searchRequest)
+      mediaProviderOAuthSession.flickrOAuthService.signRequest(mediaProviderOAuthSession.accessToken, searchRequest)
 
     searchRequest.send()
   }

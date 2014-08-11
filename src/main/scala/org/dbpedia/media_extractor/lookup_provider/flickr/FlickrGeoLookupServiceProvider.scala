@@ -5,7 +5,7 @@ import org.scribe.builder.api.FlickrApi
 
 class FlickrGeoLookupServiceProvider (
   override val targetLicenses: String,
-  override val lookupOAuthSession: LookupOAuthSession[FlickrApi],
+  override val mediaProviderOAuthSession: MediaProviderOAuthSession[FlickrApi],
   override val lat: String = "50.85",
   override val lon: String = "4.35",
   override val radius: String = "5")

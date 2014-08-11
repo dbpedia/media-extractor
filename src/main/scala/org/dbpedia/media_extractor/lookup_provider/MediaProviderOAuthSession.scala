@@ -3,18 +3,15 @@ package org.dbpedia.media_extractor.lookup_provider
 import java.net.URI
 import java.util.Properties
 import java.util.Scanner
+
 import org.scribe.builder.ServiceBuilder
-import org.scribe.builder.api.FlickrApi
-import org.scribe.model.OAuthRequest
-import org.scribe.model.Response
-import org.scribe.model.Token
-import org.scribe.model.Verb
-import org.scribe.model.Verifier
-import org.scribe.builder.api.FlickrApi
 import org.scribe.builder.api.Api
+import org.scribe.builder.api.FlickrApi
+import org.scribe.model.Token
+import org.scribe.model.Verifier
 
 // FIXME: find a more elegant way to pass the class as a parameter
-class LookupOAuthSession[T <: Api](
+class MediaProviderOAuthSession[T <: Api](
   val myApi: T,
   val savedCredentialsFile: String = "/flickr.setup.properties",
   val savedAccessTokenFile: String = "/flickr.accessToken.properties") {
@@ -73,13 +70,13 @@ class LookupOAuthSession[T <: Api](
 
 }
 
-object LookupOAuthSession {
+object MediaProviderOAuthSession {
 
   val endPointUri = new URI("https://api.flickr.com/services/rest/")
 
   def apply(myApi:FlickrApi,credentialsFile: String,
     accessTokenFile: String) =
     // FIXME: correctly use the type parameter
-    new LookupOAuthSession[FlickrApi](myApi, credentialsFile, accessTokenFile)
+    new MediaProviderOAuthSession[FlickrApi](myApi, credentialsFile, accessTokenFile)
 
 }
