@@ -8,8 +8,8 @@ import org.scribe.model.Response
 import org.scribe.model.Verb
 
 abstract class FlickrMediaProvider(
-  val targetLicenses: String,
-  val mediaProviderOAuthSession: MediaProviderOAuthSession[FlickrApi])
+  override val targetLicenses: String,
+  override val mediaProviderOAuthSession: MediaProviderOAuthSession[FlickrApi])
 
   extends MediaProvider(mediaProviderOAuthSession, targetLicenses) {
   // TODO: complete this empty stub

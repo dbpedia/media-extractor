@@ -5,8 +5,8 @@ import org.dbpedia.media_extractor.lookup_provider.MediaProviderOAuthSession
 import org.scribe.builder.api.GoogleApi
 
 abstract class YouTubeMediaProvider(
-  val targetLicenses: String,
-  val mediaProviderOAuthSession: MediaProviderOAuthSession[GoogleApi])
+  override val targetLicenses: String,
+  override val mediaProviderOAuthSession: MediaProviderOAuthSession[GoogleApi])
 
   extends MediaProvider(mediaProviderOAuthSession, targetLicenses) {
   // TODO: complete this empty stub
