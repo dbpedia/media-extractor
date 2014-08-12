@@ -62,9 +62,6 @@ case class FlickrDBpediaLookup(
     photosFullUriResource.addProperty(FOAF.primaryTopic, dbpediaResourceFullUriResource)
     photosFullUriResource.addProperty(DCTerms.license, flickrTermsUriResource)
     photosFullUriResource.addProperty(FOAF.maker, serverRootUriResource)
-
-    dbpediaResourceFullUriResource.addProperty(RDFS.label, lookupHeaderLiteral)
-
   }
 
   def performFlickrLookup(targetResource: String = targetResource, radius: String = radius): Model = {
