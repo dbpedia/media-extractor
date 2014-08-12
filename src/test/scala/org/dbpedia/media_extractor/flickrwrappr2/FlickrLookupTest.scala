@@ -26,8 +26,6 @@ class FlickrLookupTest extends FunSpec {
         lat,
         lon,
         radius,
-        locationRootUri,
-        dataRootUri,
         serverRootUri,
         flickrOAuthSession)
 

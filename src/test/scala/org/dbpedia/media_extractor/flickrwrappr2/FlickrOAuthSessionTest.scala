@@ -73,8 +73,6 @@ class FlickrOAuthSessionTest extends FunSpec {
         lat = lat,
         lon = lon,
         radius = radius,
-        locationRootUri = "",
-        dataRootUri = "",
         serverRootUri = "",
         flickrOAuthSession)
 

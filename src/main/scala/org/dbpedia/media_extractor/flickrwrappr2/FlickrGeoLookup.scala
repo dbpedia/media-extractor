@@ -13,18 +13,20 @@ case class FlickrGeoLookup(
   val lat: String = "50.85",
   val lon: String = "4.35",
   override val radius: String = "5",
-  val locationRootUri: String,
-  val dataRootUri: String,
   val serverRootUri: String,
   override val flickrOAuthSession: FlickrOAuthSession)
 
   extends FlickrLookup(flickrOAuthSession) {
 
   val geoPath = lat + "/" + lon + "/" + radius
-  val locationFullUri = locationRootUri + geoPath
-  val dataFullUri = dataRootUri + geoPath
+  val locationRootUri = serverRootUri + "location/"
 
-  override protected val namespacesMap = super.namespacesMap ++ Map(
+  val dataPhotosDepictingLocationRootUri = serverRootUri + "data/photosDepictingLocation/"
+
+  val locationFullUri = locationRootUri + geoPath
+  val dataPhotosDepictingLocationFullUri = dataPhotosDepictingLocationRootUri + geoPath
+
+  override protected val namespaceUriMap = super.namespaceUriMap ++ Map(
     //"geonames"-> "http://www.geonames.org/ontology#",
     "georss" -> "http://www.georss.org/georss/")
 
@@ -44,52 +46,48 @@ case class FlickrGeoLookup(
   }
 
   private def addLocationMetadataToRDFGraph(rdfGraph: Model) = {
+
+    val latLiteral = rdfGraph.createTypedLiteral(lat.toFloat, "Float")
+    val longLiteral = rdfGraph.createTypedLiteral(lon.toFloat, "Float")
+    val radiusLiteral = rdfGraph.createTypedLiteral(radius.toDouble, "Double")
+
+    val wgs84_posUri = namespaceUriMap("wgs84_pos")
+
+    val latProperty = rdfGraph.createProperty(wgs84_posUri, "lat")
+    val longProperty = rdfGraph.createProperty(wgs84_posUri, "long")
+    val radiusProperty = rdfGraph.createProperty(wgs84_posUri, "radius")
+
+    val typeProperty = rdfGraph.createProperty(wgs84_posUri, "type")
+
     val spatialThingResource = rdfGraph.createResource(locationFullUri)
-    spatialThingResource.addProperty(RDF.`type`, namespacesMap("wgs84_pos") + "SpatialThing")
-
-    val wgs84_posTypeProperty = rdfGraph.createProperty("type", namespacesMap("wgs84_pos") + "type")
-    spatialThingResource.addProperty(wgs84_posTypeProperty, "SpatialThing")
-
-    val latFloat = lat.toFloat
-    val lonFloat = lon.toFloat
-    val radiusFloat = radius.toFloat
-
-    val latLiteral = rdfGraph.createTypedLiteral(latFloat, "Float")
-    val longLiteral = rdfGraph.createTypedLiteral(lonFloat, "Float")
-    val radiusLiteral = rdfGraph.createTypedLiteral(radiusFloat, "Float")
-
-    val wgs84_posLatUri = namespacesMap("wgs84_pos") + "lat"
-    val wgs84_posLongUri = namespacesMap("wgs84_pos") + "long"
-    val wgs84_posRadiusUri = namespacesMap("wgs84_pos") + "radius"
-
-    val latProperty = rdfGraph.createProperty(wgs84_posLatUri, "lat")
-    val longProperty = rdfGraph.createProperty(wgs84_posLongUri, "long")
-    val radiusProperty = rdfGraph.createProperty(wgs84_posRadiusUri, "radius")
 
     spatialThingResource.addProperty(latProperty, latLiteral)
     spatialThingResource.addProperty(longProperty, longLiteral)
     spatialThingResource.addProperty(radiusProperty, radiusLiteral)
+
+    spatialThingResource.addProperty(RDF.`type`, wgs84_posUri + "SpatialThing")
   }
 
   private def addDocumentMetadataToRDFGraph(rdfGraph: Model) = {
-    val locationFullUriResource = rdfGraph.createResource(locationFullUri)
-
-    val foafDocumentResource = rdfGraph.createResource(locationFullUri)
-    foafDocumentResource.addProperty(RDF.`type`, namespacesMap("foaf") + "Document")
 
     val lookupHeader = "Photos taken within " + radius + " meters of geographic location lat=" + lat + " long=" + lon
+
     val lookupHeaderLiteral = rdfGraph.createLiteral(lookupHeader, "en")
-    foafDocumentResource.addProperty(RDFS.label, lookupHeaderLiteral)
-    foafDocumentResource.addProperty(FOAF.primaryTopic, locationFullUriResource)
-    val flickrTOUResource = rdfGraph.createResource(flickrTermsUri)
-    foafDocumentResource.addProperty(DCTerms.license, flickrTOUResource)
-
-    val dataFullUriResource = rdfGraph.createResource(dataFullUri)
-    dataFullUriResource.addProperty(RDFS.label, lookupHeaderLiteral)
-
     val lookupFooterLiteral = rdfGraph.createLiteral(lookupFooter, "en")
+
+    val locationFullUriResource = rdfGraph.createResource(locationFullUri)
     val serverRootUriResource = rdfGraph.createResource(serverRootUri)
+    val dataPhotosDepictingLocationFullUriResource = rdfGraph.createResource(dataPhotosDepictingLocationFullUri)
+    val flickrTermsUriResource = rdfGraph.createResource(flickrTermsUri)
+
     serverRootUriResource.addProperty(RDFS.label, lookupFooterLiteral)
+
+    dataPhotosDepictingLocationFullUriResource.addProperty(RDF.`type`, namespaceUriMap("foaf") + "Document")
+    dataPhotosDepictingLocationFullUriResource.addProperty(RDFS.label, lookupHeaderLiteral)
+    dataPhotosDepictingLocationFullUriResource.addProperty(FOAF.primaryTopic, locationFullUriResource)
+    dataPhotosDepictingLocationFullUriResource.addProperty(DCTerms.license, flickrTermsUriResource)
+    dataPhotosDepictingLocationFullUriResource.addProperty(FOAF.maker, serverRootUriResource)
+
   }
 
   def performFlickrLookup(lat: String = lat, lon: String = lon, radius: String = radius): Model = {

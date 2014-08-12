@@ -21,8 +21,14 @@ case class FlickrDBpediaLookup(
   extends FlickrLookup(flickrOAuthSession) {
 
   val dbpediaRootUri = "http://dbpedia.org/"
-  val dbpediaResourceUri = dbpediaRootUri + "resource/"
-  val dbpediaResourceFullUri = dbpediaResourceUri + targetResource.trim.replaceAll(" ", "_").replaceAll("%2F", "/").replaceAll("%3A", ":")
+  val dbpediaResourceRootUri = dbpediaRootUri + "resource/"
+
+  val resourceLeafUri = targetResource.trim.replaceAll(" ", "_").replaceAll("%2F", "/").replaceAll("%3A", ":")
+
+  val dbpediaResourceFullUri = dbpediaResourceRootUri + resourceLeafUri
+  val photosRootUri = serverRootUri + "photos/"
+
+  val photosFullUri = photosRootUri + resourceLeafUri
 
   def addFlickrSearchResultsToRDFGraph(flickrSearchResultsList: List[FlickrSearchResult], rdfGraph: Model) {
     val dbpediaResourceFullUriResource = rdfGraph.createResource(dbpediaResourceFullUri)
@@ -39,24 +45,26 @@ case class FlickrDBpediaLookup(
   }
 
   private def addDocumentMetadataToRDFGraph(rdfGraph: Model) = {
-    val dbpediaResourceFullUriResource = rdfGraph.createResource(dbpediaResourceFullUri)
-    val foafDocumentResource = rdfGraph.createResource(dbpediaResourceFullUri)
-    foafDocumentResource.addProperty(RDF.`type`, namespacesMap("foaf") + "Document")
 
     val lookupHeader = "Photos for Dbpedia resource " + targetResource
+
     val lookupHeaderLiteral = rdfGraph.createLiteral(lookupHeader, "en")
-    foafDocumentResource.addProperty(RDFS.label, lookupHeaderLiteral)
-
-    foafDocumentResource.addProperty(FOAF.primaryTopic, dbpediaResourceFullUriResource)
-
-    val flickrTOUResource = rdfGraph.createResource(flickrTermsUri)
-    foafDocumentResource.addProperty(DCTerms.license, flickrTOUResource)
-
-    dbpediaResourceFullUriResource.addProperty(RDFS.label, lookupHeaderLiteral)
-
     val lookupFooterLiteral = rdfGraph.createLiteral(lookupFooter, "en")
+
+    val foafUri = namespaceUriMap("foaf")
+
+    val dbpediaResourceFullUriResource = rdfGraph.createResource(dbpediaResourceFullUri)
     val serverRootUriResource = rdfGraph.createResource(serverRootUri)
+    val photosFullUriResource = rdfGraph.createResource(photosFullUri)
+    val flickrTermsUriResource = rdfGraph.createResource(flickrTermsUri)
+
     serverRootUriResource.addProperty(RDFS.label, lookupFooterLiteral)
+
+    photosFullUriResource.addProperty(RDF.`type`, foafUri + "Document")
+    photosFullUriResource.addProperty(RDFS.label, lookupHeaderLiteral)
+    photosFullUriResource.addProperty(FOAF.primaryTopic, dbpediaResourceFullUriResource)
+    photosFullUriResource.addProperty(DCTerms.license, flickrTermsUriResource)
+    photosFullUriResource.addProperty(FOAF.maker, serverRootUriResource)
   }
 
   def performFlickrLookup(targetResource: String = targetResource, radius: String = radius): Model = {
@@ -68,7 +76,7 @@ case class FlickrDBpediaLookup(
     // The SPARQL query
     val sparqlQueryString =
       "PREFIX rdfs: <" + RDFS.getURI() + "> " +
-        "PREFIX wgs84_pos: <" + namespacesMap("wgs84_pos") + "> " +
+        "PREFIX wgs84_pos: <" + namespaceUriMap("wgs84_pos") + "> " +
         "SELECT ?label ?lat ?long " +
         "FROM <" + dbpediaRootUri + "> " +
         "WHERE { " +
