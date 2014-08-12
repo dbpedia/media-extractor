@@ -53,14 +53,14 @@ case class FlickrDBpediaLookup(
     val dbpediaResourceFullUriResource = rdfGraph.createResource(dbpediaResourceFullUri)
     val serverRootUriResource = rdfGraph.createResource(serverRootUri)
     val photosFullUriResource = rdfGraph.createResource(photosFullUri)
-    val flickrTermsResource = rdfGraph.createResource(flickrTermsUri)
+    val flickrTermsUriResource = rdfGraph.createResource(flickrTermsUri)
 
     serverRootUriResource.addProperty(RDFS.label, lookupFooterLiteral)
 
     photosFullUriResource.addProperty(RDF.`type`, namespaceUriMap("foaf") + "Document")
     photosFullUriResource.addProperty(RDFS.label, lookupHeaderLiteral)
     photosFullUriResource.addProperty(FOAF.primaryTopic, dbpediaResourceFullUriResource)
-    photosFullUriResource.addProperty(DCTerms.license, flickrTermsResource)
+    photosFullUriResource.addProperty(DCTerms.license, flickrTermsUriResource)
     photosFullUriResource.addProperty(FOAF.maker, serverRootUriResource)
 
     dbpediaResourceFullUriResource.addProperty(RDFS.label, lookupHeaderLiteral)
