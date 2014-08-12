@@ -77,9 +77,12 @@ case class FlickrGeoLookup(
 
     val lookupHeader = "Photos taken within " + radius + " meters of geographic location lat=" + lat + " long=" + lon
     val lookupHeaderLiteral = rdfGraph.createLiteral(lookupHeader, "en")
+    
     foafDocumentResource.addProperty(RDFS.label, lookupHeaderLiteral)
     foafDocumentResource.addProperty(FOAF.primaryTopic, locationFullUriResource)
+    
     val flickrTOUResource = rdfGraph.createResource(flickrTermsUri)
+    
     foafDocumentResource.addProperty(DCTerms.license, flickrTOUResource)
 
     val dataFullUriResource = rdfGraph.createResource(dataFullUri)
