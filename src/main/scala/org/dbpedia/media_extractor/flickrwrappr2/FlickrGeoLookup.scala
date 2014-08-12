@@ -58,13 +58,11 @@ case class FlickrGeoLookup(
     val longLiteral = rdfGraph.createTypedLiteral(lonFloat, "Float")
     val radiusLiteral = rdfGraph.createTypedLiteral(radiusFloat, "Float")
 
-    val wgs84_posLatUri = namespacesMap("wgs84_pos") + "lat"
-    val wgs84_posLongUri = namespacesMap("wgs84_pos") + "long"
-    val wgs84_posRadiusUri = namespacesMap("wgs84_pos") + "radius"
+    val wgs84_posUri = namespacesMap("wgs84_pos")
 
-    val latProperty = rdfGraph.createProperty(wgs84_posLatUri, "lat")
-    val longProperty = rdfGraph.createProperty(wgs84_posLongUri, "long")
-    val radiusProperty = rdfGraph.createProperty(wgs84_posRadiusUri, "radius")
+    val latProperty = rdfGraph.createProperty(wgs84_posUri, "lat")
+    val longProperty = rdfGraph.createProperty(wgs84_posUri, "long")
+    val radiusProperty = rdfGraph.createProperty(wgs84_posUri, "radius")
 
     spatialThingResource.addProperty(latProperty, latLiteral)
     spatialThingResource.addProperty(longProperty, longLiteral)
