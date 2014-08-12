@@ -45,10 +45,13 @@ case class FlickrGeoLookup(
   }
 
   private def addLocationMetadataToRDFGraph(rdfGraph: Model) = {
-    val spatialThingResource = rdfGraph.createResource(locationFullUri)
-    spatialThingResource.addProperty(RDF.`type`, namespaceUriMap("wgs84_pos") + "SpatialThing")
 
-    val wgs84_posTypeProperty = rdfGraph.createProperty("type", namespaceUriMap("wgs84_pos") + "type")
+    val wgs84_posUri = namespaceUriMap("wgs84_pos")
+
+    val spatialThingResource = rdfGraph.createResource(locationFullUri)
+    spatialThingResource.addProperty(RDF.`type`, wgs84_posUri + "SpatialThing")
+
+    val wgs84_posTypeProperty = rdfGraph.createProperty("type", wgs84_posUri + "type")
     spatialThingResource.addProperty(wgs84_posTypeProperty, "SpatialThing")
 
     val latFloat = lat.toFloat
@@ -58,8 +61,6 @@ case class FlickrGeoLookup(
     val latLiteral = rdfGraph.createTypedLiteral(latFloat, "Float")
     val longLiteral = rdfGraph.createTypedLiteral(lonFloat, "Float")
     val radiusLiteral = rdfGraph.createTypedLiteral(radiusFloat, "Float")
-
-    val wgs84_posUri = namespaceUriMap("wgs84_pos")
 
     val latProperty = rdfGraph.createProperty(wgs84_posUri, "lat")
     val longProperty = rdfGraph.createProperty(wgs84_posUri, "long")
