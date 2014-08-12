@@ -5,7 +5,7 @@ class FlickrWrappr2(val serverRootUri: String = "http://localhost/flickrwrappr/"
   val flickrSavedAccessTokenFile: String = "/flickr.accessToken.properties") {
 
   val locationRootUri = serverRootUri + "location/"
-  val dataRootUri = serverRootUri + "data/photosDepictingLocation/"
+  val dataPhotosDepictingLocationRootUri = serverRootUri + "data/photosDepictingLocation/"
   val flickrOAuthSession = FlickrOAuthSession(flickrSavedCredentialsFile, flickrSavedAccessTokenFile)
 
   // TODO: allow user to input search parameters.
@@ -24,7 +24,7 @@ class FlickrWrappr2(val serverRootUri: String = "http://localhost/flickrwrappr/"
     lon = lon,
     radius = radius,
     locationRootUri = locationRootUri,
-    dataRootUri = dataRootUri,
+    dataPhotosDepictingLocationRootUri = dataPhotosDepictingLocationRootUri,
     serverRootUri = serverRootUri,
     flickrOAuthSession = flickrOAuthSession)
 

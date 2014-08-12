@@ -14,7 +14,7 @@ case class FlickrGeoLookup(
   val lon: String = "4.35",
   override val radius: String = "5",
   val locationRootUri: String,
-  val dataRootUri: String,
+  val dataPhotosDepictingLocationRootUri: String,
   val serverRootUri: String,
   override val flickrOAuthSession: FlickrOAuthSession)
 
@@ -22,7 +22,7 @@ case class FlickrGeoLookup(
 
   val geoPath = lat + "/" + lon + "/" + radius
   val locationFullUri = locationRootUri + geoPath
-  val dataFullUri = dataRootUri + geoPath
+  val dataPhotosDepictingLocationFullUri = dataPhotosDepictingLocationRootUri + geoPath
 
   override protected val namespaceUriMap = super.namespaceUriMap ++ Map(
     //"geonames"-> "http://www.geonames.org/ontology#",
@@ -85,8 +85,8 @@ case class FlickrGeoLookup(
     
     foafDocumentResource.addProperty(DCTerms.license, flickrTOUResource)
 
-    val dataFullUriResource = rdfGraph.createResource(dataFullUri)
-    dataFullUriResource.addProperty(RDFS.label, lookupHeaderLiteral)
+    val dataPhotosDepictingLocationRootUriResource = rdfGraph.createResource(dataPhotosDepictingLocationRootUri)
+    dataPhotosDepictingLocationRootUriResource.addProperty(RDFS.label, lookupHeaderLiteral)
 
     val lookupFooterLiteral = rdfGraph.createLiteral(lookupFooter, "en")
     val serverRootUriResource = rdfGraph.createResource(serverRootUri)
