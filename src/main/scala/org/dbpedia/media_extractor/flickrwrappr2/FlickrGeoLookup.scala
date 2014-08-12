@@ -24,7 +24,7 @@ case class FlickrGeoLookup(
   val locationFullUri = locationRootUri + geoPath
   val dataFullUri = dataRootUri + geoPath
 
-  override protected val namespacesMap = super.namespacesMap ++ Map(
+  override protected val namespaceUriMap = super.namespaceUriMap ++ Map(
     //"geonames"-> "http://www.geonames.org/ontology#",
     "georss" -> "http://www.georss.org/georss/")
 
@@ -45,9 +45,9 @@ case class FlickrGeoLookup(
 
   private def addLocationMetadataToRDFGraph(rdfGraph: Model) = {
     val spatialThingResource = rdfGraph.createResource(locationFullUri)
-    spatialThingResource.addProperty(RDF.`type`, namespacesMap("wgs84_pos") + "SpatialThing")
+    spatialThingResource.addProperty(RDF.`type`, namespaceUriMap("wgs84_pos") + "SpatialThing")
 
-    val wgs84_posTypeProperty = rdfGraph.createProperty("type", namespacesMap("wgs84_pos") + "type")
+    val wgs84_posTypeProperty = rdfGraph.createProperty("type", namespaceUriMap("wgs84_pos") + "type")
     spatialThingResource.addProperty(wgs84_posTypeProperty, "SpatialThing")
 
     val latFloat = lat.toFloat
@@ -58,7 +58,7 @@ case class FlickrGeoLookup(
     val longLiteral = rdfGraph.createTypedLiteral(lonFloat, "Float")
     val radiusLiteral = rdfGraph.createTypedLiteral(radiusFloat, "Float")
 
-    val wgs84_posUri = namespacesMap("wgs84_pos")
+    val wgs84_posUri = namespaceUriMap("wgs84_pos")
 
     val latProperty = rdfGraph.createProperty(wgs84_posUri, "lat")
     val longProperty = rdfGraph.createProperty(wgs84_posUri, "long")
@@ -73,7 +73,7 @@ case class FlickrGeoLookup(
     val locationFullUriResource = rdfGraph.createResource(locationFullUri)
 
     val foafDocumentResource = rdfGraph.createResource(locationFullUri)
-    foafDocumentResource.addProperty(RDF.`type`, namespacesMap("foaf") + "Document")
+    foafDocumentResource.addProperty(RDF.`type`, namespaceUriMap("foaf") + "Document")
 
     val lookupHeader = "Photos taken within " + radius + " meters of geographic location lat=" + lat + " long=" + lon
     val lookupHeaderLiteral = rdfGraph.createLiteral(lookupHeader, "en")

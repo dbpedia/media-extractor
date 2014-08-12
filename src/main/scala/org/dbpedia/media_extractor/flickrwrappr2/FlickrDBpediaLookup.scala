@@ -41,7 +41,7 @@ case class FlickrDBpediaLookup(
   private def addDocumentMetadataToRDFGraph(rdfGraph: Model) = {
     val dbpediaResourceFullUriResource = rdfGraph.createResource(dbpediaResourceFullUri)
     val foafDocumentResource = rdfGraph.createResource(dbpediaResourceFullUri)
-    foafDocumentResource.addProperty(RDF.`type`, namespacesMap("foaf") + "Document")
+    foafDocumentResource.addProperty(RDF.`type`, namespaceUriMap("foaf") + "Document")
 
     val lookupHeader = "Photos for Dbpedia resource " + targetResource
     val lookupHeaderLiteral = rdfGraph.createLiteral(lookupHeader, "en")
@@ -68,7 +68,7 @@ case class FlickrDBpediaLookup(
     // The SPARQL query
     val sparqlQueryString =
       "PREFIX rdfs: <" + RDFS.getURI() + "> " +
-        "PREFIX wgs84_pos: <" + namespacesMap("wgs84_pos") + "> " +
+        "PREFIX wgs84_pos: <" + namespaceUriMap("wgs84_pos") + "> " +
         "SELECT ?label ?lat ?long " +
         "FROM <" + dbpediaRootUri + "> " +
         "WHERE { " +

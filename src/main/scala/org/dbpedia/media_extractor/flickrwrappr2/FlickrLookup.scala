@@ -18,7 +18,7 @@ abstract class FlickrLookup(val flickrOAuthSession: FlickrOAuthSession) {
 
   val outputMode = "RDF/XML"
 
-  protected def namespacesMap = Map(
+  protected def namespaceUriMap = Map(
     "foaf" -> "http://xmlns.com/foaf/0.1/",
     "dcterms" -> "http://purl.org/dc/terms/",
     "rdfs" -> "http://www.w3.org/2000/01/rdf-schema#",
@@ -47,6 +47,6 @@ abstract class FlickrLookup(val flickrOAuthSession: FlickrOAuthSession) {
     resultsListBuffer.toList
   }
 
-  def addNameSpacesToRDFGraph(rdfGraph: Model) = namespacesMap.foreach { case (k, v) => rdfGraph.setNsPrefix(k, v) }
+  def addNameSpacesToRDFGraph(rdfGraph: Model) = namespaceUriMap.foreach { case (k, v) => rdfGraph.setNsPrefix(k, v) }
 
 }
