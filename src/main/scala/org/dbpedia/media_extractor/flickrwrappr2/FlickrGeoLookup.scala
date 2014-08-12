@@ -78,8 +78,8 @@ case class FlickrGeoLookup(
     val foafUri = namespaceUriMap("foaf")
 
     val locationFullUriResource = rdfGraph.createResource(locationFullUri)
-    val serverRootUriResource = rdfGraph.createResource(serverRootUri)
     val dataPhotosDepictingLocationFullUriResource = rdfGraph.createResource(dataPhotosDepictingLocationFullUri)
+    val serverRootUriResource = rdfGraph.createResource(serverRootUri)
     val flickrTermsUriResource = rdfGraph.createResource(flickrTermsUri)
 
     serverRootUriResource.addProperty(RDFS.label, lookupFooterLiteral)
@@ -88,7 +88,6 @@ case class FlickrGeoLookup(
     dataPhotosDepictingLocationFullUriResource.addProperty(FOAF.primaryTopic, locationFullUriResource)
     dataPhotosDepictingLocationFullUriResource.addProperty(DCTerms.license, flickrTermsUriResource)
     dataPhotosDepictingLocationFullUriResource.addProperty(FOAF.maker, serverRootUriResource)
-
   }
 
   def performFlickrLookup(lat: String = lat, lon: String = lon, radius: String = radius): Model = {
