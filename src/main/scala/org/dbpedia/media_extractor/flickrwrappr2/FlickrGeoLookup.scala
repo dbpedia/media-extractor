@@ -21,6 +21,7 @@ case class FlickrGeoLookup(
   extends FlickrLookup(flickrOAuthSession) {
 
   val geoPath = lat + "/" + lon + "/" + radius
+
   val locationFullUri = locationRootUri + geoPath
   val dataPhotosDepictingLocationFullUri = dataPhotosDepictingLocationRootUri + geoPath
 
@@ -70,27 +71,25 @@ case class FlickrGeoLookup(
   }
 
   private def addDocumentMetadataToRDFGraph(rdfGraph: Model) = {
-    val locationFullUriResource = rdfGraph.createResource(locationFullUri)
-
-    val foafDocumentResource = rdfGraph.createResource(locationFullUri)
-    foafDocumentResource.addProperty(RDF.`type`, namespaceUriMap("foaf") + "Document")
 
     val lookupHeader = "Photos taken within " + radius + " meters of geographic location lat=" + lat + " long=" + lon
+
     val lookupHeaderLiteral = rdfGraph.createLiteral(lookupHeader, "en")
-    
-    foafDocumentResource.addProperty(RDFS.label, lookupHeaderLiteral)
-    foafDocumentResource.addProperty(FOAF.primaryTopic, locationFullUriResource)
-    
-    val flickrTOUResource = rdfGraph.createResource(flickrTermsUri)
-    
-    foafDocumentResource.addProperty(DCTerms.license, flickrTOUResource)
-
-    val dataPhotosDepictingLocationRootUriResource = rdfGraph.createResource(dataPhotosDepictingLocationRootUri)
-    dataPhotosDepictingLocationRootUriResource.addProperty(RDFS.label, lookupHeaderLiteral)
-
     val lookupFooterLiteral = rdfGraph.createLiteral(lookupFooter, "en")
+
+    val locationFullUriResource = rdfGraph.createResource(locationFullUri)
     val serverRootUriResource = rdfGraph.createResource(serverRootUri)
+    val dataPhotosDepictingLocationFullUriResource = rdfGraph.createResource(dataPhotosDepictingLocationFullUri)
+    val flickrTermsUriResource = rdfGraph.createResource(flickrTermsUri)
+
     serverRootUriResource.addProperty(RDFS.label, lookupFooterLiteral)
+
+    dataPhotosDepictingLocationFullUriResource.addProperty(RDF.`type`, namespaceUriMap("foaf") + "Document")
+    dataPhotosDepictingLocationFullUriResource.addProperty(RDFS.label, lookupHeaderLiteral)
+    dataPhotosDepictingLocationFullUriResource.addProperty(FOAF.primaryTopic, locationFullUriResource)
+    dataPhotosDepictingLocationFullUriResource.addProperty(DCTerms.license, flickrTermsUriResource)
+    dataPhotosDepictingLocationFullUriResource.addProperty(FOAF.maker, serverRootUriResource)
+
   }
 
   def performFlickrLookup(lat: String = lat, lon: String = lon, radius: String = radius): Model = {
