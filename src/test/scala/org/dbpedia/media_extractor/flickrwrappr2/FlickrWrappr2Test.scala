@@ -1,14 +1,7 @@
-/**
- *
- */
-package org.dbpedia.media_extractor.flickr
+package org.dbpedia.media_extractor.flickrwrappr2
 
 import org.scalatest.FunSpec
 
-/**
- * @author allentiak
- *
- */
 class FlickrWrappr2Test extends FunSpec {
 
   describe("a FlickrWrappr2 instance") {

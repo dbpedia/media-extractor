@@ -1,5 +1,4 @@
-/src/test/resources/output.dbpedia.xml
-/src/test/resources/output.geo.xml
+/src/test/resources/FlickrLookupTest.output.*
 /src/test/resources/flickr.accessToken.properties
 /.cache
 /src/test/resources/flickr.setup.properties

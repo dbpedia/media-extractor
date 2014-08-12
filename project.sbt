@@ -6,11 +6,13 @@ scalaVersion := "2.11.2"
 
 resolvers += "scribe-java-mvn-repo" at "https://raw.github.com/fernandezpablo85/scribe-java/mvn-repo/"
 
+resolvers += Resolver.mavenLocal
+
 libraryDependencies += "org.scalatest" %% "scalatest" % "2.1.6" % "test"
 
 libraryDependencies += "org.glassfish.jersey.core" % "jersey-client" % "2.9"
 
-libraryDependencies += "org.scribe" % "scribe" % "1.3.6" 
+libraryDependencies += "org.scribe" % "scribe" % "1.3.7" 
 
 libraryDependencies += "org.scala-lang.modules" %% "scala-xml" % "1.0.2"
 
