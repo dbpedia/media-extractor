@@ -16,7 +16,6 @@ case class FlickrDBpediaLookup(
   // By default, search for Brussels
   val targetResource: String = "Brussels",
   val serverRootUri: String,
-  val photosRootUri: String,
   override val flickrOAuthSession: FlickrOAuthSession)
 
   extends FlickrLookup(flickrOAuthSession) {
@@ -27,6 +26,8 @@ case class FlickrDBpediaLookup(
   val resourceLeafUri = targetResource.trim.replaceAll(" ", "_").replaceAll("%2F", "/").replaceAll("%3A", ":")
 
   val dbpediaResourceFullUri = dbpediaResourceRootUri + resourceLeafUri
+  val photosRootUri = serverRootUri + "photos/"
+
   val photosFullUri = photosRootUri + resourceLeafUri
 
   def addFlickrSearchResultsToRDFGraph(flickrSearchResultsList: List[FlickrSearchResult], rdfGraph: Model) {

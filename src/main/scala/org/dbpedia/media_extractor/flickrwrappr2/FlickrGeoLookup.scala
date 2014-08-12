@@ -13,14 +13,15 @@ case class FlickrGeoLookup(
   val lat: String = "50.85",
   val lon: String = "4.35",
   override val radius: String = "5",
-  val locationRootUri: String,
-  val dataPhotosDepictingLocationRootUri: String,
   val serverRootUri: String,
   override val flickrOAuthSession: FlickrOAuthSession)
 
   extends FlickrLookup(flickrOAuthSession) {
 
   val geoPath = lat + "/" + lon + "/" + radius
+  val locationRootUri = serverRootUri + "location/"
+
+  val dataPhotosDepictingLocationRootUri = serverRootUri + "data/photosDepictingLocation/"
 
   val locationFullUri = locationRootUri + geoPath
   val dataPhotosDepictingLocationFullUri = dataPhotosDepictingLocationRootUri + geoPath
