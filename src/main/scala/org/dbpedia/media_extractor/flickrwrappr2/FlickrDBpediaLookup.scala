@@ -97,8 +97,9 @@ case class FlickrDBpediaLookup(
 
     // Prepare the SPARQL query
     val sparqlQuery = QueryFactory.create(sparqlQueryString)
-    val sparqlQueryExecution = QueryExecutionFactory.create(sparqlQuery, rdfGraph)
 
+    val sparqlQueryExecution = QueryExecutionFactory
+      .sparqlService("http://dbpedia.org/sparql", sparqlQuery)
     try {
       // Execute the SPARQL query
       val sparqlQueryResultSet = sparqlQueryExecution.execSelect()
