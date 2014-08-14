@@ -1,18 +1,19 @@
-package org.dbpedia.media_extractor.media_provider.flickr
+package org.dbpedia.media_extractor.media_provider_session
 
-import org.dbpedia.media_extractor.media_provider.MediaProvider
-import org.dbpedia.media_extractor.media_provider.MediaProviderOAuthSession
 import org.scribe.builder.api.FlickrApi
 import org.scribe.model.OAuthRequest
 import org.scribe.model.Response
 import org.scribe.model.Verb
 
-abstract class FlickrMediaProvider(
-  override val targetLicenses: String,
-  override val mediaProviderOAuthSession: MediaProviderOAuthSession[FlickrApi])
+class FlickrMediaProviderOAuthSession(
+  savedCredentialsFile: String = "/flickr.setup.properties",
+  savedAccessTokenFile: String = "/flickr.accessToken.properties")
 
-  extends MediaProvider(mediaProviderOAuthSession, targetLicenses) {
-  // TODO: complete this empty stub
+  extends MediaProviderOAuthSession[FlickrApi](
+    savedCredentialsFile,
+    savedAccessTokenFile) {
+
+  val targetLicenses: String
 
   //TODO: move to a test? this is for testing purposes only...
   //e. g. method = "flickr.test.login"
@@ -21,7 +22,7 @@ abstract class FlickrMediaProvider(
     request.addQuerystringParameter("method", method)
 
     if (signRequest)
-      mediaProviderOAuthSession.flickrOAuthService.signRequest(mediaProviderOAuthSession.accessToken, request)
+      flickrOAuthService.signRequest(mediaProviderOAuthSession.accessToken, request)
 
     request.send()
   }
@@ -41,7 +42,7 @@ abstract class FlickrMediaProvider(
 
     // This request does not need to be signed
     if (signRequest)
-      mediaProviderOAuthSession.flickrOAuthService.signRequest(mediaProviderOAuthSession.accessToken, searchRequest)
+      flickrOAuthService.signRequest(accessToken, searchRequest)
 
     searchRequest.send()
   }

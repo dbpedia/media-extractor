@@ -1,4 +1,4 @@
-package org.dbpedia.media_extractor.media_provider
+package org.dbpedia.media_extractor.media_provider_session
 
 import java.net.URI
 import java.util.Properties
@@ -12,9 +12,10 @@ import org.scribe.model.Verifier
 
 // FIXME: find a more elegant way to pass the class as a parameter
 class MediaProviderOAuthSession[T <: Api](
-  val myApi: T,
   val savedCredentialsFile: String = "/flickr.setup.properties",
   val savedAccessTokenFile: String = "/flickr.accessToken.properties") {
+
+  val targetLicenses: String
 
   val savedAccessCredentialsProperties = loadPropertyFromFile(savedCredentialsFile)
 
@@ -74,7 +75,7 @@ object MediaProviderOAuthSession {
 
   val endPointUri = new URI("https://api.flickr.com/services/rest/")
 
-  def apply(myApi:FlickrApi,credentialsFile: String,
+  def apply(myApi: FlickrApi, credentialsFile: String,
     accessTokenFile: String) =
     // FIXME: correctly use the type parameter
     new MediaProviderOAuthSession[FlickrApi](myApi, credentialsFile, accessTokenFile)
