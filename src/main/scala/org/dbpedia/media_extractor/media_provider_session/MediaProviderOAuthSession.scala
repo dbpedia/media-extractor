@@ -11,7 +11,8 @@ import org.scribe.model.Token
 import org.scribe.model.Verifier
 
 // FIXME: find a more elegant way to pass the class as a parameter
-class MediaProviderOAuthSession[T <: Api](
+class MediaProviderOAuthSession[MyApi <: Api](
+  val myApi: MyApi,
   val savedCredentialsFile: String = "/flickr.setup.properties",
   val savedAccessTokenFile: String = "/flickr.accessToken.properties") {
 
@@ -23,7 +24,7 @@ class MediaProviderOAuthSession[T <: Api](
   val myApiKeySecret = savedAccessCredentialsProperties.getProperty("apiKeySecret")
 
   val flickrOAuthService = new ServiceBuilder()
-    .provider(myApi.getClass())
+    .provider(myApi)
     .apiKey(myApiKey)
     .apiSecret(myApiKeySecret)
     .build()
@@ -75,9 +76,8 @@ object MediaProviderOAuthSession {
 
   val endPointUri = new URI("https://api.flickr.com/services/rest/")
 
-  def apply(myApi: FlickrApi, credentialsFile: String,
+  def apply[MyApi <: Api](myApi: MyApi, credentialsFile: String,
     accessTokenFile: String) =
-    // FIXME: correctly use the type parameter
-    new MediaProviderOAuthSession[FlickrApi](myApi, credentialsFile, accessTokenFile)
+    new MediaProviderOAuthSession(myApi, credentialsFile, accessTokenFile)
 
 }
