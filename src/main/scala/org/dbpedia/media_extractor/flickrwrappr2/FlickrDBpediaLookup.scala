@@ -4,7 +4,6 @@ import scala.collection.mutable.ArrayBuffer
 
 import com.hp.hpl.jena.query.QueryExecutionFactory
 import com.hp.hpl.jena.query.QueryFactory
-import com.hp.hpl.jena.query.ResultSetFormatter
 import com.hp.hpl.jena.rdf.model.Model
 import com.hp.hpl.jena.rdf.model.ModelFactory
 import com.hp.hpl.jena.sparql.vocabulary.FOAF
@@ -81,52 +80,54 @@ case class FlickrDBpediaLookup(
     addNameSpacesToRDFGraph(rdfGraph)
     addMetadataToRDFGraph(rdfGraph)
 
-    // The SPARQL query
-    val sparqlQueryString =
-      "PREFIX rdfs: <" + RDFS.getURI() + "> " +
-        "PREFIX wgs84_pos: <" + namespaceUriMap("wgs84_pos") + "> " +
-        "SELECT ?label ?lat ?long " +
-        "FROM <" + dbpediaRootUri + "> " +
-        "WHERE { " +
-        "	<" + dbpediaResourceFullUri + "> rdfs:label ?label . " +
-        "	OPTIONAL { " +
-        "		<" + dbpediaResourceFullUri + "> wgs84_pos:lat ?lat . " +
-        "		<" + dbpediaResourceFullUri + "> wgs84_pos:long ?long " +
-        "	} " +
-        "}"
+    val wgs84_posNsUri = namespaceUriMap("wgs84_pos")
 
-    // Prepare the SPARQL query
+    // SPARQL source code for the query
+    val sparqlQueryString = "PREFIX rdfs: <" + RDFS.getURI() + "> " +
+      "PREFIX wgs84_pos: <" + wgs84_posNsUri + "> " +
+      "SELECT ?label ?lat ?long " +
+      "WHERE { " +
+      "	<" + dbpediaResourceFullUri + "> rdfs:label ?label . " +
+      "	OPTIONAL { " +
+      "		<" + dbpediaResourceFullUri + "> wgs84_pos:lat ?lat . " +
+      "		<" + dbpediaResourceFullUri + "> wgs84_pos:long ?long " +
+      "	} " +
+      "}"
+
+    // Create the SPARQL query
     val sparqlQuery = QueryFactory.create(sparqlQueryString)
 
+    // Prepare to execute the query
     val sparqlQueryExecution = QueryExecutionFactory
       .sparqlService("http://dbpedia.org/sparql", sparqlQuery)
+
     try {
       // Execute the SPARQL query
       val sparqlQueryResultSet = sparqlQueryExecution.execSelect()
 
-      val noResults = !sparqlQueryResultSet.hasNext()
-
       // Some labels are common to many languages (e.g. "Buenos Aires")
       val processedLabels = ArrayBuffer[String]()
 
-      // FIXME: save the whole triple (label, lat, long) as "processed".
-      // Some labels have different coordinates across languages (e.g. "La Paz")
-
-      ResultSetFormatter.asRDF(rdfGraph, sparqlQueryResultSet);
-
       // For each solution to the query
       while (sparqlQueryResultSet.hasNext()) {
-        val querySolution = sparqlQueryResultSet.nextSolution()
+        val querySolution = sparqlQueryResultSet.next()
+
+        val label = querySolution.get("label").toString()
+        val lat = querySolution.getLiteral("lat").getFloat().toString()
+        val long = querySolution.getLiteral("long").getFloat().toString()
+
+        // FIXME: save the whole triple (label, lat, long) as "processed".
+        // Some labels have different coordinates across languages (e.g. "La Paz")
 
         // Skip duplicated labels
-        if (!(processedLabels.contains(querySolution.getLiteral("label").toString()))) {
+        if (!(processedLabels.contains(label))) {
 
           // 1) Perform a Flickr search
           val flickrSearchResults = getFlickrSearchResults(
             flickrOAuthSession.getFlickrSearchResponse(
-              searchText = querySolution.getLiteral("label").toString(),
-              latitude = querySolution.getLiteral("lat").toString(),
-              longitude = querySolution.getLiteral("long").toString(),
+              searchText = label,
+              latitude = lat,
+              longitude = long,
               radius,
               license,
               signRequest))
@@ -134,8 +135,9 @@ case class FlickrDBpediaLookup(
           // 2) Add the Flickr results to the RDF graph
           addFlickrSearchResultsToRDFGraph(flickrSearchResults, rdfGraph)
 
-          processedLabels += querySolution.getLiteral("label").toString()
+          processedLabels += label
         }
+
       }
 
     } finally
