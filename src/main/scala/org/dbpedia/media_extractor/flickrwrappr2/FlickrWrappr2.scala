@@ -1,6 +1,6 @@
 package org.dbpedia.media_extractor.flickrwrappr2
 
-class FlickrWrappr2(val serverRootUri: String = "http://localhost/flickrwrappr/",
+class FlickrWrappr2(
   val flickrSavedCredentialsFile: String = "/flickr.setup.properties",
   val flickrSavedAccessTokenFile: String = "/flickr.accessToken.properties") {
 
@@ -21,7 +21,6 @@ class FlickrWrappr2(val serverRootUri: String = "http://localhost/flickrwrappr/"
     lat = lat,
     lon = lon,
     radius = radius,
-    serverRootUri = serverRootUri,
     flickrOAuthSession = flickrOAuthSession)
 
   val flickrDBpediaLookup = FlickrDBpediaLookup(
@@ -31,8 +30,7 @@ class FlickrWrappr2(val serverRootUri: String = "http://localhost/flickrwrappr/"
 
 object FlickrWrappr2 extends App {
   def apply(
-    serverRootUri: String = "http://localhost/flickrwrappr/",
     flickrSavedCredentialsFile: String = "/flickr.setup.properties",
     flickrSavedAccessTokenFile: String = "/flickr.accessToken.properties") =
-    new FlickrWrappr2(serverRootUri, flickrSavedCredentialsFile, flickrSavedAccessTokenFile)
+    new FlickrWrappr2(flickrSavedCredentialsFile, flickrSavedAccessTokenFile)
 }
