@@ -78,11 +78,10 @@ case class FlickrGeoLookup(
 
     val dbpediaLocationFullUriResource = rdfGraph.createResource(dbpediaLocationFullUri)
     val dbpediaMediaLocationFullUriResource = rdfGraph.createResource(dbpediaMediaLocationFullUri)
-    val dbpediaMediaLocationRootUriResource = rdfGraph.createResource(dbpediaMediaLocationRootUri)
     val dbpediaMediaRootUriResource = rdfGraph.createResource(dbpediaMediaRootUri)
     val flickrTermsUriResource = rdfGraph.createResource(flickrTermsUri)
 
-    dbpediaMediaLocationRootUriResource.addProperty(RDFS.label, lookupFooterLiteral)
+    dbpediaMediaRootUriResource.addProperty(RDFS.label, lookupFooterLiteral)
     dbpediaMediaLocationFullUriResource.addProperty(RDFS.label, lookupHeaderLiteral)
     dbpediaMediaLocationFullUriResource.addProperty(RDF.`type`, foafUri + "Document")
     dbpediaMediaLocationFullUriResource.addProperty(FOAF.primaryTopic, dbpediaLocationFullUriResource)
