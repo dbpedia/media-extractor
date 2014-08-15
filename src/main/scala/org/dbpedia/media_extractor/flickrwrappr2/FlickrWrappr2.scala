@@ -26,7 +26,6 @@ class FlickrWrappr2(val serverRootUri: String = "http://localhost/flickrwrappr/"
 
   val flickrDBpediaLookup = FlickrDBpediaLookup(
     targetResource = targetResource,
-    serverRootUri = serverRootUri,
     flickrOAuthSession = flickrOAuthSession)
 }
 

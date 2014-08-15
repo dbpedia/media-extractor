@@ -9,7 +9,6 @@ class FlickrLookupTest extends FunSpec {
   describe("FlickrLookupTest") {
 
     val flickrOAuthSession = FlickrOAuthSession(credentialsFile = "/flickr.setup.properties", accessTokenFile = "/flickr.accessToken.properties")
-    val serverRootUri = "http://localhost/flickrwrappr/"
     val localPath = "/media/allentiak/dbpedia.git/media-extractor/src/test/resources/"
     val radius = "5"
 
@@ -23,6 +22,7 @@ class FlickrLookupTest extends FunSpec {
 
         val locationRootUri = serverRootUri + "location/"
         val dataRootUri = serverRootUri + "data/photosDepictingLocation/"
+        val serverRootUri = "http://localhost/flickrwrappr/"
 
         val flickrGeoLookup = new FlickrGeoLookup(
           lat,
@@ -50,7 +50,6 @@ class FlickrLookupTest extends FunSpec {
 
         val flickrDBpediaLookup = new FlickrDBpediaLookup(
           targetResource,
-          serverRootUri,
           flickrOAuthSession)
 
         val dbpediaRdfGraph = flickrDBpediaLookup.performFlickrLookup(targetResource, radius)
