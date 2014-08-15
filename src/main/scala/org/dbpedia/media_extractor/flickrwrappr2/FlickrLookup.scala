@@ -12,7 +12,10 @@ case class FlickrSearchResult(depictionUri: String, pageUri: String)
 abstract class FlickrLookup(val flickrOAuthSession: FlickrOAuthSession) {
 
   val flickrTermsUri = "https://secure.flickr.com/help/terms/"
-  val lookupFooter = "flickr(tm) wrappr"
+  val lookupFooter = "FlickrWrappr2 (soon to become Media Extractor)"
+
+  val dbpediaRootUri = "http://dbpedia.org/"
+  val dbpediaMediaRootUri = "http://media.dbpedia.org/"
 
   val myPath = "/media/allentiak/dbpedia.git/media-extractor/src/test/resources/"
 

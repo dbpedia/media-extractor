@@ -73,7 +73,6 @@ class FlickrOAuthSessionTest extends FunSpec {
         lat = lat,
         lon = lon,
         radius = radius,
-        serverRootUri = "",
         flickrOAuthSession)
 
       it("method 'flickr.photos.search' (unsigned)") {

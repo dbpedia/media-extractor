@@ -5,11 +5,10 @@ import java.io.FileOutputStream
 import org.scalatest.FunSpec
 
 class FlickrLookupTest extends FunSpec {
-  
+
   describe("FlickrLookupTest") {
 
     val flickrOAuthSession = FlickrOAuthSession(credentialsFile = "/flickr.setup.properties", accessTokenFile = "/flickr.accessToken.properties")
-    val serverRootUri = "http://localhost/flickrwrappr/"
     val localPath = "/media/allentiak/dbpedia.git/media-extractor/src/test/resources/"
     val radius = "5"
 
@@ -21,14 +20,10 @@ class FlickrLookupTest extends FunSpec {
         val lat = "50.85"
         val lon = "4.35"
 
-        val locationRootUri = serverRootUri + "location/"
-        val dataRootUri = serverRootUri + "data/photosDepictingLocation/"
-
         val flickrGeoLookup = new FlickrGeoLookup(
           lat,
           lon,
           radius,
-          serverRootUri,
           flickrOAuthSession)
 
         val geoLookupRdfGraph = flickrGeoLookup.performFlickrLookup(lat, lon, radius)
@@ -50,7 +45,6 @@ class FlickrLookupTest extends FunSpec {
 
         val flickrDBpediaLookup = new FlickrDBpediaLookup(
           targetResource,
-          serverRootUri,
           flickrOAuthSession)
 
         val dbpediaRdfGraph = flickrDBpediaLookup.performFlickrLookup(targetResource, radius)

@@ -13,29 +13,28 @@ case class FlickrGeoLookup(
   val lat: String = "50.85",
   val lon: String = "4.35",
   override val radius: String = "5",
-  val serverRootUri: String,
   override val flickrOAuthSession: FlickrOAuthSession)
 
   extends FlickrLookup(flickrOAuthSession) {
 
   val geoPath = lat + "/" + lon + "/" + radius
-  val locationRootUri = serverRootUri + "location/"
 
-  val dataPhotosDepictingLocationRootUri = serverRootUri + "data/photosDepictingLocation/"
+  val dbpediaLocationRootUri = dbpediaRootUri + "location/"
+  val dbpediaMediaLocationRootUri = dbpediaMediaRootUri + "location/"
 
-  val locationFullUri = locationRootUri + geoPath
-  val dataPhotosDepictingLocationFullUri = dataPhotosDepictingLocationRootUri + geoPath
+  val dbpediaLocationFullUri = dbpediaLocationRootUri + geoPath
+  val dbpediaMediaLocationFullUri = dbpediaMediaLocationRootUri + geoPath
 
   override protected val namespaceUriMap = super.namespaceUriMap ++ Map(
     //"geonames"-> "http://www.geonames.org/ontology#",
     "georss" -> "http://www.georss.org/georss/")
 
   def addFlickrSearchResultsToRDFGraph(flickrSearchResultsList: List[FlickrSearchResult], rdfGraph: Model) = {
-    val locationFullUriResource = rdfGraph.createResource(locationFullUri)
+    val dbpediaMediaLocationFullUriResource = rdfGraph.createResource(dbpediaMediaLocationFullUri)
     for (resultElem <- flickrSearchResultsList) {
       val depictionUriResource = rdfGraph.createResource(resultElem.depictionUri)
       val pageUriResource = rdfGraph.createResource(resultElem.pageUri)
-      locationFullUriResource.addProperty(FOAF.depiction, depictionUriResource)
+      dbpediaMediaLocationFullUriResource.addProperty(FOAF.depiction, depictionUriResource)
       depictionUriResource.addProperty(FOAF.page, pageUriResource)
     }
   }
@@ -59,7 +58,7 @@ case class FlickrGeoLookup(
 
     val typeProperty = rdfGraph.createProperty(wgs84_posUri, "type")
 
-    val spatialThingResource = rdfGraph.createResource(locationFullUri)
+    val spatialThingResource = rdfGraph.createResource(dbpediaLocationFullUri)
 
     spatialThingResource.addProperty(latProperty, latLiteral)
     spatialThingResource.addProperty(longProperty, longLiteral)
@@ -77,17 +76,17 @@ case class FlickrGeoLookup(
 
     val foafUri = namespaceUriMap("foaf")
 
-    val locationFullUriResource = rdfGraph.createResource(locationFullUri)
-    val dataPhotosDepictingLocationFullUriResource = rdfGraph.createResource(dataPhotosDepictingLocationFullUri)
-    val serverRootUriResource = rdfGraph.createResource(serverRootUri)
+    val dbpediaLocationFullUriResource = rdfGraph.createResource(dbpediaLocationFullUri)
+    val dbpediaMediaLocationFullUriResource = rdfGraph.createResource(dbpediaMediaLocationFullUri)
+    val dbpediaMediaRootUriResource = rdfGraph.createResource(dbpediaMediaRootUri)
     val flickrTermsUriResource = rdfGraph.createResource(flickrTermsUri)
 
-    serverRootUriResource.addProperty(RDFS.label, lookupFooterLiteral)
-    dataPhotosDepictingLocationFullUriResource.addProperty(RDFS.label, lookupHeaderLiteral)
-    dataPhotosDepictingLocationFullUriResource.addProperty(RDF.`type`, foafUri + "Document")
-    dataPhotosDepictingLocationFullUriResource.addProperty(FOAF.primaryTopic, locationFullUriResource)
-    dataPhotosDepictingLocationFullUriResource.addProperty(DCTerms.license, flickrTermsUriResource)
-    dataPhotosDepictingLocationFullUriResource.addProperty(FOAF.maker, serverRootUriResource)
+    dbpediaMediaRootUriResource.addProperty(RDFS.label, lookupFooterLiteral)
+    dbpediaMediaLocationFullUriResource.addProperty(RDFS.label, lookupHeaderLiteral)
+    dbpediaMediaLocationFullUriResource.addProperty(RDF.`type`, foafUri + "Document")
+    dbpediaMediaLocationFullUriResource.addProperty(FOAF.primaryTopic, dbpediaLocationFullUriResource)
+    dbpediaMediaLocationFullUriResource.addProperty(DCTerms.license, flickrTermsUriResource)
+    dbpediaMediaLocationFullUriResource.addProperty(FOAF.maker, dbpediaMediaRootUriResource)
   }
 
   def performFlickrLookup(lat: String = lat, lon: String = lon, radius: String = radius): Model = {

@@ -7,7 +7,6 @@ class FlickrWrappr2Test extends FunSpec {
   describe("a FlickrWrappr2 instance") {
 
     val flickrWrappr2 = new FlickrWrappr2(
-      serverRootUri = "http://localhost/flickrwrappr2/",
       flickrSavedCredentialsFile = "/flickr.setup.properties",
       flickrSavedAccessTokenFile = "/flickr.accessToken.properties")
 
