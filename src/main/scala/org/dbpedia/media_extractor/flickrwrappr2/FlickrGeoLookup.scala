@@ -30,11 +30,11 @@ case class FlickrGeoLookup(
     "georss" -> "http://www.georss.org/georss/")
 
   def addFlickrSearchResultsToRDFGraph(flickrSearchResultsList: List[FlickrSearchResult], rdfGraph: Model) = {
-    val locationFullUriResource = rdfGraph.createResource(dbpediaLocationFullUri)
+    val dbpediaMediaLocationFullUriResource = rdfGraph.createResource(dbpediaMediaLocationFullUri)
     for (resultElem <- flickrSearchResultsList) {
       val depictionUriResource = rdfGraph.createResource(resultElem.depictionUri)
       val pageUriResource = rdfGraph.createResource(resultElem.pageUri)
-      locationFullUriResource.addProperty(FOAF.depiction, depictionUriResource)
+      dbpediaMediaLocationFullUriResource.addProperty(FOAF.depiction, depictionUriResource)
       depictionUriResource.addProperty(FOAF.page, pageUriResource)
     }
   }
