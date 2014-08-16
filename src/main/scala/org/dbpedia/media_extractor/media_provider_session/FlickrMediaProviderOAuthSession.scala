@@ -67,9 +67,14 @@ object FlickrMediaProviderOAuthSession {
   val endPointUri = "https://api.flickr.com/services/rest/"
 
   def apply(
-    credentialsFile: String,
-    accessTokenFile: String) =
-    new MediaProviderOAuthSession(new FlickrApi, credentialsFile, accessTokenFile)
+    savedCredentialsFile: String = "/flickr.setup.properties",
+    savedAccessTokenFile: String = "/flickr.accessToken.properties") =
+
+    new MediaProviderOAuthSession(
+      myApi = new FlickrApi,
+      targetLicenses = "4,5,7,8",
+      savedCredentialsFile = savedCredentialsFile,
+      savedAccessTokenFile = savedAccessTokenFile)
 
 }
 
