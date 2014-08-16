@@ -7,7 +7,6 @@ class MediaProviderOAuthSessionTest extends FunSpec {
   describe("A MediaProviderOAuthSession instance") {
 
     describe("Flickr") {
-      // TODO: complete stub
 
       it("should be able to connect to Flickr using saved credentials (only <ApiKey,ApiKeySecret>)") {
         val manuallyGeneratedFlickrOAuthSession = FlickrMediaProviderOAuthSession(
