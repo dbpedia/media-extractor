@@ -9,27 +9,82 @@ class MediaProviderOAuthSessionTest extends FunSpec {
     describe("Flickr") {
       // TODO: complete stub
 
-      it("should be able to connect to Flickr using saved credentials") {
-        // TODO: complete stub
+      it("should be able to connect to Flickr using saved credentials (only <ApiKey,ApiKeySecret>)") {
+        val manuallyGeneratedFlickrOAuthSession = FlickrMediaProviderOAuthSession(
+          savedCredentialsFile = "/flickr.setup.properties",
+          savedAccessTokenFile = "")
+        assert(manuallyGeneratedFlickrOAuthSession.isInstanceOf[FlickrMediaProviderOAuthSession])
       }
 
-      it("should be able to invoke Flickr test methods") {
-        // TODO: complete stub
+      it("should load an already created access token from a file") {
+        val generatedToken = flickrOAuthSession.accessToken
+        val savedToken = flickrOAuthSession.getSavedFlickrAccessToken("/flickr.accessToken.properties")
+        assert(generatedToken === savedToken)
       }
-      
+
+      it("should be able to connect to Flickr using saved credentials (both <ApiKey,ApiKeySecret> and <accessToken,accessTokenSecret>)") {
+        val automaticallyGeneratedFlickrOAuthSession = FlickrMediaProviderOAuthSession(
+          savedCredentialsFile = "/flickr.setup.properties",
+          savedAccessTokenFile = "/flickr.accessToken.properties")
+        assert(automaticallyGeneratedFlickrOAuthSession.isInstanceOf[FlickrMediaProviderOAuthSession])
+      }
+
+      describe("should be able to invoke Flickr test methods") {
+
+        val flickrOAuthSession = FlickrOAuthSession(credentialsFile = "/flickr.setup.properties", accessTokenFile = "/flickr.accessToken.properties")
+
+        describe("(unsigned)") {
+          it("method 'flickr.test.echo'") {
+            val unsignedEchoResponse = flickrOAuthSession.invoke_parameterless_method("flickr.test.echo", false)
+            assert(unsignedEchoResponse.getMessage() === "OK")
+          }
+          it("method 'flickr.test.login'") {
+            val unsignedLoginResponse = flickrOAuthSession.invoke_parameterless_method("flickr.test.login", false)
+            assert(unsignedLoginResponse.getMessage() === "OK")
+          }
+          it("method 'flickr.test.null'") {
+            val unsignedNullResponse = flickrOAuthSession.invoke_parameterless_method("flickr.test.null", false)
+            assert(unsignedNullResponse.getMessage() === "OK")
+          }
+        }
+
+        describe("(signed)") {
+          it("method 'flickr.test.echo'") {
+            val signedEchoResponse = flickrOAuthSession.invoke_parameterless_method("flickr.test.echo", true)
+            assert(signedEchoResponse.getMessage() === "OK")
+          }
+
+          it("method 'flickr.test.login'") {
+            val signedLoginResponse = flickrOAuthSession.invoke_parameterless_method("flickr.test.login", true)
+            assert(signedLoginResponse.getMessage() === "OK")
+          }
+
+          it("method 'flickr.test.null'") {
+            val signedNullResponse = flickrOAuthSession.invoke_parameterless_method("flickr.test.null", true)
+            assert(signedNullResponse.getMessage() === "OK")
+          }
+
+        }
+
+      }
+
     }
 
     describe("YouTube") {
       // TODO: complete stub
 
-      it("should be able to connect to YouTube using saved credentials") {
+      it("should be able to connect to YouTube using saved credentials (only <ApiKey,ApiKeySecret>)") {
         // TODO: complete stub
       }
 
-      it("should be able to invoke YouTube test methods") {
+      it("should be able to connect to YouTube using saved credentials (both <ApiKey,ApiKeySecret> and <accessToken,accessTokenSecret>)") {
         // TODO: complete stub
       }
-      
+
+      it("should be able to invoke YouTube test methods (TBD)") {
+        // TODO: complete stub
+      }
+
     }
 
   }
