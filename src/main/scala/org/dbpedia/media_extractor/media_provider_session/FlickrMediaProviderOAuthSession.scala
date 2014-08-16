@@ -61,3 +61,16 @@ class FlickrMediaProviderOAuthSession(
     searchRequest.send()
   }
 }
+
+object FlickrMediaProviderOAuthSession {
+
+  val endPointUri = "https://api.flickr.com/services/rest/"
+
+  def apply(
+    credentialsFile: String,
+    accessTokenFile: String) =
+    new MediaProviderOAuthSession(new FlickrApi, credentialsFile, accessTokenFile)
+
+}
+
+ 
