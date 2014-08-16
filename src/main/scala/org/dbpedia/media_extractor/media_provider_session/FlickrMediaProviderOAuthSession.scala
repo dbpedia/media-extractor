@@ -29,6 +29,8 @@ class FlickrMediaProviderOAuthSession(
    * 
    */
 
+  val endPointRootUri = "https://api.flickr.com/services/rest/"
+
   //TODO: move to a test? this is for testing purposes only...
   //e. g. method = "flickr.test.login"
   def invoke_parameterless_method(method: String = null, signRequest: Boolean = true): Response = {
@@ -64,15 +66,11 @@ class FlickrMediaProviderOAuthSession(
 
 object FlickrMediaProviderOAuthSession {
 
-  override val endPointRootUri = "https://api.flickr.com/services/rest/"
-
   def apply(
     savedCredentialsFile: String = "/flickr.setup.properties",
     savedAccessTokenFile: String = "/flickr.accessToken.properties") =
 
-    new MediaProviderOAuthSession(
-      myApi = new FlickrApi,
-      targetLicenses = "4,5,7,8",
+    new FlickrMediaProviderOAuthSession(
       savedCredentialsFile = savedCredentialsFile,
       savedAccessTokenFile = savedAccessTokenFile)
 

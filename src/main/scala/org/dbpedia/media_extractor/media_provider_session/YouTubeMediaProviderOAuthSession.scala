@@ -22,5 +22,7 @@ class YouTubeMediaProviderOAuthSession(
    * 
    */
 
+  val endPointRootUri = "https://www.googleapis.com/youtube/v3"
+
   // TODO: complete this empty stub
 }

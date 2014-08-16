@@ -9,7 +9,7 @@ import org.scribe.model.Token
 import org.scribe.model.Verifier
 
 // FIXME: find a more elegant way to pass the class as a parameter
-class MediaProviderOAuthSession[MyApi <: Api](
+abstract class MediaProviderOAuthSession[MyApi <: Api](
   val myApi: MyApi,
   val targetLicenses: String,
   val savedCredentialsFile: String,
@@ -71,18 +71,3 @@ class MediaProviderOAuthSession[MyApi <: Api](
 
 }
 
-object MediaProviderOAuthSession {
-
-  def apply[MyApi <: Api](
-    myApi: MyApi,
-    targetLicenses: String,
-    credentialsFile: String,
-    accessTokenFile: String) =
-
-    new MediaProviderOAuthSession(
-      myApi,
-      targetLicenses,
-      credentialsFile,
-      accessTokenFile)
-
-}
