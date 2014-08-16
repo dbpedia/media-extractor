@@ -1,12 +1,10 @@
 package org.dbpedia.media_extractor.media_provider_session
 
-import java.net.URI
 import java.util.Properties
 import java.util.Scanner
 
 import org.scribe.builder.ServiceBuilder
 import org.scribe.builder.api.Api
-import org.scribe.builder.api.FlickrApi
 import org.scribe.model.Token
 import org.scribe.model.Verifier
 
