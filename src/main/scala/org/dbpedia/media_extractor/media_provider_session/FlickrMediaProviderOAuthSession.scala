@@ -15,7 +15,6 @@ class FlickrMediaProviderOAuthSession(
     savedCredentialsFile,
     savedAccessTokenFile) {
 
-  val targetLicenses: String
 
   //TODO: move to a test? this is for testing purposes only...
   //e. g. method = "flickr.test.login"
