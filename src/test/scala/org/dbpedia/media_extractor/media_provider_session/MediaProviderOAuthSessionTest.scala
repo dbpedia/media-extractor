@@ -12,7 +12,6 @@ class MediaProviderOAuthSessionTest extends FunSpec {
         val manuallyGeneratedFlickrOAuthSession = FlickrMediaProviderOAuthSession(
           savedCredentialsFile = "/flickr.setup.properties",
           savedAccessTokenFile = "")
-
         assert(manuallyGeneratedFlickrOAuthSession.isInstanceOf[FlickrMediaProviderOAuthSession])
       }
 
@@ -20,12 +19,10 @@ class MediaProviderOAuthSessionTest extends FunSpec {
         val automaticallyGeneratedFlickrOAuthSession = FlickrMediaProviderOAuthSession(
           savedCredentialsFile = "/flickr.setup.properties",
           savedAccessTokenFile = "/flickr.accessToken.properties")
-
         assert(automaticallyGeneratedFlickrOAuthSession.isInstanceOf[FlickrMediaProviderOAuthSession])
 
         val generatedToken = automaticallyGeneratedFlickrOAuthSession.accessToken
         val savedToken = automaticallyGeneratedFlickrOAuthSession.getSavedAccessToken("/flickr.accessToken.properties")
-
         assert(generatedToken === savedToken)
       }
 
@@ -55,17 +52,14 @@ class MediaProviderOAuthSessionTest extends FunSpec {
             val signedEchoResponse = flickrMediaProviderOAuthSession.invoke_parameterless_method("flickr.test.echo", true)
             assert(signedEchoResponse.getMessage() === "OK")
           }
-
           it("method 'flickr.test.login'") {
             val signedLoginResponse = flickrMediaProviderOAuthSession.invoke_parameterless_method("flickr.test.login", true)
             assert(signedLoginResponse.getMessage() === "OK")
           }
-
           it("method 'flickr.test.null'") {
             val signedNullResponse = flickrMediaProviderOAuthSession.invoke_parameterless_method("flickr.test.null", true)
             assert(signedNullResponse.getMessage() === "OK")
           }
-
         }
 
       }
