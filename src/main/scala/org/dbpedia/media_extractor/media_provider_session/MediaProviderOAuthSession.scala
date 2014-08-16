@@ -17,6 +17,8 @@ class MediaProviderOAuthSession[MyApi <: Api](
   val savedCredentialsFile: String = "/flickr.setup.properties",
   val savedAccessTokenFile: String = "/flickr.accessToken.properties") {
 
+  val endPointUri: String
+
   val savedAccessCredentialsProperties = loadPropertyFromFile(savedCredentialsFile)
 
   val myApiKey = savedAccessCredentialsProperties.getProperty("apiKey")
@@ -72,8 +74,6 @@ class MediaProviderOAuthSession[MyApi <: Api](
 }
 
 object MediaProviderOAuthSession {
-
-  val endPointUri = new URI("https://api.flickr.com/services/rest/")
 
   def apply[MyApi <: Api](myApi: MyApi, credentialsFile: String,
     accessTokenFile: String) =
