@@ -38,6 +38,7 @@ class YouTubeMediaProviderOAuthSession(
     searchRequest.addQuerystringParameter("location", latitude + "," + longitude)
     searchRequest.addQuerystringParameter("locationRadius", radius + measurementUnit)
     searchRequest.addQuerystringParameter("videoLicense", license)
+    searchRequest.addQuerystringParameter("safeSearch", "none") // no YouTube censorship
     searchRequest.addQuerystringParameter("maxResults", maxResultsPerQuery)
     searchRequest.addQuerystringParameter("order", "relevance")
     searchRequest.addQuerystringParameter("publishedAfter", "1970-01-01T00:00:00Z")
