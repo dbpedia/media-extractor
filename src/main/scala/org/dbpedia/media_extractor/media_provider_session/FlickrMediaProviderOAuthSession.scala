@@ -62,6 +62,7 @@ class FlickrMediaProviderOAuthSession(
 
     searchRequest.send()
   }
+
 }
 
 object FlickrMediaProviderOAuthSession {
