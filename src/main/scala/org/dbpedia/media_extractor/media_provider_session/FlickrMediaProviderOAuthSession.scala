@@ -22,7 +22,7 @@ class FlickrMediaProviderOAuthSession(
     request.addQuerystringParameter("method", method)
 
     if (signRequest)
-      flickrOAuthService.signRequest(mediaProviderOAuthSession.accessToken, request)
+      flickrOAuthService.signRequest(accessToken, request)
 
     request.send()
   }
