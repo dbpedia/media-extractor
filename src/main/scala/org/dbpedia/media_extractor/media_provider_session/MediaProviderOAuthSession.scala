@@ -52,7 +52,7 @@ class MediaProviderOAuthSession[MyApi <: Api](
       oAuthService.getAccessToken(requestToken, verifier)
     }
 
-  def loadPropertyFromFile(propertyFile: String): Properties = {
+  private def loadPropertyFromFile(propertyFile: String): Properties = {
     val propertyInputStream = this.getClass().getResourceAsStream(propertyFile)
     val myProperty = new Properties()
 
