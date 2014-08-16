@@ -15,7 +15,7 @@ class MediaProviderOAuthSession[MyApi <: Api](
   val savedCredentialsFile: String,
   val savedAccessTokenFile: String) {
 
-  val endPointUri: String
+  val endPointRootUri: String
 
   val savedAccessCredentialsProperties = loadPropertyFromFile(savedCredentialsFile)
 

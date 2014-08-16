@@ -32,7 +32,7 @@ class FlickrMediaProviderOAuthSession(
   //TODO: move to a test? this is for testing purposes only...
   //e. g. method = "flickr.test.login"
   def invoke_parameterless_method(method: String = null, signRequest: Boolean = true): Response = {
-    val request = new OAuthRequest(Verb.POST, endPointUri)
+    val request = new OAuthRequest(Verb.POST, endPointRootUri)
     request.addQuerystringParameter("method", method)
 
     if (signRequest)
@@ -42,7 +42,7 @@ class FlickrMediaProviderOAuthSession(
   }
 
   def getFlickrSearchResponse(searchText: String = "", latitude: String = "", longitude: String = "", radius: String = "", license: String = "", signRequest: Boolean = true): Response = {
-    val searchRequest = new OAuthRequest(Verb.POST, endPointUri)
+    val searchRequest = new OAuthRequest(Verb.POST, endPointRootUri)
 
     searchRequest.addQuerystringParameter("method", "flickr.photos.search")
     searchRequest.addQuerystringParameter("text", searchText)
@@ -64,7 +64,7 @@ class FlickrMediaProviderOAuthSession(
 
 object FlickrMediaProviderOAuthSession {
 
-  val endPointUri = "https://api.flickr.com/services/rest/"
+  override val endPointRootUri = "https://api.flickr.com/services/rest/"
 
   def apply(
     savedCredentialsFile: String = "/flickr.setup.properties",
