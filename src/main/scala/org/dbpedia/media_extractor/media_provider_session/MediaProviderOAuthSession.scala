@@ -14,8 +14,8 @@ import org.scribe.model.Verifier
 class MediaProviderOAuthSession[MyApi <: Api](
   val myApi: MyApi,
   val targetLicenses: String,
-  val savedCredentialsFile: String = "/flickr.setup.properties",
-  val savedAccessTokenFile: String = "/flickr.accessToken.properties") {
+  val savedCredentialsFile: String,
+  val savedAccessTokenFile: String) {
 
   val endPointUri: String
 
