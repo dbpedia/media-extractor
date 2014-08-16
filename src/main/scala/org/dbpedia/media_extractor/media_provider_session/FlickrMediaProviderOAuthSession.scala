@@ -11,10 +11,23 @@ class FlickrMediaProviderOAuthSession(
 
   extends MediaProviderOAuthSession[FlickrApi](
     myApi = new FlickrApi,
-    targetLicenses = "4,5,7,8",
+    targetLicenses = "4,5,7,8", // See detail on licenses below
     savedCredentialsFile,
     savedAccessTokenFile) {
 
+  /* Licenses (from https://secure.flickr.com/services/api/flickr.photos.licenses.getInfo.html)
+   * 
+   *<license id="0" name="All Rights Reserved" url="" />
+   *<license id="1" name="Attribution-NonCommercial-ShareAlike License" url="http://creativecommons.org/licenses/by-nc-sa/2.0/" />
+   *<license id="2" name="Attribution-NonCommercial License" url="http://creativecommons.org/licenses/by-nc/2.0/" />
+   *<license id="3" name="Attribution-NonCommercial-NoDerivs License" url="http://creativecommons.org/licenses/by-nc-nd/2.0/" />
+   *<license id="4" name="Attribution License" url="http://creativecommons.org/licenses/by/2.0/" />
+   *<license id="5" name="Attribution-ShareAlike License" url="http://creativecommons.org/licenses/by-sa/2.0/" />
+   *<license id="6" name="Attribution-NoDerivs License" url="http://creativecommons.org/licenses/by-nd/2.0/" />
+   *<license id="7" name="No known copyright restrictions" url="http://flickr.com/commons/usage/" />
+   *<license id="8" name="United States Government Work" url="http://www.usa.gov/copyright.shtml" />
+   * 
+   */
 
   //TODO: move to a test? this is for testing purposes only...
   //e. g. method = "flickr.test.login"
