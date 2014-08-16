@@ -24,7 +24,7 @@ class MediaProviderOAuthSession[MyApi <: Api](
   val myApiKey = savedAccessCredentialsProperties.getProperty("apiKey")
   val myApiKeySecret = savedAccessCredentialsProperties.getProperty("apiKeySecret")
 
-  val flickrOAuthService = new ServiceBuilder()
+  val oAuthService = new ServiceBuilder()
     .provider(myApi)
     .apiKey(myApiKey)
     .apiSecret(myApiKeySecret)
@@ -34,8 +34,8 @@ class MediaProviderOAuthSession[MyApi <: Api](
     if ((!savedAccessTokenFile.isEmpty()) && (!(getSavedAccessToken(savedAccessTokenFile).isEmpty)))
       getSavedAccessToken(savedAccessTokenFile)
     else {
-      val requestToken = flickrOAuthService.getRequestToken()
-      val authorizationUri = flickrOAuthService.getAuthorizationUrl(requestToken)
+      val requestToken = oAuthService.getRequestToken()
+      val authorizationUri = oAuthService.getAuthorizationUrl(requestToken)
 
       println("Follow this authorization URL to authorise yourself on " + myApi.getClass().toString() + ":")
       println(authorizationUri)
@@ -49,7 +49,7 @@ class MediaProviderOAuthSession[MyApi <: Api](
       println("")
       println("(If it does not crash immediately after this line, the authorization from " + myApi.getClass().toString() + " was successful)")
 
-      flickrOAuthService.getAccessToken(requestToken, verifier)
+      oAuthService.getAccessToken(requestToken, verifier)
     }
 
   def loadPropertyFromFile(propertyFile: String): Properties = {

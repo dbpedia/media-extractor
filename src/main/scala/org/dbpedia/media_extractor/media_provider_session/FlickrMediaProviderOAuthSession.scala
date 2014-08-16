@@ -36,7 +36,7 @@ class FlickrMediaProviderOAuthSession(
     request.addQuerystringParameter("method", method)
 
     if (signRequest)
-      flickrOAuthService.signRequest(accessToken, request)
+      oAuthService.signRequest(accessToken, request)
 
     request.send()
   }
@@ -56,7 +56,7 @@ class FlickrMediaProviderOAuthSession(
 
     // This request does not need to be signed
     if (signRequest)
-      flickrOAuthService.signRequest(accessToken, searchRequest)
+      oAuthService.signRequest(accessToken, searchRequest)
 
     searchRequest.send()
   }
