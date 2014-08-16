@@ -29,7 +29,8 @@ class FlickrMediaProviderOAuthSession(
    * 
    */
 
-  val endPointRootUri = "https://api.flickr.com/services/rest/"
+  override val endPointRootUri = "https://api.flickr.com/services/rest/"
+  override val maxResultsPerQuery = "30" // according to FlickrAPI's TOU
 
   //TODO: move to a test? this is for testing purposes only...
   //e. g. method = "flickr.test.login"
@@ -51,8 +52,9 @@ class FlickrMediaProviderOAuthSession(
     searchRequest.addQuerystringParameter("lat", latitude)
     searchRequest.addQuerystringParameter("lon", longitude)
     searchRequest.addQuerystringParameter("radius", radius)
+    searchRequest.addQuerystringParameter("radius_units", measurementUnit)
     searchRequest.addQuerystringParameter("license", license)
-    searchRequest.addQuerystringParameter("per_page", "30") // maximum according to FlickrAPI's TOU
+    searchRequest.addQuerystringParameter("per_page", maxResultsPerQuery)
     searchRequest.addQuerystringParameter("sort", "relevance")
     searchRequest.addQuerystringParameter("min_taken_date", "1800-01-01 00:00:00") // limiting agent to avoid "parameterless searches"
 

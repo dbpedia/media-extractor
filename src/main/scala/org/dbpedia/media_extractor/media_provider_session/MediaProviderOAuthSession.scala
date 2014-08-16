@@ -17,6 +17,8 @@ abstract class MediaProviderOAuthSession[MyApi <: Api](
   val savedAccessTokenFile: String) {
 
   val endPointRootUri: String
+  val measurementUnit = "km"
+  val maxResultsPerQuery: String
 
   val savedAccessCredentialsProperties = loadPropertyFromFile(savedCredentialsFile)
 
