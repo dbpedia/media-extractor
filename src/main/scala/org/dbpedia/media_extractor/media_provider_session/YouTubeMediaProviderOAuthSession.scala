@@ -1,6 +1,9 @@
 package org.dbpedia.media_extractor.media_provider_session
 
 import org.scribe.builder.api.GoogleApi
+import org.scribe.model.OAuthRequest
+import org.scribe.model.Response
+import org.scribe.model.Verb
 
 class YouTubeMediaProviderOAuthSession(
   savedCredentialsFile: String = "/youtube.setup.properties",
@@ -22,9 +25,30 @@ class YouTubeMediaProviderOAuthSession(
    * 
    */
 
-  val endPointRootUri = "https://www.googleapis.com/youtube/v3"
+  override val endPointRootUri = "https://www.googleapis.com/youtube/v3"
+  override val maxResultsPerQuery = "50"
 
-  // TODO: complete this empty stub
+  override def getSearchResponse(searchText: String = "", latitude: String = "", longitude: String = "", radius: String = "", license: String = "", signRequest: Boolean = true): Response = {
+    val searchRequest = new OAuthRequest(Verb.GET, endPointRootUri)
+
+    searchRequest.addQuerystringParameter("method", "search")
+    searchRequest.addQuerystringParameter("part", "snippet")
+    searchRequest.addQuerystringParameter("type", "video")
+    searchRequest.addQuerystringParameter("text", searchText)
+    searchRequest.addQuerystringParameter("location", latitude + "," + longitude)
+    searchRequest.addQuerystringParameter("locationRadius", radius + measurementUnit)
+    searchRequest.addQuerystringParameter("status.license", license)
+    searchRequest.addQuerystringParameter("maxResults", maxResultsPerQuery)
+    searchRequest.addQuerystringParameter("order", "relevance")
+    searchRequest.addQuerystringParameter("publishedAfter", "1970-01-01T00:00:00Z")
+
+    // This request does not need to be signed
+    if (signRequest)
+      oAuthService.signRequest(accessToken, searchRequest)
+
+    searchRequest.send()
+  }
+
 }
 
 object YouTubeMediaProviderOAuthSession {
