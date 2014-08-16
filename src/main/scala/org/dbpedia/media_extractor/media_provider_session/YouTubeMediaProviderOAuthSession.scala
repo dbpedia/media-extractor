@@ -26,3 +26,16 @@ class YouTubeMediaProviderOAuthSession(
 
   // TODO: complete this empty stub
 }
+
+object YouTubeMediaProviderOAuthSession {
+
+  def apply(
+    savedCredentialsFile: String = "/youtube.setup.properties",
+    savedAccessTokenFile: String = "/youtube.accessToken.properties") =
+
+    new YouTubeMediaProviderOAuthSession(
+      savedCredentialsFile = savedCredentialsFile,
+      savedAccessTokenFile = savedAccessTokenFile)
+
+}
+
