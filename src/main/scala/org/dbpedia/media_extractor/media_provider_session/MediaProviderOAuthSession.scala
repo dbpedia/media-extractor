@@ -75,8 +75,16 @@ class MediaProviderOAuthSession[MyApi <: Api](
 
 object MediaProviderOAuthSession {
 
-  def apply[MyApi <: Api](myApi: MyApi, credentialsFile: String,
+  def apply[MyApi <: Api](
+    myApi: MyApi,
+    targetLicenses: String,
+    credentialsFile: String,
     accessTokenFile: String) =
-    new MediaProviderOAuthSession(myApi, credentialsFile, accessTokenFile)
+
+    new MediaProviderOAuthSession(
+      myApi,
+      targetLicenses,
+      credentialsFile,
+      accessTokenFile)
 
 }
