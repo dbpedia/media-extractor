@@ -10,6 +10,8 @@ class FlickrMediaProviderOAuthSession(
   savedAccessTokenFile: String = "/flickr.accessToken.properties")
 
   extends MediaProviderOAuthSession[FlickrApi](
+    myApi = new FlickrApi,
+    targetLicenses = "4,5,7,8",
     savedCredentialsFile,
     savedAccessTokenFile) {
 

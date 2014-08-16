@@ -13,10 +13,9 @@ import org.scribe.model.Verifier
 // FIXME: find a more elegant way to pass the class as a parameter
 class MediaProviderOAuthSession[MyApi <: Api](
   val myApi: MyApi,
+  val targetLicenses: String,
   val savedCredentialsFile: String = "/flickr.setup.properties",
   val savedAccessTokenFile: String = "/flickr.accessToken.properties") {
-
-  val targetLicenses: String
 
   val savedAccessCredentialsProperties = loadPropertyFromFile(savedCredentialsFile)
 
