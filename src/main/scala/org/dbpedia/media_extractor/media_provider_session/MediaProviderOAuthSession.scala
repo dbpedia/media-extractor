@@ -5,6 +5,7 @@ import java.util.Scanner
 
 import org.scribe.builder.ServiceBuilder
 import org.scribe.builder.api.Api
+import org.scribe.model.Response
 import org.scribe.model.Token
 import org.scribe.model.Verifier
 
@@ -68,6 +69,8 @@ abstract class MediaProviderOAuthSession[MyApi <: Api](
 
     new Token(accessToken, accessSecret)
   }
+
+  def getSearchResponse(searchText: String = "", latitude: String = "", longitude: String = "", radius: String = "", license: String = "", signRequest: Boolean = true): Response
 
 }
 
