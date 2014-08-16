@@ -44,13 +44,17 @@ abstract class MediaProviderOAuthSession[MyApi <: Api](
       print(">>")
 
       val scanner = new Scanner(System.in)
-      val verifier = new Verifier(scanner.nextLine())
+      val verifier = new Verifier(scanner.next())
       scanner.close()
-
       println("")
-      println("(If it does not crash immediately after this line, the authorization from " + myApi.getClass().toString() + " was successful)")
 
-      oAuthService.getAccessToken(requestToken, verifier)
+      val generatedAccessToken = oAuthService.getAccessToken(requestToken, verifier)
+
+      println("Generated Access Token: (keep it secret!!)")
+      println(generatedAccessToken)
+      println("")
+
+      generatedAccessToken
     }
 
   private def loadPropertyFromFile(propertyFile: String): Properties = {
