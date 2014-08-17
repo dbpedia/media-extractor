@@ -33,52 +33,6 @@ class FlickrMediaProviderOAuthSession(
   override val maxResultsPerQuery = "30" // according to FlickrAPI's TOU
   override val termsOfUseUri = "https://secure.flickr.com/help/terms/"
 
-  //TODO: move to a test? this is for testing purposes only...
-  //e. g. method = "flickr.test.login"
-  def invoke_parameterless_method(method: String = null, signRequest: Boolean = true): Response = {
-    val request = new OAuthRequest(Verb.POST, endPointRootUri)
-    request.addQuerystringParameter("method", method)
-
-    if (signRequest)
-      oAuthService.signRequest(accessToken, request)
-
-    request.send()
-  }
-
-  override def getSearchResponse(searchText: String = "", latitude: String = "", longitude: String = "", radius: String = "", license: String = "", signRequest: Boolean = true): Response = {
-    val searchRequest = new OAuthRequest(Verb.POST, endPointRootUri)
-
-    searchRequest.addQuerystringParameter("method", "flickr.photos.search")
-    searchRequest.addQuerystringParameter("text", searchText)
-    searchRequest.addQuerystringParameter("lat", latitude)
-    searchRequest.addQuerystringParameter("lon", longitude)
-    searchRequest.addQuerystringParameter("radius", radius)
-    searchRequest.addQuerystringParameter("radius_units", measurementUnit)
-    searchRequest.addQuerystringParameter("license", license)
-    searchRequest.addQuerystringParameter("per_page", maxResultsPerQuery)
-    searchRequest.addQuerystringParameter("sort", "relevance")
-    searchRequest.addQuerystringParameter("min_taken_date", "1800-01-01 00:00:00") // limiting agent to avoid "parameterless searches"
-
-    // This request does not need to be signed
-    if (signRequest)
-      oAuthService.signRequest(accessToken, searchRequest)
-
-    searchRequest.send()
-  }
-
-  override def getSearchResults(searchResponse: Response): List[FlickrSearchResult] = {
-    val myXml = XML.loadString(searchResponse.getBody())
-    val resultsListBuffer = new ListBuffer[FlickrSearchResult]
-    (myXml \\ "rsp" \ "photos" \ "photo") foreach {
-      photo =>
-        val depictionUri = "https://farm" + (photo \ "@farm") + ".staticflickr.com/" + (photo \ "@server") + "/" + (photo \ "@id") + "_" + (photo \ "@secret") + ".jpg"
-        val pageUri = "https://flickr.com/photos/" + (photo \ "@owner") + "/" + (photo \ "@id")
-
-        resultsListBuffer += FlickrSearchResult(depictionUri, pageUri)
-    }
-    resultsListBuffer.toList
-  }
-
 }
 
 object FlickrMediaProviderOAuthSession {

@@ -1,7 +1,6 @@
-package org.dbpedia.media_extractor.media_provider.youtube
+package org.dbpedia.media_extractor.media_lookup_service_provider
 
 import org.dbpedia.media_extractor.media_provider_session.YouTubeMediaProviderOAuthSession
-import org.dbpedia.media_extractor.media_lookup_service_provider.MediaLookupServiceProvider
 
 class YouTubeSemanticMediaLookupServiceProvider(
   val targetLicenses: String,
@@ -9,6 +8,6 @@ class YouTubeSemanticMediaLookupServiceProvider(
   targetResource: String = "Brussels",
   val radius: String = "5")
 
-  extends MediaLookupServiceProvider {
+  extends YouTubeMediaLookupServiceProvider {
   //TODO: complete empty stub
 }

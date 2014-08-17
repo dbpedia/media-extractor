@@ -1,6 +1,5 @@
-package org.dbpedia.media_extractor.media_provider.flickr
+package org.dbpedia.media_extractor.media_lookup_service_provider
 
-import org.dbpedia.media_extractor.media_lookup_service_provider.MediaLookupServiceProvider
 import org.dbpedia.media_extractor.media_provider_session.FlickrMediaProviderOAuthSession
 
 class FlickrGeoMediaLookupServiceProvider(
@@ -10,6 +9,6 @@ class FlickrGeoMediaLookupServiceProvider(
   val lon: String = "4.35",
   val radius: String = "5")
 
-  extends MediaLookupServiceProvider {
+  extends FlickrMediaLookupServiceProvider {
   //TODO: complete empty stub
 }
