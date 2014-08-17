@@ -7,7 +7,7 @@ import org.scribe.model.Response
 import com.hp.hpl.jena.rdf.model.Model
 
 abstract class LookupService[ProviderApi <: Api](
-  val serviceProviderCallback: MediaLookupServiceProvider[ProviderApi],
+  val mediaLookupServiceProviderCallback: MediaLookupServiceProvider[ProviderApi],
   val radius: String = "5") {
 
   val lookupFooter = "Media Extractor (inspired by FlickrWrappr)"

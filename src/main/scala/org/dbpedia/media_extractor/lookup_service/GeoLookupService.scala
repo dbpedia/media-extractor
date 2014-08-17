@@ -92,7 +92,7 @@ abstract class GeoLookupService[ProviderApi <: Api](
     addNameSpacesToRDFGraph(rdfGraph)
     addMetadataToRDFGraph(rdfGraph)
 
-    val searchResults = serviceProviderCallback.oAuthSession.getSearchResults(serviceProviderCallback.oAuthSession.getSearchResponse(searchText = "", latitude = lat, longitude = lon, radius, signRequest = signRequest))
+    val searchResults = mediaLookupServiceProviderCallback.oAuthSession.getSearchResults(mediaLookupServiceProviderCallback.oAuthSession.getSearchResponse(searchText = "", latitude = lat, longitude = lon, radius, signRequest = signRequest))
     addSearchResultsToRDFGraph(searchResults, rdfGraph)
 
     rdfGraph
