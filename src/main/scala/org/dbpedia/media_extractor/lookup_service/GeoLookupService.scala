@@ -9,15 +9,18 @@ import com.hp.hpl.jena.vocabulary.DCTerms
 import org.dbpedia.media_extractor.oauthsession.OAuthSession
 import org.dbpedia.media_extractor.search_result.SearchResult
 import org.scribe.builder.api.Api
+import org.dbpedia.media_extractor.media_lookup_service_provider.MediaLookupServiceProvider
 
-abstract class GeoLookupService(
+abstract class GeoLookupService[ProviderApi <: Api](
   // By default, search for Brussels
   val lat: String = "50.85",
   val lon: String = "4.35",
   radius: String = "5",
-  oAuthSession: OAuthSession[Api])
+  serviceProviderCallback: MediaLookupServiceProvider[ProviderApi])
 
-  extends LookupService(oAuthSession, radius) {
+  extends LookupService[ProviderApi](
+    serviceProviderCallback,
+    radius) {
 
   val geoPath = lat + "/" + lon + "/" + radius
 
@@ -89,7 +92,7 @@ abstract class GeoLookupService(
     addNameSpacesToRDFGraph(rdfGraph)
     addMetadataToRDFGraph(rdfGraph)
 
-    val searchResults = oAuthSession.getSearchResults(oAuthSession.getSearchResponse(searchText = "", latitude = lat, longitude = lon, radius, signRequest = signRequest))
+    val searchResults = serviceProviderCallback.oAuthSession.getSearchResults(serviceProviderCallback.oAuthSession.getSearchResponse(searchText = "", latitude = lat, longitude = lon, radius, signRequest = signRequest))
     addSearchResultsToRDFGraph(searchResults, rdfGraph)
 
     rdfGraph
