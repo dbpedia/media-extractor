@@ -79,7 +79,7 @@ abstract class OAuthSession[MyApi <: Api](
     new Token(accessToken, accessSecret)
   }
 
-  def getSearchResponse(searchText: String = "", latitude: String = "", longitude: String = "", radius: String = "", license: String = "", signRequest: Boolean = true): Response
+  def getSearchResponse(searchText: String = "", latitude: String = "", longitude: String = "", radius: String = "", signRequest: Boolean = true): Response
 
   def getSearchResults(searchResponse: Response): List[SearchResult]
 
