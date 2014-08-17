@@ -77,3 +77,16 @@ class OAuthSession[ProviderApi <: Api](
 
 }
 
+object OAuthSession {
+
+  def apply(
+    myProviderApi: ProviderApi,
+    savedCredentialsFile: String,
+    savedAccessTokenFile: String) =
+
+    new OAuthSession[ProviderApi](
+      myProviderApi: ProviderApi,
+      savedCredentialsFile = savedCredentialsFile,
+      savedAccessTokenFile = savedAccessTokenFile)
+
+}
