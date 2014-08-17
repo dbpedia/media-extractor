@@ -27,6 +27,7 @@ class YouTubeMediaProviderOAuthSession(
 
   override val endPointRootUri = "https://www.googleapis.com/youtube/v3"
   override val maxResultsPerQuery = "50"
+  override val termsOfUseUri = "https://developers.google.com/youtube/terms"
 
   override def getSearchResponse(searchText: String = "", latitude: String = "", longitude: String = "", radius: String = "", license: String = "", signRequest: Boolean = true): Response = {
     val searchRequest = new OAuthRequest(Verb.GET, endPointRootUri)

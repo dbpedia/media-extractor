@@ -31,6 +31,7 @@ class FlickrMediaProviderOAuthSession(
 
   override val endPointRootUri = "https://api.flickr.com/services/rest/"
   override val maxResultsPerQuery = "30" // according to FlickrAPI's TOU
+  override val termsOfUseUri = "https://secure.flickr.com/help/terms/"
 
   //TODO: move to a test? this is for testing purposes only...
   //e. g. method = "flickr.test.login"
@@ -63,6 +64,19 @@ class FlickrMediaProviderOAuthSession(
       oAuthService.signRequest(accessToken, searchRequest)
 
     searchRequest.send()
+  }
+
+  override def getSearchResults(searchResponse: Response): List[FlickrSearchResult] = {
+    val myXml = XML.loadString(searchResponse.getBody())
+    val resultsListBuffer = new ListBuffer[FlickrSearchResult]
+    (myXml \\ "rsp" \ "photos" \ "photo") foreach {
+      photo =>
+        val depictionUri = "https://farm" + (photo \ "@farm") + ".staticflickr.com/" + (photo \ "@server") + "/" + (photo \ "@id") + "_" + (photo \ "@secret") + ".jpg"
+        val pageUri = "https://flickr.com/photos/" + (photo \ "@owner") + "/" + (photo \ "@id")
+
+        resultsListBuffer += FlickrSearchResult(depictionUri, pageUri)
+    }
+    resultsListBuffer.toList
   }
 
 }

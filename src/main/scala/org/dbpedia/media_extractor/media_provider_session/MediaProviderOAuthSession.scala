@@ -16,9 +16,11 @@ abstract class MediaProviderOAuthSession[MyApi <: Api](
   val savedCredentialsFile: String,
   val savedAccessTokenFile: String) {
 
-  val endPointRootUri: String
   val measurementUnit = "km"
+
+  val endPointRootUri: String
   val maxResultsPerQuery: String
+  val termsOfUseUri: String
 
   val savedAccessCredentialsProperties = loadPropertyFromFile(savedCredentialsFile)
 
@@ -77,6 +79,8 @@ abstract class MediaProviderOAuthSession[MyApi <: Api](
   }
 
   def getSearchResponse(searchText: String = "", latitude: String = "", longitude: String = "", radius: String = "", license: String = "", signRequest: Boolean = true): Response
+
+  def getSearchResults(searchResponse: Response): List[SearchResult]
 
 }
 
