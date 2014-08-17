@@ -10,18 +10,10 @@ import org.scribe.model.Response
 import org.scribe.model.Token
 import org.scribe.model.Verifier
 
-// FIXME: find a more elegant way to pass the class as a parameter
-abstract class OAuthSession[ProviderApi <: Api](
+class OAuthSession[ProviderApi <: Api](
   val myProviderApi: ProviderApi,
-  val targetLicenses: String,
   val savedCredentialsFile: String,
   val savedAccessTokenFile: String) {
-
-  val measurementUnit = "km"
-
-  val endPointRootUri: String
-  val maxResultsPerQuery: String
-  val termsOfUseUri: String
 
   val savedAccessCredentialsProperties = loadPropertyFromFile(savedCredentialsFile)
 
