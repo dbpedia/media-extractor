@@ -3,9 +3,9 @@ package org.dbpedia.media_extractor.media_lookup_service_provider
 import org.scribe.model.OAuthRequest
 import org.scribe.model.Verb
 import scala.collection.mutable.ListBuffer
-import org.dbpedia.media_extractor.media_provider_session.FlickrSearchResult
 import scala.xml.XML
 import org.scribe.model.Response
+import org.dbpedia.media_extractor.search_result.FlickrSearchResult
 
 class FlickrMediaLookupServiceProvider extends MediaLookupServiceProvider {
 
