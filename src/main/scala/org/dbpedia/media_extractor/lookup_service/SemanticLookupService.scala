@@ -20,15 +20,6 @@ abstract class SemanticLookupService(
   val dbpediaResourceFullUri = dbpediaResourceRootUri + resourceLeafUri
   val dbpediaMediaResourceFullUri = dbpediaMediaResourceRootUri + resourceLeafUri
 
-  def addFlickrSearchResultsToRDFGraph(flickrSearchResultsList: List[FlickrSearchResult], rdfGraph: Model) {
-    val dbpediaMediaResourceFullUriResource = rdfGraph.createResource(dbpediaMediaResourceFullUri)
-    for (resultElem <- flickrSearchResultsList) {
-      val depictionUriResource = rdfGraph.createResource(resultElem.depictionUri)
-      val pageUriResource = rdfGraph.createResource(resultElem.pageUri)
-      dbpediaMediaResourceFullUriResource.addProperty(FOAF.depiction, depictionUriResource)
-      depictionUriResource.addProperty(FOAF.page, pageUriResource)
-    }
-  }
 
   def addMetadataToRDFGraph(rdfGraph: Model) = {
     addDocumentMetadataToRDFGraph(rdfGraph)
