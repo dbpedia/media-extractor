@@ -1,4 +1,4 @@
-package org.dbpedia.media_extractor.media_provider_session
+package org.dbpedia.media_extractor.oauthsession
 
 import org.scribe.builder.api.FlickrApi
 import org.scribe.model.OAuthRequest

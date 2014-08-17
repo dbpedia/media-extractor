@@ -1,4 +1,4 @@
-package org.dbpedia.media_extractor.media_provider_session
+package org.dbpedia.media_extractor.oauthsession
 
 import java.util.Properties
 import java.util.Scanner
