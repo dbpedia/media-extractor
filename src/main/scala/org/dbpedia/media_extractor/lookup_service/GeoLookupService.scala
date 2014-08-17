@@ -1,7 +1,7 @@
 package org.dbpedia.media_extractor.media_provider
 
 import com.hp.hpl.jena.rdf.model.Model
-import org.dbpedia.media_extractor.media_provider_session.SearchResult
+import org.dbpedia.media_extractor.lookup_service.SearchResult
 
 abstract class GeoLookupService(
   // By default, search for Brussels
