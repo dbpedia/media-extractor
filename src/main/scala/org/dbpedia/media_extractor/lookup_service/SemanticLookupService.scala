@@ -3,7 +3,6 @@ package org.dbpedia.media_extractor.lookup_service
 import org.dbpedia.media_extractor.media_lookup_service_provider.MediaLookupServiceProvider
 import org.dbpedia.media_extractor.search_result.SearchResult
 import org.scribe.builder.api.Api
-
 import com.hp.hpl.jena.rdf.model.Model
 import com.hp.hpl.jena.sparql.vocabulary.FOAF
 import com.hp.hpl.jena.vocabulary.DCTerms
@@ -11,13 +10,13 @@ import com.hp.hpl.jena.vocabulary.OWL
 import com.hp.hpl.jena.vocabulary.RDF
 import com.hp.hpl.jena.vocabulary.RDFS
 
-abstract class SemanticLookupService[ProviderApi <: Api](
+abstract class SemanticLookupService[ProviderApi <: Api, SearchResultType <: SearchResult](
   // By default, search for Brussels
   val targetResource: String = "Brussels",
-  override val radius: String = "5",
+  radius: String = "5",
   mediaLookupServiceProviderCallback: MediaLookupServiceProvider[ProviderApi])
 
-  extends LookupService[ProviderApi](
+  extends LookupService[ProviderApi, SearchResultType](
     mediaLookupServiceProviderCallback,
     radius) {
 

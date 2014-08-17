@@ -11,14 +11,14 @@ import com.hp.hpl.jena.vocabulary.DCTerms
 import com.hp.hpl.jena.vocabulary.RDF
 import com.hp.hpl.jena.vocabulary.RDFS
 
-abstract class GeoLookupService[ProviderApi <: Api](
+abstract class GeoLookupService[ProviderApi <: Api, SearchResultType <: SearchResult](
   // By default, search for Brussels
   val lat: String = "50.85",
   val lon: String = "4.35",
   radius: String = "5",
   mediaLookupServiceProviderCallback: MediaLookupServiceProvider[ProviderApi])
 
-  extends LookupService[ProviderApi](
+  extends LookupService[ProviderApi, SearchResultType](
     mediaLookupServiceProviderCallback,
     radius) {
 
@@ -33,8 +33,6 @@ abstract class GeoLookupService[ProviderApi <: Api](
   override protected val namespaceUriMap = super.namespaceUriMap ++ Map(
     //"geonames"-> "http://www.geonames.org/ontology#",
     "georss" -> "http://www.georss.org/georss/")
-
-  def addSearchResultsToRDFGraph(searchResultsList: List[SearchResult], rdfGraph: Model)
 
   def addMetadataToRDFGraph(rdfGraph: Model) = {
     addLocationMetadataToRDFGraph(rdfGraph)
