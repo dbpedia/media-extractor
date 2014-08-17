@@ -6,8 +6,14 @@ import scala.collection.mutable.ListBuffer
 import scala.xml.XML
 import org.scribe.model.Response
 import org.dbpedia.media_extractor.search_result.FlickrSearchResult
+import org.scribe.builder.api.FlickrApi
 
-class FlickrMediaLookupServiceProvider extends MediaLookupServiceProvider {
+class FlickrMediaLookupServiceProvider(
+
+  savedCredentialsFile: String = "/flickr.setup.properties",
+  savedAccessTokenFile: String = "/flickr.accessToken.properties")
+
+  extends MediaLookupServiceProvider[FlickrApi] {
 
   override val termsOfUseUri = "https://secure.flickr.com/help/terms/"
   override val endPointRootUri = "https://api.flickr.com/services/rest/"
