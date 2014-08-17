@@ -42,7 +42,7 @@ class FlickrMediaLookupServiceProvider(
     request.addQuerystringParameter("method", method)
 
     if (signRequest)
-      oAuthService.signRequest(accessToken, request)
+      oAuthSession.oAuthService.signRequest(oAuthSession.accessToken, request)
 
     request.send()
   }
@@ -63,7 +63,7 @@ class FlickrMediaLookupServiceProvider(
 
     // This request does not need to be signed
     if (signRequest)
-      oAuthService.signRequest(accessToken, searchRequest)
+      oAuthSession.oAuthService.signRequest(oAuthSession.accessToken, searchRequest)
 
     searchRequest.send()
   }

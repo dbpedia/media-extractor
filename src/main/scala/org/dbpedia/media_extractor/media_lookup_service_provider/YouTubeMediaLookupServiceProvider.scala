@@ -51,7 +51,7 @@ class YouTubeMediaLookupServiceProvider(
 
     // This request does not need to be signed
     if (signRequest)
-      oAuthService.signRequest(accessToken, searchRequest)
+      oAuthSession.oAuthService.signRequest(oAuthSession.accessToken, searchRequest)
 
     searchRequest.send()
   }
