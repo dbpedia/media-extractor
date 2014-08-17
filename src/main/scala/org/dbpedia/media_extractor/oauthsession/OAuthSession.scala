@@ -11,8 +11,8 @@ import org.scribe.model.Token
 import org.scribe.model.Verifier
 
 // FIXME: find a more elegant way to pass the class as a parameter
-abstract class OAuthSession[MyApi <: Api](
-  val myApi: MyApi,
+abstract class OAuthSession[ProviderApi <: Api](
+  val myProviderApi: ProviderApi,
   val targetLicenses: String,
   val savedCredentialsFile: String,
   val savedAccessTokenFile: String) {
@@ -29,7 +29,7 @@ abstract class OAuthSession[MyApi <: Api](
   val myApiKeySecret = savedAccessCredentialsProperties.getProperty("apiKeySecret")
 
   val oAuthService = new ServiceBuilder()
-    .provider(myApi)
+    .provider(myProviderApi)
     .apiKey(myApiKey)
     .apiSecret(myApiKeySecret)
     .build()
@@ -41,7 +41,7 @@ abstract class OAuthSession[MyApi <: Api](
       val requestToken = oAuthService.getRequestToken()
       val authorizationUri = oAuthService.getAuthorizationUrl(requestToken)
 
-      println("Follow this authorization URL to authorise yourself on " + myApi.getClass().toString() + ":")
+      println("Follow this authorization URL to authorise yourself on " + myProviderApi.getClass().toString() + ":")
       println(authorizationUri)
       println("Paste here the verifier it gives you:")
       print(">>")

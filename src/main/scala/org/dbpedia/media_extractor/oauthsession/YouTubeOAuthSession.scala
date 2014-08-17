@@ -7,7 +7,7 @@ class YouTubeOAuthSession(
   savedAccessTokenFile: String = "/youtube.accessToken.properties")
 
   extends OAuthSession[GoogleApi](
-    myApi = new GoogleApi,
+    myProviderApi = new GoogleApi,
     targetLicenses = "creativeCommon", // CC-BY (see details below)
     savedCredentialsFile,
     savedAccessTokenFile) {
