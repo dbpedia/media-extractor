@@ -76,7 +76,7 @@ abstract class GeoLookupService[ProviderApi <: Api](
     val dbpediaLocationFullUriResource = rdfGraph.createResource(dbpediaLocationFullUri)
     val dbpediaMediaLocationFullUriResource = rdfGraph.createResource(dbpediaMediaLocationFullUri)
     val dbpediaMediaRootUriResource = rdfGraph.createResource(dbpediaMediaRootUri)
-    val flickrTermsUriResource = rdfGraph.createResource(flickrTermsUri)
+    val flickrTermsUriResource = rdfGraph.createResource(mediaLookupServiceProviderCallback.termsOfUseUri)
 
     dbpediaMediaRootUriResource.addProperty(RDFS.label, lookupFooterLiteral)
     dbpediaMediaLocationFullUriResource.addProperty(RDFS.label, lookupHeaderLiteral)

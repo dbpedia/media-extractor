@@ -48,7 +48,7 @@ abstract class SemanticLookupService[ProviderApi <: Api](
 
     val dbpediaResourceFullUriResource = rdfGraph.createResource(dbpediaResourceFullUri)
     val dbpediaMediaResourceFullUriResource = rdfGraph.createResource(dbpediaMediaResourceFullUri)
-    val flickrTermsUriResource = rdfGraph.createResource(flickrTermsUri)
+    val flickrTermsUriResource = rdfGraph.createResource(mediaLookupServiceProviderCallback.termsOfUseUri)
     val dbpediaMediaRootUriResource = rdfGraph.createResource(dbpediaMediaRootUri)
 
     dbpediaMediaRootUriResource.addProperty(RDFS.label, lookupFooterLiteral)
