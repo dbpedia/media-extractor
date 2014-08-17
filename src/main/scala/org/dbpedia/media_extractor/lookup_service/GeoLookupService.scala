@@ -8,13 +8,14 @@ import com.hp.hpl.jena.vocabulary.RDFS
 import com.hp.hpl.jena.vocabulary.DCTerms
 import org.dbpedia.media_extractor.oauthsession.OAuthSession
 import org.dbpedia.media_extractor.search_result.SearchResult
+import org.scribe.builder.api.Api
 
 abstract class GeoLookupService(
   // By default, search for Brussels
   val lat: String = "50.85",
   val lon: String = "4.35",
   radius: String = "5",
-  oAuthSession: OAuthSession[T])
+  oAuthSession: OAuthSession[Api])
 
   extends LookupService(oAuthSession, radius) {
 

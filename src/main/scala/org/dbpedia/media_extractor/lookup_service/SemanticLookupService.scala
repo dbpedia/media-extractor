@@ -8,13 +8,15 @@ import com.hp.hpl.jena.vocabulary.OWL
 import com.hp.hpl.jena.vocabulary.DCTerms
 import org.dbpedia.media_extractor.search_result.SearchResult
 import org.dbpedia.media_extractor.oauthsession.OAuthSession
+import org.scribe.builder.api.Api
 
 abstract class SemanticLookupService(
   // By default, search for Brussels
   val targetResource: String = "Brussels",
-  override val radius: String = "5")
+  override val radius: String = "5",
+  oAuthSession: OAuthSession[Api])
 
-  extends LookupService(radius) {
+  extends LookupService(oAuthSession, radius) {
 
   val dbpediaResourceRootUri = dbpediaRootUri + "resource/"
   val dbpediaMediaResourceRootUri = dbpediaMediaRootUri + "resource/"
