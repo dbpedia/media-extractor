@@ -1,6 +1,9 @@
 package org.dbpedia.media_extractor.media_lookup_service_provider
 
-import org.dbpedia.media_extractor.media_provider_session.FlickrMediaProviderOAuthSession
+import com.hp.hpl.jena.rdf.model.ModelFactory
+import org.dbpedia.media_extractor.search_result.FlickrSearchResult
+import com.hp.hpl.jena.rdf.model.Model
+import com.hp.hpl.jena.sparql.vocabulary.FOAF
 
 class FlickrGeoMediaLookupServiceProvider(
   val targetLicenses: String,
