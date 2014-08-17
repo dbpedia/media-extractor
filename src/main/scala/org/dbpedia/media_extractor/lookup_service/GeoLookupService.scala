@@ -25,8 +25,6 @@ abstract class GeoLookupService(
     //"geonames"-> "http://www.geonames.org/ontology#",
     "georss" -> "http://www.georss.org/georss/")
 
-  def performGeoLookup(lat: String = "50.85", lon: String = "4.35", radius: String = radius): Model
-
   def addSearchResultsToRDFGraph(searchResultsList: List[SearchResult], rdfGraph: Model)
 
   def addMetadataToRDFGraph(rdfGraph: Model) = {
