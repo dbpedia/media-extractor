@@ -79,7 +79,7 @@ class OAuthSession[ProviderApi <: Api](
 
 object OAuthSession {
 
-  def apply(
+  def apply[ProviderApi](
     myProviderApi: ProviderApi,
     savedCredentialsFile: String,
     savedAccessTokenFile: String) =
