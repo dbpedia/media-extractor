@@ -14,7 +14,7 @@ abstract class GeoLookupService(
   val lat: String = "50.85",
   val lon: String = "4.35",
   radius: String = "5",
-  oAuthSession: OAuthSession)
+  oAuthSession: OAuthSession[T])
 
   extends LookupService(oAuthSession, radius) {
 
@@ -88,10 +88,10 @@ abstract class GeoLookupService(
     addNameSpacesToRDFGraph(rdfGraph)
     addMetadataToRDFGraph(rdfGraph)
 
-    val flickrSearchResults = getSearchResults(flickrOAuthSession.getFlickrSearchResponse(searchText = "", latitude = lat, longitude = lon, radius, license, signRequest))
-    addSearchResultsToRDFGraph(flickrSearchResults, rdfGraph)
+    val searchResults = getSearchResults(oAuthSession.getSearchResponse(searchText = "", latitude = lat, longitude = lon, radius, license, signRequest))
+    addSearchResultsToRDFGraph(searchResults, rdfGraph)
 
     rdfGraph
   }
-  
+
 }
