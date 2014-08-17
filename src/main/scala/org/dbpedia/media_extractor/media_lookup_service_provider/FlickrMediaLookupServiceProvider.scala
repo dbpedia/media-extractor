@@ -21,27 +21,6 @@ class FlickrMediaLookupServiceProvider extends MediaLookupServiceProvider {
     request.send()
   }
 
-  override def getSearchResponse(searchText: String = "", latitude: String = "", longitude: String = "", radius: String = "", license: String = "", signRequest: Boolean = true): Response = {
-    val searchRequest = new OAuthRequest(Verb.POST, endPointRootUri)
-
-    searchRequest.addQuerystringParameter("method", "flickr.photos.search")
-    searchRequest.addQuerystringParameter("text", searchText)
-    searchRequest.addQuerystringParameter("lat", latitude)
-    searchRequest.addQuerystringParameter("lon", longitude)
-    searchRequest.addQuerystringParameter("radius", radius)
-    searchRequest.addQuerystringParameter("radius_units", measurementUnit)
-    searchRequest.addQuerystringParameter("license", license)
-    searchRequest.addQuerystringParameter("per_page", maxResultsPerQuery)
-    searchRequest.addQuerystringParameter("sort", "relevance")
-    searchRequest.addQuerystringParameter("min_taken_date", "1800-01-01 00:00:00") // limiting agent to avoid "parameterless searches"
-
-    // This request does not need to be signed
-    if (signRequest)
-      oAuthService.signRequest(accessToken, searchRequest)
-
-    searchRequest.send()
-  }
-
   override def getSearchResults(searchResponse: Response): List[FlickrSearchResult] = {
     val myXml = XML.loadString(searchResponse.getBody())
     val resultsListBuffer = new ListBuffer[FlickrSearchResult]

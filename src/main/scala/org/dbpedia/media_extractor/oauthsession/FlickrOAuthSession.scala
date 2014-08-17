@@ -1,6 +1,9 @@
 package org.dbpedia.media_extractor.oauthsession
 
 import org.scribe.builder.api.FlickrApi
+import org.scribe.model.OAuthRequest
+import org.scribe.model.Verb
+import org.scribe.model.Response
 
 class FlickrOAuthSession(
   savedCredentialsFile: String = "/flickr.setup.properties",
@@ -29,6 +32,27 @@ class FlickrOAuthSession(
   override val endPointRootUri = "https://api.flickr.com/services/rest/"
   override val maxResultsPerQuery = "30" // according to FlickrAPI's TOU
   override val termsOfUseUri = "https://secure.flickr.com/help/terms/"
+
+  override def getSearchResponse(searchText: String = "", latitude: String = "", longitude: String = "", radius: String = "", signRequest: Boolean = true): Response = {
+    val searchRequest = new OAuthRequest(Verb.POST, endPointRootUri)
+
+    searchRequest.addQuerystringParameter("method", "flickr.photos.search")
+    searchRequest.addQuerystringParameter("text", searchText)
+    searchRequest.addQuerystringParameter("lat", latitude)
+    searchRequest.addQuerystringParameter("lon", longitude)
+    searchRequest.addQuerystringParameter("radius", radius)
+    searchRequest.addQuerystringParameter("radius_units", measurementUnit)
+    searchRequest.addQuerystringParameter("license", targetLicenses)
+    searchRequest.addQuerystringParameter("per_page", maxResultsPerQuery)
+    searchRequest.addQuerystringParameter("sort", "relevance")
+    searchRequest.addQuerystringParameter("min_taken_date", "1800-01-01 00:00:00") // limiting agent to avoid "parameterless searches"
+
+    // This request does not need to be signed
+    if (signRequest)
+      oAuthService.signRequest(accessToken, searchRequest)
+
+    searchRequest.send()
+  }
 
 }
 
