@@ -1,24 +1,24 @@
 package org.dbpedia.media_extractor.lookup_service
 
+import org.dbpedia.media_extractor.media_lookup_service_provider.MediaLookupServiceProvider
+import org.dbpedia.media_extractor.search_result.SearchResult
+import org.scribe.builder.api.Api
+
 import com.hp.hpl.jena.rdf.model.Model
 import com.hp.hpl.jena.sparql.vocabulary.FOAF
+import com.hp.hpl.jena.vocabulary.DCTerms
+import com.hp.hpl.jena.vocabulary.OWL
 import com.hp.hpl.jena.vocabulary.RDF
 import com.hp.hpl.jena.vocabulary.RDFS
-import com.hp.hpl.jena.vocabulary.OWL
-import com.hp.hpl.jena.vocabulary.DCTerms
-import org.dbpedia.media_extractor.search_result.SearchResult
-import org.dbpedia.media_extractor.oauthsession.OAuthSession
-import org.scribe.builder.api.Api
-import org.dbpedia.media_extractor.media_lookup_service_provider.MediaLookupServiceProvider
 
 abstract class SemanticLookupService[ProviderApi <: Api](
   // By default, search for Brussels
   val targetResource: String = "Brussels",
   override val radius: String = "5",
-  serviceProviderCallback: MediaLookupServiceProvider[ProviderApi])
+  mediaLookupServiceProviderCallback: MediaLookupServiceProvider[ProviderApi])
 
   extends LookupService[ProviderApi](
-    serviceProviderCallback,
+    mediaLookupServiceProviderCallback,
     radius) {
 
   val dbpediaResourceRootUri = dbpediaRootUri + "resource/"
