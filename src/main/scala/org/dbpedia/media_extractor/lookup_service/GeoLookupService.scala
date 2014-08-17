@@ -1,6 +1,7 @@
 package org.dbpedia.media_extractor.media_provider
 
 import com.hp.hpl.jena.rdf.model.Model
+import org.dbpedia.media_extractor.media_provider_session.SearchResult
 
 abstract class GeoLookupService(
   // By default, search for Brussels
@@ -11,8 +12,6 @@ abstract class GeoLookupService(
 
   extends LookupService(mediaProviderOAuthSession, radius) {
   // TODO: complete this empty stub
-
-  def performGeoLookup(lat: String = "50.85", lon: String = "4.35", radius: String = radius): Model
 
   val geoPath = lat + "/" + lon + "/" + radius
 
@@ -26,15 +25,9 @@ abstract class GeoLookupService(
     //"geonames"-> "http://www.geonames.org/ontology#",
     "georss" -> "http://www.georss.org/georss/")
 
-  def addSearchResultsToRDFGraph(searchResultsList: List[FlickrSearchResult], rdfGraph: Model) = {
-    val dbpediaMediaLocationFullUriResource = rdfGraph.createResource(dbpediaMediaLocationFullUri)
-    for (resultElem <- searchResultsList) {
-      val depictionUriResource = rdfGraph.createResource(resultElem.depictionUri)
-      val pageUriResource = rdfGraph.createResource(resultElem.pageUri)
-      dbpediaMediaLocationFullUriResource.addProperty(FOAF.depiction, depictionUriResource)
-      depictionUriResource.addProperty(FOAF.page, pageUriResource)
-    }
-  }
+  def performGeoLookup(lat: String = "50.85", lon: String = "4.35", radius: String = radius): Model
+
+  def addSearchResultsToRDFGraph(searchResultsList: List[SearchResult], rdfGraph: Model)
 
   def addMetadataToRDFGraph(rdfGraph: Model) = {
     addLocationMetadataToRDFGraph(rdfGraph)
