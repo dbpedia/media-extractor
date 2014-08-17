@@ -1,4 +1,4 @@
-package org.dbpedia.media_extractor.media_provider
+package org.dbpedia.media_extractor.lookup_service
 
 import org.scribe.builder.api.Api
 import com.hp.hpl.jena.rdf.model.Model
