@@ -25,8 +25,8 @@ abstract class LookupService(
     "rdfs" -> "http://www.w3.org/2000/01/rdf-schema#",
     "wgs84_pos" -> "http://www.w3.org/2003/01/geo/wgs84_pos#")
 
-  def validateSearchResponse(flickrSearchResponse: Response): Boolean = {
-    flickrSearchResponse.getMessage().equals("OK")
+  def validateSearchResponse(searchResponse: Response): Boolean = {
+    searchResponse.getMessage().equals("OK")
   }
 
   def addNameSpacesToRDFGraph(rdfGraph: Model) =
