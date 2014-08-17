@@ -1,9 +1,9 @@
 package org.dbpedia.media_extractor.media_lookup_service_provider
 
 import org.scribe.builder.api.Api
-import org.dbpedia.media_extractor.oauthsession.OAuthSession
 import org.dbpedia.media_extractor.lookup_service.GeoLookupService
 import org.dbpedia.media_extractor.lookup_service.SemanticLookupService
+import org.dbpedia.media_extractor.oauthsession.OAuthSession
 
 abstract class MediaLookupServiceProvider[ProviderApi <: Api] {
   val oAuthSession: OAuthSession[ProviderApi]
