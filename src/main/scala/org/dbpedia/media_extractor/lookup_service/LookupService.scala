@@ -1,11 +1,12 @@
 package org.dbpedia.media_extractor.media_provider
 
-import org.dbpedia.media_extractor.media_provider_session.MediaProviderOAuthSession
+import org.scribe.model.Response
+import com.hp.hpl.jena.rdf.model.Model
+import org.dbpedia.media_extractor.oauthsession.OAuthSession
 
 abstract class LookupService(
-  val mediaProviderOAuthSession: MediaProviderOAuthSession[T],
+  val oAuthSession: OAuthSession[T],
   val radius: String = "5") {
-  // TODO: complete this empty stub
 
   val lookupFooter = "Media Extractor (inspired by FlickrWrappr)"
 

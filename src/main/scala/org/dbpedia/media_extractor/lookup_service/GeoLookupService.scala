@@ -1,17 +1,22 @@
 package org.dbpedia.media_extractor.media_provider
 
 import com.hp.hpl.jena.rdf.model.Model
-import org.dbpedia.media_extractor.lookup_service.SearchResult
+import com.hp.hpl.jena.sparql.vocabulary.FOAF
+import com.hp.hpl.jena.vocabulary.RDF
+import com.hp.hpl.jena.rdf.model.ModelFactory
+import com.hp.hpl.jena.vocabulary.RDFS
+import com.hp.hpl.jena.vocabulary.DCTerms
+import org.dbpedia.media_extractor.oauthsession.OAuthSession
+import org.dbpedia.media_extractor.search_result.SearchResult
 
 abstract class GeoLookupService(
   // By default, search for Brussels
   val lat: String = "50.85",
   val lon: String = "4.35",
   radius: String = "5",
-  val mediaProviderOAuthSession: MediaProviderOAuthSession)
+  oAuthSession: OAuthSession)
 
-  extends LookupService(mediaProviderOAuthSession, radius) {
-  // TODO: complete this empty stub
+  extends LookupService(oAuthSession, radius) {
 
   val geoPath = lat + "/" + lon + "/" + radius
 
