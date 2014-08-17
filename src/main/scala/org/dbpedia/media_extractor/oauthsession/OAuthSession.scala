@@ -3,6 +3,7 @@ package org.dbpedia.media_extractor.oauthsession
 import java.util.Properties
 import java.util.Scanner
 
+import org.dbpedia.media_extractor.search_result.SearchResult
 import org.scribe.builder.ServiceBuilder
 import org.scribe.builder.api.Api
 import org.scribe.model.Response
@@ -10,7 +11,7 @@ import org.scribe.model.Token
 import org.scribe.model.Verifier
 
 // FIXME: find a more elegant way to pass the class as a parameter
-abstract class MediaProviderOAuthSession[MyApi <: Api](
+abstract class OAuthSession[MyApi <: Api](
   val myApi: MyApi,
   val targetLicenses: String,
   val savedCredentialsFile: String,

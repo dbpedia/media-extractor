@@ -1,15 +1,12 @@
 package org.dbpedia.media_extractor.oauthsession
 
 import org.scribe.builder.api.FlickrApi
-import org.scribe.model.OAuthRequest
-import org.scribe.model.Response
-import org.scribe.model.Verb
 
-class FlickrMediaProviderOAuthSession(
+class FlickrOAuthSession(
   savedCredentialsFile: String = "/flickr.setup.properties",
   savedAccessTokenFile: String = "/flickr.accessToken.properties")
 
-  extends MediaProviderOAuthSession[FlickrApi](
+  extends OAuthSession[FlickrApi](
     myApi = new FlickrApi,
     targetLicenses = "4,5,7,8", // See detail on licenses below
     savedCredentialsFile,
@@ -41,7 +38,7 @@ object FlickrMediaProviderOAuthSession {
     savedCredentialsFile: String = "/flickr.setup.properties",
     savedAccessTokenFile: String = "/flickr.accessToken.properties") =
 
-    new FlickrMediaProviderOAuthSession(
+    new FlickrOAuthSession(
       savedCredentialsFile = savedCredentialsFile,
       savedAccessTokenFile = savedAccessTokenFile)
 

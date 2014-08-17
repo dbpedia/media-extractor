@@ -1,15 +1,12 @@
 package org.dbpedia.media_extractor.oauthsession
 
 import org.scribe.builder.api.GoogleApi
-import org.scribe.model.OAuthRequest
-import org.scribe.model.Response
-import org.scribe.model.Verb
 
-class YouTubeMediaProviderOAuthSession(
+class YouTubeOAuthSession(
   savedCredentialsFile: String = "/youtube.setup.properties",
   savedAccessTokenFile: String = "/youtube.accessToken.properties")
 
-  extends MediaProviderOAuthSession[GoogleApi](
+  extends OAuthSession[GoogleApi](
     myApi = new GoogleApi,
     targetLicenses = "creativeCommon", // CC-BY (see details below)
     savedCredentialsFile,
@@ -37,7 +34,7 @@ object YouTubeMediaProviderOAuthSession {
     savedCredentialsFile: String = "/youtube.setup.properties",
     savedAccessTokenFile: String = "/youtube.accessToken.properties") =
 
-    new YouTubeMediaProviderOAuthSession(
+    new YouTubeOAuthSession(
       savedCredentialsFile = savedCredentialsFile,
       savedAccessTokenFile = savedAccessTokenFile)
 
