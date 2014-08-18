@@ -5,6 +5,8 @@ import org.dbpedia.media_extractor.lookup_service.GeoLookupService
 import org.dbpedia.media_extractor.lookup_service.SemanticLookupService
 import org.dbpedia.media_extractor.oauthsession.OAuthSession
 import org.dbpedia.media_extractor.search_result.SearchResult
+import org.dbpedia.media_extractor.lookup_service.SemanticLookupService
+import org.dbpedia.media_extractor.lookup_service.GeoLookupService
 
 class MediaLookupServiceProvider[ProviderApi <: Api, SearchResultType <: SearchResult](
   val myProviderApi: ProviderApi,
