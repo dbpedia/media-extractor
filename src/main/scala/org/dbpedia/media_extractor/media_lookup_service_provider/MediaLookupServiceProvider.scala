@@ -4,9 +4,18 @@ import org.scribe.builder.api.Api
 import org.dbpedia.media_extractor.lookup_service.GeoLookupService
 import org.dbpedia.media_extractor.lookup_service.SemanticLookupService
 import org.dbpedia.media_extractor.oauthsession.OAuthSession
+import org.dbpedia.media_extractor.search_result.SearchResult
 
-abstract class MediaLookupServiceProvider[ProviderApi <: Api] {
-  val oAuthSession: OAuthSession[ProviderApi]
+class MediaLookupServiceProvider[ProviderApi <: Api, SearchResultType <: SearchResult](
+  val myProviderApi: ProviderApi,
+  val savedCredentialsFile: String,
+  val savedAccessTokenFile: String) {
+
+  val oAuthSession = OAuthSession(
+    myProviderApi,
+    savedCredentialsFile,
+    savedAccessTokenFile)
+
   val geoLookupService = GeoLookupService
   val semanticLookupService = SemanticLookupService
 
@@ -18,4 +27,17 @@ abstract class MediaLookupServiceProvider[ProviderApi <: Api] {
   val maxResultsPerQuery: String
   val targetLicenses: String
 
+}
+
+object MediaLookupServiceProvider {
+
+  def apply[ProviderApi, SearchResultType](
+    myProviderApi: ProviderApi,
+    savedCredentialsFile: String,
+    savedAccessTokenFile: String) =
+
+    new MediaLookupServiceProvider[ProviderApi, SearchResultType](
+      myProviderApi,
+      savedCredentialsFile,
+      savedAccessTokenFile)
 }

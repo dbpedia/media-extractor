@@ -7,7 +7,7 @@ import com.hp.hpl.jena.rdf.model.Model
 import javax.naming.directory.SearchResult
 
 abstract class LookupService[ProviderApi <: Api, SearchResultType <: SearchResult](
-  val mediaLookupServiceProviderCallback: MediaLookupServiceProvider[ProviderApi],
+  mediaLookupServiceProviderCallback: MediaLookupServiceProvider[ProviderApi, SearchResultType],
   val radius: String = "5") {
 
   val lookupFooter = "Media Extractor (inspired by FlickrWrappr)"
