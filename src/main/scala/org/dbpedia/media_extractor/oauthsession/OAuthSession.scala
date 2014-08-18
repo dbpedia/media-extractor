@@ -88,5 +88,4 @@ object OAuthSession {
       myProviderApi: ProviderApi,
       savedCredentialsFile = savedCredentialsFile,
       savedAccessTokenFile = savedAccessTokenFile)
-
 }
