@@ -1,10 +1,18 @@
 package org.dbpedia.media_extractor.media_lookup_service_provider
 
-import org.dbpedia.media_extractor.media_provider_session.FlickrMediaProviderOAuthSession
+import com.hp.hpl.jena.rdf.model.ModelFactory
+import com.hp.hpl.jena.query.QueryFactory
+import scala.collection.mutable.ArrayBuffer
+import com.hp.hpl.jena.vocabulary.RDFS
+import com.hp.hpl.jena.rdf.model.Model
+import com.hp.hpl.jena.query.QueryExecutionFactory
+import org.dbpedia.media_extractor.search_result.SearchResult
+import org.dbpedia.media_extractor.oauthsession.OAuthSession
+import org.scribe.builder.api.FlickrApi
 
 class FlickrSemanticMediaLookupServiceProvider(
   val targetLicenses: String,
-  val mediaProviderOAuthSession: FlickrMediaProviderOAuthSession,
+  oAuthSession: OAuthSession[FlickrApi],
   targetResource: String = "Brussels",
   val radius: String = "5")
 

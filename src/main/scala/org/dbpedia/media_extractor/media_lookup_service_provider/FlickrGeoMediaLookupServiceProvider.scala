@@ -4,10 +4,13 @@ import com.hp.hpl.jena.rdf.model.ModelFactory
 import org.dbpedia.media_extractor.search_result.FlickrSearchResult
 import com.hp.hpl.jena.rdf.model.Model
 import com.hp.hpl.jena.sparql.vocabulary.FOAF
+import org.dbpedia.media_extractor.oauthsession.OAuthSession
+import org.scribe.builder.api.FlickrApi
+import sun.nio.fs.UnixFileSystem.LookupService
 
 class FlickrGeoMediaLookupServiceProvider(
   val targetLicenses: String,
-  val mediaProviderOAuthSession: FlickrMediaProviderOAuthSession,
+  val oAuthSession: OAuthSession[ProviderApi],
   val lat: String = "50.85",
   val lon: String = "4.35",
   val radius: String = "5")
@@ -19,10 +22,10 @@ class FlickrGeoMediaLookupServiceProvider(
   override def performGeoLookup(lat: String = lat, lon: String = lon, radius: String = radius): Model = {
     val rdfGraph = ModelFactory.createDefaultModel()
 
-    addNameSpacesToRDFGraph(rdfGraph)
+    semanticLookupService.addNameSpacesToRDFGraph(rdfGraph)
     addMetadataToRDFGraph(rdfGraph)
 
-    val flickrSearchResults = getSearchResults(flickrOAuthSession.getFlickrSearchResponse(searchText = "", latitude = lat, longitude = lon, radius, license, signRequest))
+    val flickrSearchResults = getSearchResults(oAuthSession.getFlickrSearchResponse(searchText = "", latitude = lat, longitude = lon, radius, license, signRequest))
     addSearchResultsToRDFGraph(flickrSearchResults, rdfGraph)
 
     rdfGraph
