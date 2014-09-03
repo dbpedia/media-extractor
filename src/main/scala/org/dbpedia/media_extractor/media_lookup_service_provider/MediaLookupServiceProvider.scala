@@ -1,10 +1,9 @@
 package org.dbpedia.media_extractor.media_lookup_service_provider
 
-import org.scribe.builder.api.Api
 import org.dbpedia.media_extractor.lookup_service.SemanticLookupService
 import org.dbpedia.media_extractor.oauthsession.OAuthSession
 import org.dbpedia.media_extractor.search_result.SearchResult
-import org.dbpedia.media_extractor.lookup_service.SemanticLookupService
+import org.scribe.builder.api.Api
 
 class MediaLookupServiceProvider[ProviderApi <: Api, SearchResultType <: SearchResult](
   val myProviderApi: ProviderApi,

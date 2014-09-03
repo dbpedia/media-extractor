@@ -3,7 +3,9 @@ package org.dbpedia.media_extractor.lookup_service
 import org.dbpedia.media_extractor.media_lookup_service_provider.MediaLookupServiceProvider
 import org.scribe.builder.api.Api
 import org.scribe.model.Response
+
 import com.hp.hpl.jena.rdf.model.Model
+
 import javax.naming.directory.SearchResult
 
 abstract class LookupService[ProviderApi <: Api, SearchResultType <: SearchResult](
