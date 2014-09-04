@@ -1,3 +1,5 @@
 package org.dbpedia.media_extractor.search_result
 
-class SearchResult
+abstract class SearchResult {
+  def getLinks(): String
+}
