@@ -94,8 +94,8 @@ class FlickrMediaLookupServiceProvider(
   def addSearchResultsToRDFGraph(searchResultsList: List[FlickrSearchResult], rdfGraph: Model) {
     val dbpediaMediaResourceFullUriResource = rdfGraph.createResource(dbpediaMediaResourceFullUri)
     for (resultElem <- searchResultsList) {
-      val depictionUriResource = rdfGraph.createResource(resultElem.depictionUri)
-      val pageUriResource = rdfGraph.createResource(resultElem.pageUri)
+      val pageUriResource = rdfGraph.createResource(resultElem.getLinks())
+
       dbpediaMediaResourceFullUriResource.addProperty(FOAF.depiction, depictionUriResource)
       depictionUriResource.addProperty(FOAF.page, pageUriResource)
     }
