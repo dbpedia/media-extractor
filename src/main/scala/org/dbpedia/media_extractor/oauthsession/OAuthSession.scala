@@ -10,7 +10,7 @@ import org.scribe.model.Response
 import org.scribe.model.Token
 import org.scribe.model.Verifier
 
-class OAuthSession[ProviderApi <: Api](
+class OAuthSession[ProviderApi <: Api, SearchResultType <: SearchResult](
   val myProviderApi: ProviderApi,
   val savedCredentialsFile: String,
   val savedAccessTokenFile: String) {
@@ -73,7 +73,7 @@ class OAuthSession[ProviderApi <: Api](
 
   def getSearchResponse(searchText: String = "", latitude: String = "", longitude: String = "", radius: String = "", signRequest: Boolean = true): Response
 
-  def getSearchResults(searchResponse: Response): List[SearchResult]
+  def getSearchResults(searchResponse: Response): List[SearchResultType]
 
 }
 
