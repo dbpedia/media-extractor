@@ -37,9 +37,10 @@ class MediaProvider[ProviderApi <: Api, SearchResultType <: SearchResult](
     val dbpediaMediaRootUri = "http://media.dbpedia.org/"
     val dbpediaResourceRootUri = dbpediaRootUri + "resource/"
     val dbpediaMediaResourceRootUri = dbpediaMediaRootUri + "resource/"
-    val resourceLeafUri = targetResource.trim.replaceAll(" ", "_").replaceAll("%2F", "/").replaceAll("%3A", ":")
-    val dbpediaResourceFullUri = dbpediaResourceRootUri + resourceLeafUri
-    val dbpediaMediaResourceFullUri = dbpediaMediaResourceRootUri + resourceLeafUri
+    
+    def encodeResourceLeafUri(targetResource:String) = targetResource.trim.replaceAll(" ", "_").replaceAll("%2F", "/").replaceAll("%3A", ":")
+    def dbpediaResourceFullUri(targetResource:String) = dbpediaResourceRootUri + encodeResourceLeafUri(targetResource)
+    def dbpediaMediaResourceFullUri(targetResource:String) = dbpediaMediaResourceRootUri + encodeResourceLeafUri(targetResource)
 
     val WGS84_getURI = "http://www.w3.org/2003/01/geo/wgs84_pos#"
 
@@ -49,10 +50,10 @@ class MediaProvider[ProviderApi <: Api, SearchResultType <: SearchResult](
         "PREFIX wgs84_pos: <" + WGS84_getURI + "> " +
         "SELECT ?label ?lat ?long " +
         "WHERE { " +
-        "	<" + dbpediaResourceFullUri + "> rdfs:label ?label . " +
+        "	<" + dbpediaResourceFullUri(targetResource) + "> rdfs:label ?label . " +
         "	OPTIONAL { " +
-        "		<" + dbpediaResourceFullUri + "> wgs84_pos:lat ?lat . " +
-        "		<" + dbpediaResourceFullUri + "> wgs84_pos:long ?long " +
+        "		<" + dbpediaResourceFullUri(targetResource) + "> wgs84_pos:lat ?lat . " +
+        "		<" + dbpediaResourceFullUri(targetResource) + "> wgs84_pos:long ?long " +
         "	} " +
         "}"
 
