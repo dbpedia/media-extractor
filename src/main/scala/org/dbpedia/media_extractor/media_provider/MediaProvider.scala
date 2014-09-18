@@ -119,6 +119,23 @@ class MediaProvider[ProviderApi <: Api, SearchResultType <: SearchResult](
     targetResource: String,
     lookupResults: Set[SearchResultType]): Model = {
     val rdfGraph = ModelFactory.createDefaultModel()
+  def addMetadataToRDFGraph(targetResource: String, rdfGraph: Model) = {
+    val lookupHeader = "Photos for Dbpedia resource " + targetResource
+    val lookupFooter = "Media Extractor"
+    val lookupHeaderLiteral = rdfGraph.createLiteral(lookupHeader, "en")
+    val lookupFooterLiteral = rdfGraph.createLiteral(lookupFooter, "en")
+    val dbpediaResourceFullUriResource = rdfGraph.createResource(dbpediaResourceFullUri(targetResource))
+    val dbpediaMediaResourceFullUriResource = rdfGraph.createResource(dbpediaMediaResourceFullUri(targetResource))
+    val flickrTermsUriResource = rdfGraph.createResource(termsOfUseUri)
+    val dbpediaMediaRootUriResource = rdfGraph.createResource(dbpediaMediaRootUri)
+    dbpediaMediaRootUriResource.addProperty(RDFS.label, lookupFooterLiteral)
+    dbpediaMediaResourceFullUriResource.addProperty(RDFS.label, lookupHeaderLiteral)
+    dbpediaMediaResourceFullUriResource.addProperty(RDF.`type`, FOAF.getURI() + "Document")
+    dbpediaMediaResourceFullUriResource.addProperty(FOAF.primaryTopic, dbpediaResourceFullUriResource)
+    dbpediaMediaResourceFullUriResource.addProperty(DCTerms.license, flickrTermsUriResource)
+    dbpediaMediaResourceFullUriResource.addProperty(FOAF.maker, dbpediaMediaRootUriResource)
+    dbpediaMediaResourceFullUriResource.addProperty(OWL.sameAs, dbpediaResourceFullUriResource)
+  }
 
 }
 
