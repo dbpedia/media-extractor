@@ -23,6 +23,11 @@ case class FlickrDepictionSearchResult(
 
 }
 
+case class FlickrSearchResult(
+  page: FlickrPageSearchResult,
+  depiction: FlickrDepictionSearchResult)
+  extends SearchResult
+
 case class YouTubeSearchResult(
   thumbnailUri: String)
   extends SearchResult {
