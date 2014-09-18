@@ -8,6 +8,7 @@ import com.hp.hpl.jena.query.QueryFactory
 import com.hp.hpl.jena.query.QueryExecutionFactory
 import scala.collection.mutable.ArrayBuffer
 import org.scribe.model.Response
+import com.hp.hpl.jena.rdf.model.Model
 
 class MediaProvider[ProviderApi <: Api, SearchResultType <: SearchResult](
   val myProviderApi: ProviderApi,
@@ -101,6 +102,8 @@ class MediaProvider[ProviderApi <: Api, SearchResultType <: SearchResult](
     } finally
       sparqlQueryExecution.close()
   }
+
+  def constructRDFModel(lookupResults: Set[SearchResultType]): Model
 
 }
 
