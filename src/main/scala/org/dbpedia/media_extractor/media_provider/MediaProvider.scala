@@ -104,6 +104,17 @@ class MediaProvider[ProviderApi <: Api, SearchResultType <: SearchResult](
       sparqlQueryExecution.close()
   }
 
+  val namespaceUriMap = Map(
+    "foaf" -> "http://xmlns.com/foaf/0.1/",
+    "dcterms" -> "http://purl.org/dc/terms/",
+    "rdfs" -> "http://www.w3.org/2000/01/rdf-schema#",
+    "wgs84_pos" -> "http://www.w3.org/2003/01/geo/wgs84_pos#")
+
+  def addNameSpacesToRDFGraph(rdfGraph: Model) =
+    namespaceUriMap.foreach {
+      case (k, v) => rdfGraph.setNsPrefix(k, v)
+    }
+
   def constructRDFGraph(
     targetResource: String,
     lookupResults: Set[SearchResultType]): Model = {
