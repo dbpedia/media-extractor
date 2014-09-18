@@ -79,12 +79,12 @@ class OAuthSession[ProviderApi <: Api, SearchResultType <: SearchResult](
 
 object OAuthSession {
 
-  def apply[ProviderApi](
+  def apply[ProviderApi, SearchResultType](
     myProviderApi: ProviderApi,
     savedCredentialsFile: String,
     savedAccessTokenFile: String) =
 
-    new OAuthSession[ProviderApi](
+    new OAuthSession[ProviderApi, SearchResultType](
       myProviderApi: ProviderApi,
       savedCredentialsFile = savedCredentialsFile,
       savedAccessTokenFile = savedAccessTokenFile)
