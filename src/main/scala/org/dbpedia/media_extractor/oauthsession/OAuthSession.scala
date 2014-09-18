@@ -73,8 +73,6 @@ class OAuthSession[ProviderApi <: Api, SearchResultType <: SearchResult](
 
   def getSearchResponse(searchText: String = "", latitude: String = "", longitude: String = "", radius: String = "", signRequest: Boolean = true): Response
 
-  def getSearchResults(searchResponse: Response): List[SearchResultType]
-
 }
 
 object OAuthSession {
