@@ -100,7 +100,6 @@ class MediaProvider[ProviderApi <: Api, SearchResultType <: SearchResult](
       lookupResults
     } finally
       sparqlQueryExecution.close()
-
   }
 
 }
