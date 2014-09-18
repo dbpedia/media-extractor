@@ -7,6 +7,7 @@ import com.hp.hpl.jena.vocabulary.RDFS
 import com.hp.hpl.jena.query.QueryFactory
 import com.hp.hpl.jena.query.QueryExecutionFactory
 import scala.collection.mutable.ArrayBuffer
+import org.scribe.model.Response
 
 class MediaProvider[ProviderApi <: Api, SearchResultType <: SearchResult](
   val myProviderApi: ProviderApi,
@@ -24,8 +25,10 @@ class MediaProvider[ProviderApi <: Api, SearchResultType <: SearchResult](
   val endPointRootUri: String
   val maxResultsPerQuery: String
   val targetLicenses: String
+  
+  def getSearchResults(searchResponse: Response): Set[SearchResultType]
 
-  def performLookup(targetResource: String, radius: Int): List[SearchResultType] = {
+  def performLookup(targetResource: String, radius: String): Set[SearchResultType] = {
 
     val signRequest = true
 
@@ -64,9 +67,9 @@ class MediaProvider[ProviderApi <: Api, SearchResultType <: SearchResult](
       val sparqlQueryResultSet = sparqlQueryExecution.execSelect()
 
       // Some labels are common to many languages (e.g. "Buenos Aires")
-      val processedLabels = ArrayBuffer[String]()
+      val processedLabels = Set[String]()
 
-      val lookupResults = ArrayBuffer[SearchResultType]()
+      val lookupResults = Set[SearchResultType]()
 
       // For each solution to the query
       while (sparqlQueryResultSet.hasNext()) {
@@ -83,19 +86,20 @@ class MediaProvider[ProviderApi <: Api, SearchResultType <: SearchResult](
         if (!(processedLabels.contains(label))) {
 
           // Perform a Media search
-          lookupResults += oAuthSession.getSearchResults(getSearchResponse(
+          val searchResponse = oAuthSession.getSearchResponse(
             searchText = label,
             latitude = lat,
             longitude = long,
             radius,
-            license,
-            signRequest))
+            signRequest)
 
-          processedLabels += label
+          lookupResults ++: getSearchResults(searchResponse)
+
+          processedLabels ++: label
         }
 
       }
-      lookupResults.toList
+      lookupResults
 
     } finally
       sparqlQueryExecution.close()
