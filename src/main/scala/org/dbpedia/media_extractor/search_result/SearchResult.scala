@@ -33,6 +33,5 @@ case class YouTubeSearchResult(
   extends SearchResult {
   override def getUri() = thumbnailUri
   override def getProperty() = FOAF.page
-
 }
 
