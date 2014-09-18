@@ -125,6 +125,9 @@ class MediaProvider[ProviderApi <: Api, SearchResultType <: SearchResult](
     addLookupResultsToRDFGraph(lookupResults, rdfGraph)
     rdfGraph
   }
+
+  def addLookupResultsToRDFGraph(lookupResults: Set[SearchResultType], rdfGraph: Model)
+
   def addMetadataToRDFGraph(targetResource: String, rdfGraph: Model) = {
     val lookupHeader = "Photos for Dbpedia resource " + targetResource
     val lookupFooter = "Media Extractor"
