@@ -9,6 +9,11 @@ import com.hp.hpl.jena.query.QueryExecutionFactory
 import scala.collection.mutable.ArrayBuffer
 import org.scribe.model.Response
 import com.hp.hpl.jena.rdf.model.Model
+import com.hp.hpl.jena.rdf.model.ModelFactory
+import com.hp.hpl.jena.sparql.vocabulary.FOAF
+import com.hp.hpl.jena.vocabulary.OWL
+import com.hp.hpl.jena.vocabulary.RDF
+import com.hp.hpl.jena.vocabulary.DCTerms
 
 class MediaProvider[ProviderApi <: Api, SearchResultType <: SearchResult](
   val myProviderApi: ProviderApi,
