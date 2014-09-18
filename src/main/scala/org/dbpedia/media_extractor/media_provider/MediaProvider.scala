@@ -25,7 +25,7 @@ class MediaProvider[ProviderApi <: Api, SearchResultType <: SearchResult](
   val endPointRootUri: String
   val maxResultsPerQuery: String
   val targetLicenses: String
-  
+
   def getSearchResults(searchResponse: Response): Set[SearchResultType]
 
   def performLookup(targetResource: String, radius: String): Set[SearchResultType] = {
@@ -84,7 +84,6 @@ class MediaProvider[ProviderApi <: Api, SearchResultType <: SearchResult](
 
         // Skip duplicated labels
         if (!(processedLabels.contains(label))) {
-
           // Perform a Media search
           val searchResponse = oAuthSession.getSearchResponse(
             searchText = label,
@@ -94,13 +93,11 @@ class MediaProvider[ProviderApi <: Api, SearchResultType <: SearchResult](
             signRequest)
 
           lookupResults ++: getSearchResults(searchResponse)
-
           processedLabels ++: label
         }
 
       }
       lookupResults
-
     } finally
       sparqlQueryExecution.close()
 
