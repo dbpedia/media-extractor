@@ -118,7 +118,13 @@ class MediaProvider[ProviderApi <: Api, SearchResultType <: SearchResult](
   def constructRDFGraph(
     targetResource: String,
     lookupResults: Set[SearchResultType]): Model = {
+
     val rdfGraph = ModelFactory.createDefaultModel()
+    addNameSpacesToRDFGraph(rdfGraph)
+    addMetadataToRDFGraph(targetResource, rdfGraph)
+    addLookupResultsToRDFGraph(lookupResults, rdfGraph)
+    rdfGraph
+  }
   def addMetadataToRDFGraph(targetResource: String, rdfGraph: Model) = {
     val lookupHeader = "Photos for Dbpedia resource " + targetResource
     val lookupFooter = "Media Extractor"
