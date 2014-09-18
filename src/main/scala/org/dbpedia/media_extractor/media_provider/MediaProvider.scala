@@ -27,20 +27,20 @@ class MediaProvider[ProviderApi <: Api, SearchResultType <: SearchResult](
   val maxResultsPerQuery: String
   val targetLicenses: String
 
+  val dbpediaRootUri = "http://dbpedia.org/"
+  val dbpediaMediaRootUri = "http://media.dbpedia.org/"
+  val dbpediaResourceRootUri = dbpediaRootUri + "resource/"
+  val dbpediaMediaResourceRootUri = dbpediaMediaRootUri + "resource/"
+
+  def encodeResourceLeafUri(targetResource: String) = targetResource.trim.replaceAll(" ", "_").replaceAll("%2F", "/").replaceAll("%3A", ":")
+  def dbpediaResourceFullUri(targetResource: String) = dbpediaResourceRootUri + encodeResourceLeafUri(targetResource)
+  def dbpediaMediaResourceFullUri(targetResource: String) = dbpediaMediaResourceRootUri + encodeResourceLeafUri(targetResource)
+
   def getSearchResults(searchResponse: Response): Set[SearchResultType]
 
   def performLookup(targetResource: String, radius: String): Set[SearchResultType] = {
 
     val signRequest = true
-
-    val dbpediaRootUri = "http://dbpedia.org/"
-    val dbpediaMediaRootUri = "http://media.dbpedia.org/"
-    val dbpediaResourceRootUri = dbpediaRootUri + "resource/"
-    val dbpediaMediaResourceRootUri = dbpediaMediaRootUri + "resource/"
-    
-    def encodeResourceLeafUri(targetResource:String) = targetResource.trim.replaceAll(" ", "_").replaceAll("%2F", "/").replaceAll("%3A", ":")
-    def dbpediaResourceFullUri(targetResource:String) = dbpediaResourceRootUri + encodeResourceLeafUri(targetResource)
-    def dbpediaMediaResourceFullUri(targetResource:String) = dbpediaMediaResourceRootUri + encodeResourceLeafUri(targetResource)
 
     val WGS84_getURI = "http://www.w3.org/2003/01/geo/wgs84_pos#"
 
