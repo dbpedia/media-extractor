@@ -104,7 +104,10 @@ class MediaProvider[ProviderApi <: Api, SearchResultType <: SearchResult](
       sparqlQueryExecution.close()
   }
 
-  def constructRDFModel(lookupResults: Set[SearchResultType]): Model
+  def constructRDFGraph(
+    targetResource: String,
+    lookupResults: Set[SearchResultType]): Model = {
+    val rdfGraph = ModelFactory.createDefaultModel()
 
 }
 
