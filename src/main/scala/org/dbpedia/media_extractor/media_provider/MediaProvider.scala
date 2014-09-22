@@ -152,4 +152,3 @@ abstract class MediaProvider[ProviderApi <: Api, SearchResultType <: SearchResul
   }
 
 }
-
