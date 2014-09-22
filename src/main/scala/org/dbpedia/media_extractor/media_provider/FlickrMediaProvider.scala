@@ -3,16 +3,11 @@ package org.dbpedia.media_extractor.media_provider
 import scala.collection.mutable.ListBuffer
 import scala.xml.XML
 
-import org.dbpedia.media_extractor.search_result.FlickrDepictionSearchResult
-import org.dbpedia.media_extractor.search_result.FlickrPageSearchResult
 import org.dbpedia.media_extractor.search_result.FlickrSearchResult
 import org.scribe.builder.api.FlickrApi
 import org.scribe.model.OAuthRequest
 import org.scribe.model.Response
 import org.scribe.model.Verb
-
-import com.hp.hpl.jena.rdf.model.Model
-import com.hp.hpl.jena.sparql.vocabulary.FOAF
 
 class FlickrMediaProvider(
 
@@ -82,30 +77,12 @@ class FlickrMediaProvider(
     val resultsListBuffer = new ListBuffer[FlickrSearchResult]
     (myXml \\ "rsp" \ "photos" \ "photo") foreach {
       photo =>
-        val depictionUri = "https://farm" + (photo \ "@farm") + ".staticflickr.com/" + (photo \ "@server") + "/" + (photo \ "@id") + "_" + (photo \ "@secret") + ".jpg"
         val pageUri = "https://flickr.com/photos/" + (photo \ "@owner") + "/" + (photo \ "@id")
+        val pageSearchResult = new FlickrSearchResult(pageUri)
 
-        val depictionSearchResult = new FlickrDepictionSearchResult(depictionUri)
-        val pageSearchResult = new FlickrPageSearchResult(pageUri)
-
-        resultsListBuffer += new FlickrSearchResult(page = pageSearchResult, depiction = depictionSearchResult)
+        resultsListBuffer += pageSearchResult
     }
     resultsListBuffer.toSet
-  }
-
-  override def addLookupResultsToRDFGraph(
-    targetResource: String,
-    searchResultsSet: Set[FlickrSearchResult],
-    rdfGraph: Model): Model = {
-    val dbpediaMediaResourceFullUriResource = rdfGraph.createResource(dbpediaMediaResourceFullUri(targetResource))
-    for (resultElem <- searchResultsSet) {
-      val pageUriResource = rdfGraph.createResource(resultElem.page.getUri())
-      val depictionUriResource = rdfGraph.createResource(resultElem.depiction.getUri())
-
-      dbpediaMediaResourceFullUriResource.addProperty(FOAF.depiction, depictionUriResource)
-      depictionUriResource.addProperty(FOAF.page, pageUriResource)
-    }
-    rdfGraph
   }
 
 }
