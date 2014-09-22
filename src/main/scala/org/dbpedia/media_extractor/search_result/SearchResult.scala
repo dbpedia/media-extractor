@@ -1,7 +1,7 @@
 package org.dbpedia.media_extractor.search_result
 
-import com.hp.hpl.jena.sparql.vocabulary.FOAF
 import com.hp.hpl.jena.rdf.model.Property
+import com.hp.hpl.jena.sparql.vocabulary.FOAF
 
 abstract class SearchResult {
   def getUri(): String

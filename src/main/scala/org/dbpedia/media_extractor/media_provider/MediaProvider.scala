@@ -3,17 +3,17 @@ package org.dbpedia.media_extractor.media_provider
 import org.dbpedia.media_extractor.oauthsession.OAuthSession
 import org.dbpedia.media_extractor.search_result.SearchResult
 import org.scribe.builder.api.Api
-import com.hp.hpl.jena.vocabulary.RDFS
-import com.hp.hpl.jena.query.QueryFactory
-import com.hp.hpl.jena.query.QueryExecutionFactory
-import scala.collection.mutable.ArrayBuffer
 import org.scribe.model.Response
+
+import com.hp.hpl.jena.query.QueryExecutionFactory
+import com.hp.hpl.jena.query.QueryFactory
 import com.hp.hpl.jena.rdf.model.Model
 import com.hp.hpl.jena.rdf.model.ModelFactory
 import com.hp.hpl.jena.sparql.vocabulary.FOAF
+import com.hp.hpl.jena.vocabulary.DCTerms
 import com.hp.hpl.jena.vocabulary.OWL
 import com.hp.hpl.jena.vocabulary.RDF
-import com.hp.hpl.jena.vocabulary.DCTerms
+import com.hp.hpl.jena.vocabulary.RDFS
 
 abstract class MediaProvider[ProviderApi <: Api, SearchResultType <: SearchResult](
   val myProviderApi: ProviderApi,
