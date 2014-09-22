@@ -75,7 +75,7 @@ class OAuthSession[ProviderApi <: Api, SearchResultType <: SearchResult](
 
 object OAuthSession {
 
-  def apply[ProviderApi, SearchResultType](
+  def apply[ProviderApi <: Api, SearchResultType <: SearchResult](
     myProviderApi: ProviderApi,
     savedCredentialsFile: String,
     savedAccessTokenFile: String) =
