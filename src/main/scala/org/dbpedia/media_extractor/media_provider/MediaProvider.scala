@@ -153,15 +153,3 @@ abstract class MediaProvider[ProviderApi <: Api, SearchResultType <: SearchResul
 
 }
 
-object MediaProvider {
-
-  def apply[ProviderApi, SearchResultType](
-    myProviderApi: ProviderApi,
-    savedCredentialsFile: String,
-    savedAccessTokenFile: String) =
-
-    new MediaProvider[ProviderApi, SearchResultType](
-      myProviderApi,
-      savedCredentialsFile,
-      savedAccessTokenFile)
-}
