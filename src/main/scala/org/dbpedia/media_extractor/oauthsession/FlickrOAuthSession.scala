@@ -6,7 +6,7 @@ import org.scribe.builder.api.FlickrApi
 class FlickrOAuthSession(
   savedCredentialsFile: String,
   savedAccessTokenFile: String)
-  extends OAuthSession[FlickrApi, FlickrSearchResult](
+  extends OAuthSession[FlickrApi](
     myProviderApi = new FlickrApi,
     savedCredentialsFile = savedCredentialsFile,
     savedAccessTokenFile = savedAccessTokenFile)
