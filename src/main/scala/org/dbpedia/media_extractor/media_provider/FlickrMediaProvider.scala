@@ -96,11 +96,12 @@ class FlickrMediaProvider(
     resultsListBuffer.toSet
   }
 
-  def addSearchResultsToRDFGraph(targetResource: String, searchResultsList: Set[FlickrSearchResult], rdfGraph: Model): Model = {
-    dbpediaResourceFullUri(targetResource)
-
+  override def addLookupResultsToRDFGraph(
+    targetResource: String,
+    searchResultsSet: Set[FlickrSearchResult],
+    rdfGraph: Model): Model = {
     val dbpediaMediaResourceFullUriResource = rdfGraph.createResource(dbpediaMediaResourceFullUri(targetResource))
-    for (resultElem <- searchResultsList) {
+    for (resultElem <- searchResultsSet) {
       val pageUriResource = rdfGraph.createResource(resultElem.page.getUri())
       val depictionUriResource = rdfGraph.createResource(resultElem.depiction.getUri())
 
