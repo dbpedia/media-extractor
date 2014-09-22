@@ -2,20 +2,17 @@ package org.dbpedia.media_extractor.media_provider
 
 import scala.collection.mutable.ListBuffer
 import scala.xml.XML
+
+import org.dbpedia.media_extractor.search_result.FlickrDepictionSearchResult
+import org.dbpedia.media_extractor.search_result.FlickrPageSearchResult
 import org.dbpedia.media_extractor.search_result.FlickrSearchResult
 import org.scribe.builder.api.FlickrApi
 import org.scribe.model.OAuthRequest
 import org.scribe.model.Response
 import org.scribe.model.Verb
-import com.hp.hpl.jena.rdf.model.ModelFactory
-import scala.collection.mutable.ArrayBuffer
+
 import com.hp.hpl.jena.rdf.model.Model
-import com.hp.hpl.jena.query.QueryFactory
 import com.hp.hpl.jena.sparql.vocabulary.FOAF
-import com.hp.hpl.jena.query.QueryExecutionFactory
-import com.hp.hpl.jena.vocabulary.RDFS
-import org.dbpedia.media_extractor.search_result.FlickrDepictionSearchResult
-import org.dbpedia.media_extractor.search_result.FlickrPageSearchResult
 
 class FlickrMediaProvider(
 
