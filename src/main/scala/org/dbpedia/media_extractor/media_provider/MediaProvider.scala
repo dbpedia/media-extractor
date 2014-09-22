@@ -127,11 +127,21 @@ abstract class MediaProvider[ProviderApi <: Api, SearchResultType <: SearchResul
     val rdfGraph = ModelFactory.createDefaultModel()
     addNameSpacesToRDFGraph(rdfGraph)
     addMetadataToRDFGraph(targetResource, rdfGraph)
-    addLookupResultsToRDFGraph(lookupResults, rdfGraph)
+    addLookupResultsToRDFGraph(targetResource, lookupResults, rdfGraph)
     rdfGraph
   }
 
-  def addLookupResultsToRDFGraph(lookupResults: Set[SearchResultType], rdfGraph: Model)
+  def addLookupResultsToRDFGraph(
+    targetResource: String,
+    searchResultsSet: Set[SearchResultType],
+    rdfGraph: Model): Model = {
+    val dbpediaMediaResourceFullUriResource = rdfGraph.createResource(dbpediaMediaResourceFullUri(targetResource))
+    for (resultElem <- searchResultsSet) {
+      val resultElemResource = rdfGraph.createResource(resultElem.getUri())
+      dbpediaMediaResourceFullUriResource.addProperty(resultElem.getProperty(), resultElemResource)
+    }
+    rdfGraph
+  }
 
   def addMetadataToRDFGraph(targetResource: String, rdfGraph: Model) = {
     val lookupHeader = "Photos for Dbpedia resource " + targetResource
