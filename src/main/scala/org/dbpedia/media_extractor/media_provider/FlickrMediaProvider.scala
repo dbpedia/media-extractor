@@ -114,7 +114,4 @@ class FlickrMediaProvider(
   // Members declared in org.dbpedia.media_extractor.media_provider.FlickrMediaProvider
   override def constructRDFModel(lookupResults: Set[FlickrSearchResult]): Model
 
-  // Members declared in org.dbpedia.media_extractor.media_provider.MediaProvider
-  def addLookupResultsToRDFGraph(lookupResults: Set[FlickrSearchResult], rdfGraph: Model): Unit = ???
-
 }
