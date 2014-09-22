@@ -43,6 +43,8 @@ abstract class MediaProvider[ProviderApi <: Api, SearchResultType <: SearchResul
 
   def getSearchResults(searchResponse: Response): Set[SearchResultType]
 
+  def getSearchResponse(searchText: String = "", latitude: String = "", longitude: String = "", radius: String = "", signRequest: Boolean = true): Response
+
   def performLookup(targetResource: String, radius: String): Set[SearchResultType] = {
 
     val signRequest = true
@@ -92,7 +94,7 @@ abstract class MediaProvider[ProviderApi <: Api, SearchResultType <: SearchResul
         // Skip duplicated labels
         if (!(processedLabels.contains(label))) {
           // Perform a Media search
-          val searchResponse = oAuthSession.getSearchResponse(
+          val searchResponse = getSearchResponse(
             searchText = label,
             latitude = lat,
             longitude = long,

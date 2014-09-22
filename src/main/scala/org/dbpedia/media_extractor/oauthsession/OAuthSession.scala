@@ -71,8 +71,6 @@ class OAuthSession[ProviderApi <: Api, SearchResultType <: SearchResult](
     new Token(accessToken, accessSecret)
   }
 
-  def getSearchResponse(searchText: String = "", latitude: String = "", longitude: String = "", radius: String = "", signRequest: Boolean = true): Response
-
 }
 
 object OAuthSession {
