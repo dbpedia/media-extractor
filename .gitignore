@@ -1,3 +1,4 @@
+/src/test/resources/vimeo.setup.properties
 /src/test/resources/youtube.setup.properties
 /src/test/resources/FlickrLookupTest.output.*
 /src/test/resources/flickr.accessToken.properties
