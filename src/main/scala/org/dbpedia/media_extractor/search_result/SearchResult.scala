@@ -21,3 +21,11 @@ case class YouTubeSearchResult(
   override def getUri() = thumbnailUri
   override def getProperty() = FOAF.page
 }
+
+case class VimeoSearchResult(
+  linkUri: String)
+  extends SearchResult {
+  override def getUri() = linkUri
+  override def getProperty() = FOAF.page
+}
+
