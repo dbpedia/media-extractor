@@ -8,6 +8,10 @@ abstract class SearchResult {
   def getProperty(): Property
 }
 
+case class FlickrSearchResult(
+  page: FlickrPageSearchResult,
+  depiction: FlickrDepictionSearchResult)
+
 case class FlickrPageSearchResult(
   pageUri: String)
   extends SearchResult {
@@ -20,13 +24,7 @@ case class FlickrDepictionSearchResult(
   extends SearchResult {
   override def getUri() = depictionUri
   override def getProperty() = FOAF.depiction
-
 }
-
-case class FlickrSearchResult(
-  page: FlickrPageSearchResult,
-  depiction: FlickrDepictionSearchResult)
-  extends SearchResult
 
 case class YouTubeSearchResult(
   thumbnailUri: String)
@@ -34,4 +32,3 @@ case class YouTubeSearchResult(
   override def getUri() = thumbnailUri
   override def getProperty() = FOAF.page
 }
-
