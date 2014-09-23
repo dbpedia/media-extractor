@@ -14,7 +14,7 @@ object VimeoOAuthSession {
   def apply(
     savedCredentialsFile: String,
     savedAccessTokenFile: String) =
-    new FlickrOAuthSession(
+    new VimeoOAuthSession(
       savedCredentialsFile = savedCredentialsFile,
       savedAccessTokenFile = savedAccessTokenFile)
 }
