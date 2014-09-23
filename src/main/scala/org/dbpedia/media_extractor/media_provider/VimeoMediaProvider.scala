@@ -20,7 +20,7 @@ class VimeoMediaProvider(
     savedCredentialsFile,
     savedAccessTokenFile) {
 
-  override val termsOfUseUri = "https://vimeo.com/terms"
+  override val termsOfUseUri = "https://vimeo.com/terms/"
   override val endPointRootUri = "https://vimeo.com/api/rest/"
 
   override val maxResultsPerQuery = "50" // maximum per page according to Vimeo API's doc
