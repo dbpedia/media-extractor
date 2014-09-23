@@ -1,4 +1,4 @@
-package org.dbpedia.media_extractor.media_provider
+package org.dbpedia.media_extractor.oauthsession
 
 import org.scalatest.FunSpec
 
