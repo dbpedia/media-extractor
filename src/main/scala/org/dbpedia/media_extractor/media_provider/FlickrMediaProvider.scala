@@ -3,6 +3,7 @@ package org.dbpedia.media_extractor.media_provider
 import scala.collection.mutable.ListBuffer
 import scala.xml.XML
 
+import org.dbpedia.media_extractor.oauthsession.OAuthSession
 import org.dbpedia.media_extractor.search_result.FlickrSearchResult
 import org.scribe.builder.api.FlickrApi
 import org.scribe.model.OAuthRequest
@@ -12,10 +13,12 @@ import org.scribe.model.Verb
 class FlickrMediaProvider(
 
   savedCredentialsFile: String = "/flickr.setup.properties",
-  savedAccessTokenFile: String = "/flickr.accessToken.properties")
+  savedAccessTokenFile: String = "/flickr.accessToken.properties",
+  oAuthSession: OAuthSession[FlickrApi])
 
   extends MediaProvider[FlickrApi, FlickrSearchResult](
     new FlickrApi,
+    oAuthSession,
     savedCredentialsFile,
     savedAccessTokenFile) {
 

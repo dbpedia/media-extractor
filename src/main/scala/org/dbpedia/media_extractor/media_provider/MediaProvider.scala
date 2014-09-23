@@ -17,13 +17,9 @@ import com.hp.hpl.jena.vocabulary.RDFS
 
 abstract class MediaProvider[ProviderApi <: Api, SearchResultType <: SearchResult](
   val myProviderApi: ProviderApi,
+  val oAuthSession: OAuthSession[ProviderApi],
   val savedCredentialsFile: String,
   val savedAccessTokenFile: String) {
-
-  val oAuthSession = OAuthSession(
-    myProviderApi,
-    savedCredentialsFile,
-    savedAccessTokenFile)
 
   val measurementUnit = "km"
 
