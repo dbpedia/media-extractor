@@ -8,7 +8,8 @@ class VimeoOAuthSession(
   extends OAuthSession[VimeoApi](
     myProviderApi = new VimeoApi,
     savedCredentialsFile = savedCredentialsFile,
-    savedAccessTokenFile = savedAccessTokenFile)
+    savedAccessTokenFile = savedAccessTokenFile,
+    useRequestToken = false) // TODO: check this!!
 
 object VimeoOAuthSession {
   def apply(

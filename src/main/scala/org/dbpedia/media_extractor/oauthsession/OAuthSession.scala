@@ -11,7 +11,8 @@ import org.scribe.model.Verifier
 class OAuthSession[ProviderApi <: Api](
   val myProviderApi: ProviderApi,
   val savedCredentialsFile: String,
-  val savedAccessTokenFile: String) {
+  val savedAccessTokenFile: String,
+  val useRequestToken: Boolean) {
 
   val savedAccessCredentialsProperties = loadPropertyFromFile(savedCredentialsFile)
 
@@ -28,7 +29,13 @@ class OAuthSession[ProviderApi <: Api](
     if ((!savedAccessTokenFile.isEmpty()) && (!(getSavedAccessToken(savedAccessTokenFile).isEmpty)))
       getSavedAccessToken(savedAccessTokenFile)
     else {
-      val requestToken = oAuthService.getRequestToken()
+
+      val requestToken =
+        if (useRequestToken)
+          oAuthService.getRequestToken()
+        else
+          null
+
       val authorizationUri = oAuthService.getAuthorizationUrl(requestToken)
 
       println("Follow this authorization URL to authorise yourself on " + myProviderApi.getClass().toString() + ":")
@@ -76,10 +83,12 @@ object OAuthSession {
   def apply[ProviderApi <: Api](
     myProviderApi: ProviderApi,
     savedCredentialsFile: String,
-    savedAccessTokenFile: String) =
+    savedAccessTokenFile: String,
+    useRequestToken: Boolean) =
 
     new OAuthSession[ProviderApi](
       myProviderApi: ProviderApi,
       savedCredentialsFile = savedCredentialsFile,
-      savedAccessTokenFile = savedAccessTokenFile)
+      savedAccessTokenFile = savedAccessTokenFile,
+      useRequestToken = useRequestToken)
 }

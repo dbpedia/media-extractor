@@ -8,7 +8,8 @@ class FlickrOAuthSession(
   extends OAuthSession[FlickrApi](
     myProviderApi = new FlickrApi,
     savedCredentialsFile = savedCredentialsFile,
-    savedAccessTokenFile = savedAccessTokenFile)
+    savedAccessTokenFile = savedAccessTokenFile,
+    useRequestToken = true)
 
 object FlickrOAuthSession {
   def apply(

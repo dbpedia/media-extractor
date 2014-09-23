@@ -8,7 +8,8 @@ class YouTubeOAuthSession(
   extends OAuthSession[Google20Api](
     myProviderApi = new Google20Api,
     savedCredentialsFile = savedCredentialsFile,
-    savedAccessTokenFile = savedAccessTokenFile)
+    savedAccessTokenFile = savedAccessTokenFile,
+    useRequestToken = false)
 
 object YouTubeOAuthSession {
   def apply(
