@@ -14,7 +14,7 @@ object YouTubeOAuthSession {
   def apply(
     savedCredentialsFile: String,
     savedAccessTokenFile: String) =
-    new FlickrOAuthSession(
+    new YouTubeOAuthSession(
       savedCredentialsFile = savedCredentialsFile,
       savedAccessTokenFile = savedAccessTokenFile)
 }
