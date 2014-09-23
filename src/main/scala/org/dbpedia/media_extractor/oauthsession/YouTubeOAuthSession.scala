@@ -1,12 +1,12 @@
 package org.dbpedia.media_extractor.oauthsession
 
-import org.scribe.builder.api.Google20Api
+import org.scribe.builder.api.Google2Api
 
 class YouTubeOAuthSession(
   savedCredentialsFile: String,
   savedAccessTokenFile: String)
-  extends OAuthSession[Google20Api](
-    myProviderApi = new Google20Api,
+  extends OAuthSession[Google2Api](
+    myProviderApi = new Google2Api,
     savedCredentialsFile = savedCredentialsFile,
     savedAccessTokenFile = savedAccessTokenFile,
     useRequestToken = false)

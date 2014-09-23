@@ -5,7 +5,7 @@ import scala.xml.XML
 
 import org.dbpedia.media_extractor.oauthsession.OAuthSession
 import org.dbpedia.media_extractor.search_result.YouTubeSearchResult
-import org.scribe.builder.api.Google20Api
+import org.scribe.builder.api.Google2Api
 import org.scribe.model.OAuthRequest
 import org.scribe.model.Response
 import org.scribe.model.Verb
@@ -14,10 +14,10 @@ class YouTubeMediaProvider(
 
   savedCredentialsFile: String = "/youtube.setup.properties",
   savedAccessTokenFile: String = "/youtube.accessToken.properties",
-  oAuthSession: OAuthSession[Google20Api])
+  oAuthSession: OAuthSession[Google2Api])
 
-  extends MediaProvider[Google20Api, YouTubeSearchResult](
-    new Google20Api,
+  extends MediaProvider[Google2Api, YouTubeSearchResult](
+    new Google2Api,
     oAuthSession,
     savedCredentialsFile,
     savedAccessTokenFile) {
