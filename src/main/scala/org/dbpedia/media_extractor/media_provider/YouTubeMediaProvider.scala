@@ -3,8 +3,8 @@ package org.dbpedia.media_extractor.media_provider
 import scala.collection.mutable.ListBuffer
 import scala.xml.XML
 
-import org.dbpedia.media_extractor.search_result.FlickrSearchResult
-import org.scribe.builder.api.FlickrApi
+import org.dbpedia.media_extractor.search_result.YouTubeSearchResult
+import org.scribe.builder.api.Google20Api
 import org.scribe.model.OAuthRequest
 import org.scribe.model.Response
 import org.scribe.model.Verb
