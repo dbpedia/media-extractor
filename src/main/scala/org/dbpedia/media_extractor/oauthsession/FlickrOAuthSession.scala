@@ -5,11 +5,13 @@ import org.scribe.builder.api.FlickrApi
 class FlickrOAuthSession(
   savedCredentialsFile: String,
   savedAccessTokenFile: String)
-  extends OAuthSession[FlickrApi](
-    myProviderApi = new FlickrApi,
+  extends OAuthSession(
     savedCredentialsFile = savedCredentialsFile,
-    savedAccessTokenFile = savedAccessTokenFile,
-    useRequestToken = true)
+    savedAccessTokenFile = savedAccessTokenFile) {
+
+  override val myOAuthServiceBuilder = new FlickrOAuthServiceBuilder(myApiKey, myApiKeySecret)
+
+}
 
 object FlickrOAuthSession {
   def apply(

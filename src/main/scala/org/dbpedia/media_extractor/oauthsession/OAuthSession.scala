@@ -9,7 +9,6 @@ import org.scribe.model.Token
 import org.scribe.model.Verifier
 
 abstract class OAuthSession(
-  val myOAuthServiceBuilder: OAuthServiceBuilder,
   val savedCredentialsFile: String,
   val savedAccessTokenFile: String) {
 
@@ -18,8 +17,10 @@ abstract class OAuthSession(
   val myApiKey = savedAccessCredentialsProperties.getProperty("apiKey")
   val myApiKeySecret = savedAccessCredentialsProperties.getProperty("apiKeySecret")
 
+  val myOAuthServiceBuilder: OAuthServiceBuilder
+
   val myOAuthService = myOAuthServiceBuilder.oAuthService
-  
+
   val accessToken: Token =
     if ((!savedAccessTokenFile.isEmpty()) && (!(getSavedAccessToken(savedAccessTokenFile).isEmpty)))
       getSavedAccessToken(savedAccessTokenFile)

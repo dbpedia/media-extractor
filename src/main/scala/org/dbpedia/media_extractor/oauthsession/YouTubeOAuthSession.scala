@@ -5,11 +5,13 @@ import org.scribe.builder.api.Google2Api
 class YouTubeOAuthSession(
   savedCredentialsFile: String,
   savedAccessTokenFile: String)
-  extends OAuthSession[Google2Api](
-    myProviderApi = new Google2Api,
+  extends OAuthSession(
     savedCredentialsFile = savedCredentialsFile,
-    savedAccessTokenFile = savedAccessTokenFile,
-    useRequestToken = false)
+    savedAccessTokenFile = savedAccessTokenFile) {
+
+  override val myOAuthServiceBuilder = new YouTubeOAuthServiceBuilder(myApiKey, myApiKeySecret)
+
+}
 
 object YouTubeOAuthSession {
   def apply(
