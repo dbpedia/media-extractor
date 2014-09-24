@@ -10,15 +10,14 @@ class FlickrOAuthSessionTest extends FunSpec {
       val manuallyGeneratedFlickrOAuthSession = FlickrOAuthSession(
         savedCredentialsFile = "/flickr.setup.properties",
         savedAccessTokenFile = "")
-      assert(manuallyGeneratedFlickrOAuthSession.isInstanceOf[FlickrOAuthSession])
+      assert(!manuallyGeneratedFlickrOAuthSession.accessToken.isEmpty())
     }
 
     it("should be able to connect to Flickr using saved credentials (both <ApiKey,ApiKeySecret> and <accessToken,accessTokenSecret>)") {
       val automaticallyGeneratedFlickrOAuthSession = FlickrOAuthSession(
         savedCredentialsFile = "/flickr.setup.properties",
         savedAccessTokenFile = "/flickr.accessToken.properties")
-      assert(automaticallyGeneratedFlickrOAuthSession.isInstanceOf[FlickrOAuthSession])
-
+        
       val generatedToken = automaticallyGeneratedFlickrOAuthSession.accessToken
       val savedToken = automaticallyGeneratedFlickrOAuthSession.getSavedAccessToken("/flickr.accessToken.properties")
       assert(generatedToken === savedToken)

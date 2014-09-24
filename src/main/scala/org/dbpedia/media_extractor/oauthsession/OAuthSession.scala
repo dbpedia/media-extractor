@@ -3,8 +3,6 @@ package org.dbpedia.media_extractor.oauthsession
 import java.util.Properties
 import java.util.Scanner
 
-import org.scribe.builder.ServiceBuilder
-import org.scribe.builder.api.Api
 import org.scribe.model.Token
 import org.scribe.model.Verifier
 
@@ -19,43 +17,46 @@ abstract class OAuthSession(
 
   val myOAuthServiceBuilder: OAuthServiceBuilder
 
-  val myOAuthService = myOAuthServiceBuilder.oAuthService
+  lazy val accessToken: Token = {
 
-  val accessToken: Token =
-    if ((!savedAccessTokenFile.isEmpty()) && (!(getSavedAccessToken(savedAccessTokenFile).isEmpty)))
-      getSavedAccessToken(savedAccessTokenFile)
-    else {
+    val myOAuthService = myOAuthServiceBuilder.oAuthService
 
-      // Make OAuth2 use transparent to myOAuthService
-      val requestToken = myOAuthServiceBuilder.requestToken
-      val authorizationUri = myOAuthServiceBuilder.getAuthorizationUrl()
+    val accessToken =
+      if ((!savedAccessTokenFile.isEmpty()) && (!(getSavedAccessToken(savedAccessTokenFile).isEmpty)))
+        getSavedAccessToken(savedAccessTokenFile)
+      else {
 
-      println("Follow this authorization URL to authorise yourself on " + myOAuthServiceBuilder.providerName + ":")
-      println(authorizationUri)
-      println("Paste here the verifier it gives you:")
-      print(">>")
+        // Make OAuth2 use transparent to myOAuthService
+        val requestToken = myOAuthServiceBuilder.requestToken
+        val authorizationUri = myOAuthServiceBuilder.getAuthorizationUrl()
 
-      val scanner = new Scanner(System.in)
-      val verifier = new Verifier(scanner.next())
-      scanner.close()
-      println("")
+        println("Follow this authorization URL to authorise yourself on " + myOAuthServiceBuilder.providerName + ":")
+        println(authorizationUri)
+        println("Paste here the verifier it gives you:")
+        print(">>")
 
-      val generatedAccessToken = myOAuthService.getAccessToken(requestToken, verifier)
+        val scanner = new Scanner(System.in)
+        val verifier = new Verifier(scanner.next())
+        scanner.close()
+        println("")
 
-      println("Generated Access Token: (keep it secret!!)")
-      println(generatedAccessToken)
-      println("")
+        val generatedAccessToken = myOAuthService.getAccessToken(requestToken, verifier)
 
-      generatedAccessToken
-    }
+        println("Generated Access Token: (keep it secret!!)")
+        println(generatedAccessToken)
+        println("")
+
+        generatedAccessToken
+      }
+
+    accessToken
+  }
 
   private def loadPropertyFromFile(propertyFile: String): Properties = {
     val propertyInputStream = this.getClass().getResourceAsStream(propertyFile)
     val myProperty = new Properties()
-
     myProperty.load(propertyInputStream)
     propertyInputStream.close()
-
     myProperty
   }
 

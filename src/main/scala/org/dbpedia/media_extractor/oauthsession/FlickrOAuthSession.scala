@@ -1,7 +1,5 @@
 package org.dbpedia.media_extractor.oauthsession
 
-import org.scribe.builder.api.FlickrApi
-
 class FlickrOAuthSession(
   savedCredentialsFile: String,
   savedAccessTokenFile: String)
@@ -10,7 +8,6 @@ class FlickrOAuthSession(
     savedAccessTokenFile = savedAccessTokenFile) {
 
   override val myOAuthServiceBuilder = new FlickrOAuthServiceBuilder(myApiKey, myApiKeySecret)
-
 }
 
 object FlickrOAuthSession {
