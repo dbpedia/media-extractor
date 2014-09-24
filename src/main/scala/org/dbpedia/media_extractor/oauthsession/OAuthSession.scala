@@ -8,37 +8,28 @@ import org.scribe.builder.api.Api
 import org.scribe.model.Token
 import org.scribe.model.Verifier
 
-class OAuthSession[ProviderApi <: Api](
-  val myProviderApi: ProviderApi,
+abstract class OAuthSession(
+  val myOAuthServiceBuilder: OAuthServiceBuilder,
   val savedCredentialsFile: String,
-  val savedAccessTokenFile: String,
-  val useRequestToken: Boolean) {
+  val savedAccessTokenFile: String) {
 
   val savedAccessCredentialsProperties = loadPropertyFromFile(savedCredentialsFile)
 
   val myApiKey = savedAccessCredentialsProperties.getProperty("apiKey")
   val myApiKeySecret = savedAccessCredentialsProperties.getProperty("apiKeySecret")
 
-  val oAuthService = new ServiceBuilder()
-    .provider(myProviderApi)
-    .apiKey(myApiKey)
-    .apiSecret(myApiKeySecret)
-    .build()
-
+  val myOAuthService = myOAuthServiceBuilder.oAuthService
+  
   val accessToken: Token =
     if ((!savedAccessTokenFile.isEmpty()) && (!(getSavedAccessToken(savedAccessTokenFile).isEmpty)))
       getSavedAccessToken(savedAccessTokenFile)
     else {
 
-      val requestToken =
-        if (useRequestToken)
-          oAuthService.getRequestToken()
-        else
-          null
+      // Make OAuth2 use transparent to myOAuthService
+      val requestToken = myOAuthServiceBuilder.requestToken
+      val authorizationUri = myOAuthServiceBuilder.getAuthorizationUrl()
 
-      val authorizationUri = oAuthService.getAuthorizationUrl(requestToken)
-
-      println("Follow this authorization URL to authorise yourself on " + myProviderApi.getClass().toString() + ":")
+      println("Follow this authorization URL to authorise yourself on " + myOAuthServiceBuilder.providerName + ":")
       println(authorizationUri)
       println("Paste here the verifier it gives you:")
       print(">>")
@@ -48,7 +39,7 @@ class OAuthSession[ProviderApi <: Api](
       scanner.close()
       println("")
 
-      val generatedAccessToken = oAuthService.getAccessToken(requestToken, verifier)
+      val generatedAccessToken = myOAuthService.getAccessToken(requestToken, verifier)
 
       println("Generated Access Token: (keep it secret!!)")
       println(generatedAccessToken)
@@ -76,19 +67,4 @@ class OAuthSession[ProviderApi <: Api](
     new Token(accessToken, accessSecret)
   }
 
-}
-
-object OAuthSession {
-
-  def apply[ProviderApi <: Api](
-    myProviderApi: ProviderApi,
-    savedCredentialsFile: String,
-    savedAccessTokenFile: String,
-    useRequestToken: Boolean) =
-
-    new OAuthSession[ProviderApi](
-      myProviderApi: ProviderApi,
-      savedCredentialsFile = savedCredentialsFile,
-      savedAccessTokenFile = savedAccessTokenFile,
-      useRequestToken = useRequestToken)
 }
