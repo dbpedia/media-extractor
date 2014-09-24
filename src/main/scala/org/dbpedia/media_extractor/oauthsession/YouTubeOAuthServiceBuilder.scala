@@ -1,10 +1,8 @@
 package org.dbpedia.media_extractor.oauthsession
 
-import org.scribe.builder.api.FlickrApi
-import org.scribe.oauth.OAuthService
 import org.scribe.builder.ServiceBuilder
-import org.scribe.model.Token
 import org.scribe.builder.api.Google2Api
+import org.scribe.oauth.OAuthService
 
 class YouTubeOAuthServiceBuilder(
   myApiKey: String,
