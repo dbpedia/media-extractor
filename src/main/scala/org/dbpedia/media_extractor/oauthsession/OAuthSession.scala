@@ -42,7 +42,7 @@ abstract class OAuthSession(
 
         val generatedAccessToken = myOAuthService.getAccessToken(requestToken, verifier)
 
-        println("Generated Access Token: (keep it secret!!)")
+        println("Generated " + myOAuthServiceBuilder.providerName + " Access Token: (keep it secret!!)")
         println(generatedAccessToken)
         println("")
 
