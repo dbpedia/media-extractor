@@ -15,8 +15,7 @@ import com.hp.hpl.jena.vocabulary.OWL
 import com.hp.hpl.jena.vocabulary.RDF
 import com.hp.hpl.jena.vocabulary.RDFS
 
-abstract class MediaProvider[ProviderApi <: Api, SearchResultType <: SearchResult](
-  val myProviderApi: ProviderApi,
+abstract class MediaProvider[SearchResultType <: SearchResult](
   val oAuthSession: OAuthSession,
   val savedCredentialsFile: String,
   val savedAccessTokenFile: String) {
