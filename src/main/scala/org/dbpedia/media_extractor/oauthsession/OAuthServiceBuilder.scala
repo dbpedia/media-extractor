@@ -9,7 +9,7 @@ abstract class OAuthServiceBuilder(
   val providerName: String
   val oAuthService: OAuthService
 
-  val emptyToken = null
+  private val emptyToken = null
 
   val requestToken = try {
     oAuthService.getRequestToken()
