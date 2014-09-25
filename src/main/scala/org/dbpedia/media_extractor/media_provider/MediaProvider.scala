@@ -28,10 +28,10 @@ abstract class MediaProvider[ProviderApi <: Api, SearchResultType <: SearchResul
   val maxResultsPerQuery: String
   val targetLicenses: String
 
-  val dbpediaRootUri = "http://dbpedia.org/"
-  val dbpediaMediaRootUri = "http://media.dbpedia.org/"
-  val dbpediaResourceRootUri = dbpediaRootUri + "resource/"
-  val dbpediaMediaResourceRootUri = dbpediaMediaRootUri + "resource/"
+  private val dbpediaRootUri = "http://dbpedia.org/"
+  private val dbpediaMediaRootUri = "http://media.dbpedia.org/"
+  private val dbpediaResourceRootUri = dbpediaRootUri + "resource/"
+  private val dbpediaMediaResourceRootUri = dbpediaMediaRootUri + "resource/"
 
   private def encodeResourceLeafUri(targetResource: String) = targetResource.trim.replaceAll(" ", "_").replaceAll("%2F", "/").replaceAll("%3A", ":")
   private def dbpediaResourceFullUri(targetResource: String) = dbpediaResourceRootUri + encodeResourceLeafUri(targetResource)
