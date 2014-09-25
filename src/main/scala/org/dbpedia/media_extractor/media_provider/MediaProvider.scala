@@ -33,13 +33,13 @@ abstract class MediaProvider[ProviderApi <: Api, SearchResultType <: SearchResul
   val dbpediaResourceRootUri = dbpediaRootUri + "resource/"
   val dbpediaMediaResourceRootUri = dbpediaMediaRootUri + "resource/"
 
-  def encodeResourceLeafUri(targetResource: String) = targetResource.trim.replaceAll(" ", "_").replaceAll("%2F", "/").replaceAll("%3A", ":")
-  def dbpediaResourceFullUri(targetResource: String) = dbpediaResourceRootUri + encodeResourceLeafUri(targetResource)
-  def dbpediaMediaResourceFullUri(targetResource: String) = dbpediaMediaResourceRootUri + encodeResourceLeafUri(targetResource)
+  private def encodeResourceLeafUri(targetResource: String) = targetResource.trim.replaceAll(" ", "_").replaceAll("%2F", "/").replaceAll("%3A", ":")
+  private def dbpediaResourceFullUri(targetResource: String) = dbpediaResourceRootUri + encodeResourceLeafUri(targetResource)
+  private def dbpediaMediaResourceFullUri(targetResource: String) = dbpediaMediaResourceRootUri + encodeResourceLeafUri(targetResource)
 
-  def getSearchResults(searchResponse: Response): Set[SearchResultType]
+  protected def getSearchResults(searchResponse: Response): Set[SearchResultType]
 
-  def getSearchResponse(searchText: String = "", latitude: String = "", longitude: String = "", radius: String = "", signRequest: Boolean = true): Response
+  protected def getSearchResponse(searchText: String = "", latitude: String = "", longitude: String = "", radius: String = "", signRequest: Boolean = true): Response
 
   def performLookup(targetResource: String, radius: String): Set[SearchResultType] = {
 
@@ -107,13 +107,13 @@ abstract class MediaProvider[ProviderApi <: Api, SearchResultType <: SearchResul
       sparqlQueryExecution.close()
   }
 
-  val namespaceUriMap = Map(
+  private val namespaceUriMap = Map(
     "foaf" -> "http://xmlns.com/foaf/0.1/",
     "dcterms" -> "http://purl.org/dc/terms/",
     "rdfs" -> "http://www.w3.org/2000/01/rdf-schema#",
     "wgs84_pos" -> "http://www.w3.org/2003/01/geo/wgs84_pos#")
 
-  def addNameSpacesToRDFGraph(rdfGraph: Model) =
+  private def addNameSpacesToRDFGraph(rdfGraph: Model) =
     namespaceUriMap.foreach {
       case (k, v) => rdfGraph.setNsPrefix(k, v)
     }
@@ -129,7 +129,7 @@ abstract class MediaProvider[ProviderApi <: Api, SearchResultType <: SearchResul
     rdfGraph
   }
 
-  def addLookupResultsToRDFGraph(
+  private def addLookupResultsToRDFGraph(
     targetResource: String,
     searchResultsSet: Set[SearchResultType],
     rdfGraph: Model): Model = {
@@ -141,7 +141,7 @@ abstract class MediaProvider[ProviderApi <: Api, SearchResultType <: SearchResul
     rdfGraph
   }
 
-  def addMetadataToRDFGraph(targetResource: String, rdfGraph: Model) = {
+  private def addMetadataToRDFGraph(targetResource: String, rdfGraph: Model) = {
     val lookupHeader = "Photos for Dbpedia resource " + targetResource
     val lookupFooter = "Media Extractor"
     val lookupHeaderLiteral = rdfGraph.createLiteral(lookupHeader, "en")
