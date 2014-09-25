@@ -21,7 +21,7 @@ abstract class MediaProvider[ProviderApi <: Api, SearchResultType <: SearchResul
   val savedCredentialsFile: String,
   val savedAccessTokenFile: String) {
 
-  val measurementUnit = "km"
+  private val measurementUnit = "km"
 
   val termsOfUseUri: String
   val endPointRootUri: String
