@@ -1,8 +1,8 @@
 package org.dbpedia.media_extractor.oauthsession
 
 class FlickrOAuthSession(
-  savedCredentialsFile: String,
-  savedAccessTokenFile: String)
+  savedCredentialsFile: String = "/flickr.setup.properties",
+  savedAccessTokenFile: String = "/flickr.accessToken.properties")
   extends OAuthSession(
     savedCredentialsFile = savedCredentialsFile,
     savedAccessTokenFile = savedAccessTokenFile) {

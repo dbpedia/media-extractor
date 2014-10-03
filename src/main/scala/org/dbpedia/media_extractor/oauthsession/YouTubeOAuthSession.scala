@@ -1,8 +1,8 @@
 package org.dbpedia.media_extractor.oauthsession
 
 class YouTubeOAuthSession(
-  savedCredentialsFile: String,
-  savedAccessTokenFile: String)
+  savedCredentialsFile: String = "/youtube.setup.properties",
+  savedAccessTokenFile: String = "/youtube.accessToken.properties")
   extends OAuthSession(
     savedCredentialsFile = savedCredentialsFile,
     savedAccessTokenFile = savedAccessTokenFile) {
