@@ -106,17 +106,6 @@ abstract class MediaProvider[SearchResultType <: SearchResult](
       sparqlQueryExecution.close()
   }
 
-  private val namespaceUriMap = Map(
-    "foaf" -> "http://xmlns.com/foaf/0.1/",
-    "dcterms" -> "http://purl.org/dc/terms/",
-    "rdfs" -> "http://www.w3.org/2000/01/rdf-schema#",
-    "wgs84_pos" -> "http://www.w3.org/2003/01/geo/wgs84_pos#")
-
-  private def addNameSpacesToRDFGraph(rdfGraph: Model) =
-    namespaceUriMap.foreach {
-      case (k, v) => rdfGraph.setNsPrefix(k, v)
-    }
-
   def constructRDFGraph(
     targetResource: String,
     lookupResults: Set[SearchResultType]): Model = {
@@ -127,6 +116,17 @@ abstract class MediaProvider[SearchResultType <: SearchResult](
     addLookupResultsToRDFGraph(targetResource, lookupResults, rdfGraph)
     rdfGraph
   }
+
+  private val namespaceUriMap = Map(
+    "foaf" -> "http://xmlns.com/foaf/0.1/",
+    "dcterms" -> "http://purl.org/dc/terms/",
+    "rdfs" -> "http://www.w3.org/2000/01/rdf-schema#",
+    "wgs84_pos" -> "http://www.w3.org/2003/01/geo/wgs84_pos#")
+
+  private def addNameSpacesToRDFGraph(rdfGraph: Model) =
+    namespaceUriMap.foreach {
+      case (k, v) => rdfGraph.setNsPrefix(k, v)
+    }
 
   private def addLookupResultsToRDFGraph(
     targetResource: String,
