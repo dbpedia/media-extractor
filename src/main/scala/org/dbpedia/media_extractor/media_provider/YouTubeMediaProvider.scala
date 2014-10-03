@@ -31,20 +31,6 @@ class YouTubeMediaProvider(
    *   * 
    */
 
-  //TODO: move to a test? this is for testing purposes only...
-  //e. g. method = "flickr.test.login"
-  def invoke_parameterless_method(method: String = null, signRequest: Boolean = true): Response = {
-    val request = new OAuthRequest(Verb.POST, endPointRootUri)
-    request.addQuerystringParameter("method", method)
-
-    val myService = oAuthSession.myOAuthServiceBuilder.oAuthService
-
-    if (signRequest)
-      myService.signRequest(oAuthSession.accessToken, request)
-
-    request.send()
-  }
-
   override def getSearchResponse(searchText: String = "", latitude: String = "", longitude: String = "", radius: String = "", signRequest: Boolean = true): Response = {
     val searchRequest = new OAuthRequest(Verb.POST, endPointRootUri)
 
