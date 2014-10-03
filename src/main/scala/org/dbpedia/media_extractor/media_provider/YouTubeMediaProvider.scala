@@ -20,15 +20,18 @@ class YouTubeMediaProvider(
     savedCredentialsFile,
     savedAccessTokenFile) {
 
-  override val termsOfUseUri = ""
-  override val endPointRootUri = ""
+  override val termsOfUseUri = "https://www.youtube.com/t/terms"
+  override val endPointRootUri = "https://www.googleapis.com/youtube/v3/"
 
-  override val maxResultsPerQuery = "" // according to YouTube API's TOU
-  override val targetLicenses = "" // See detail on licenses below
+  override val maxResultsPerQuery = "50" // according to YouTube API's TOU
+  override val targetLicenses = "creativeCommon" // See detail on licenses below
 
-  /* Licenses (from )
+  /* CC BY License includes (from https://support.google.com/youtube/answer/2797468/?hl=en)
    * 
-   *   * 
+   * -Your originally created content
+   * -Other videos marked with a CC BY license
+   * -Videos in the public domain
+   * 
    */
 
   override def getSearchResponse(searchText: String = "", latitude: String = "", longitude: String = "", radius: String = "", signRequest: Boolean = true): Response = {
