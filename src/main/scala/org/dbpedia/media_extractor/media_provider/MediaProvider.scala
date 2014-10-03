@@ -2,7 +2,6 @@ package org.dbpedia.media_extractor.media_provider
 
 import org.dbpedia.media_extractor.oauthsession.OAuthSession
 import org.dbpedia.media_extractor.search_result.SearchResult
-import org.scribe.builder.api.Api
 import org.scribe.model.Response
 
 import com.hp.hpl.jena.query.QueryExecutionFactory
