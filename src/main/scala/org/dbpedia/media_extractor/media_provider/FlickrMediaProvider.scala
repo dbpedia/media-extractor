@@ -46,8 +46,10 @@ class FlickrMediaProvider(
     val request = new OAuthRequest(Verb.POST, endPointRootUri)
     request.addQuerystringParameter("method", method)
 
+    val myService = oAuthSession.myOAuthServiceBuilder.oAuthService
+
     if (signRequest)
-      oAuthSession.oAuthService.signRequest(oAuthSession.accessToken, request)
+      myService.signRequest(oAuthSession.accessToken, request)
 
     request.send()
   }
@@ -66,9 +68,11 @@ class FlickrMediaProvider(
     searchRequest.addQuerystringParameter("sort", "relevance")
     searchRequest.addQuerystringParameter("min_taken_date", "1800-01-01 00:00:00") // limiting agent to avoid "parameterless searches"
 
+    val myService = oAuthSession.myOAuthServiceBuilder.oAuthService
+
     // This request does not need to be signed
     if (signRequest)
-      oAuthSession.oAuthService.signRequest(oAuthSession.accessToken, searchRequest)
+      myService.signRequest(oAuthSession.accessToken, searchRequest)
 
     searchRequest.send()
   }
