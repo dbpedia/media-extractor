@@ -35,7 +35,7 @@ class YouTubeMediaProvider(
    */
 
   override def getSearchResponse(searchText: String = "", latitude: String = "", longitude: String = "", radius: String = "", signRequest: Boolean = true): Response = {
-    val searchRequest = new OAuthRequest(Verb.POST, endPointRootUri)
+    val searchRequest = new OAuthRequest(Verb.GET, endPointRootUri)
 
     searchRequest.addQuerystringParameter("method", "flickr.photos.search")
     searchRequest.addQuerystringParameter("text", searchText)
