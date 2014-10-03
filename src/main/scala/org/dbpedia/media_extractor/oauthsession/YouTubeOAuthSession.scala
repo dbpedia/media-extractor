@@ -1,7 +1,5 @@
 package org.dbpedia.media_extractor.oauthsession
 
-import org.scribe.builder.api.Google2Api
-
 class YouTubeOAuthSession(
   savedCredentialsFile: String,
   savedAccessTokenFile: String)
