@@ -16,11 +16,11 @@ class FlickrMediaProviderTest extends FunSpec {
       }
 
       it("by reusing an OAuthSession instance if possible") {
-        val flickrMediaProvider2= new FlickrMediaProvider(FlickrOAuthSession())
+        val flickrMediaProvider2 = new FlickrMediaProvider(FlickrOAuthSession())
       }
     }
 
-    describe("should be able to perform a simple search")
+    describe("should be able to perform a simple search")(pending)
 
   }
 
