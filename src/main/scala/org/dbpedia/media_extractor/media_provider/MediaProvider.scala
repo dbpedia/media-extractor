@@ -19,12 +19,12 @@ abstract class MediaProvider[SearchResultType <: SearchResult](
   val savedCredentialsFile: String,
   val savedAccessTokenFile: String) {
 
-  private val measurementUnit = "km"
-
   val termsOfUseUri: String
   val endPointRootUri: String
   val maxResultsPerQuery: String
   val targetLicenses: String
+  
+  protected val measurementUnit = "km"
 
   private val dbpediaRootUri = "http://dbpedia.org/"
   private val dbpediaMediaRootUri = "http://media.dbpedia.org/"
