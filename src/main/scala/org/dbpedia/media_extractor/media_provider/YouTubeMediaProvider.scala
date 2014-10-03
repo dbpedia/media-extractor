@@ -24,7 +24,7 @@ class YouTubeMediaProvider(
   override val endPointRootUri = "https://www.googleapis.com/youtube/v3/"
 
   override val maxResultsPerQuery = "50" // according to YouTube API's TOU
-  override val targetLicenses = "creativeCommon" // See detail on licenses below
+  override val targetLicenses = "creativeCommon" // CC-BY + public domain - See details below
 
   /* CC BY License includes (from https://support.google.com/youtube/answer/2797468/?hl=en)
    * 
