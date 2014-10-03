@@ -1,8 +1,8 @@
 package org.dbpedia.media_extractor.oauthsession
 
 class FlickrOAuthSession(
-  savedCredentialsFile: String = "/flickr.setup.properties",
-  savedAccessTokenFile: String = "/flickr.accessToken.properties")
+  savedCredentialsFile: String,
+  savedAccessTokenFile: String)
   extends OAuthSession(
     savedCredentialsFile = savedCredentialsFile,
     savedAccessTokenFile = savedAccessTokenFile) {
@@ -12,8 +12,8 @@ class FlickrOAuthSession(
 
 object FlickrOAuthSession {
   def apply(
-    savedCredentialsFile: String,
-    savedAccessTokenFile: String) =
+    savedCredentialsFile: String = "/flickr.setup.properties",
+    savedAccessTokenFile: String = "/flickr.accessToken.properties") =
     new FlickrOAuthSession(
       savedCredentialsFile = savedCredentialsFile,
       savedAccessTokenFile = savedAccessTokenFile)
