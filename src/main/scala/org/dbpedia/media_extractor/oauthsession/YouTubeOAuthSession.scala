@@ -8,7 +8,6 @@ class YouTubeOAuthSession(
     savedAccessTokenFile = savedAccessTokenFile) {
 
   override val myOAuthServiceBuilder = new YouTubeOAuthServiceBuilder(myApiKey, myApiKeySecret)
-
 }
 
 object YouTubeOAuthSession {
