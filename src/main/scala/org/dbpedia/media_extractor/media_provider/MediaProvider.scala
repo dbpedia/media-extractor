@@ -15,15 +15,13 @@ import com.hp.hpl.jena.vocabulary.RDF
 import com.hp.hpl.jena.vocabulary.RDFS
 
 abstract class MediaProvider[SearchResultType <: SearchResult](
-  val oAuthSession: OAuthSession,
-  val savedCredentialsFile: String,
-  val savedAccessTokenFile: String) {
+  val oAuthSession: OAuthSession) {
 
   val termsOfUseUri: String
   val endPointRootUri: String
   val maxResultsPerQuery: String
   val targetLicenses: String
-  
+
   protected val measurementUnit = "km"
 
   private val dbpediaRootUri = "http://dbpedia.org/"

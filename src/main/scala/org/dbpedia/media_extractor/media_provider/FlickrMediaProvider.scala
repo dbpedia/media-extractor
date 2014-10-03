@@ -10,15 +10,10 @@ import org.scribe.model.Response
 import org.scribe.model.Verb
 
 class FlickrMediaProvider(
-
-  savedCredentialsFile: String = "/flickr.setup.properties",
-  savedAccessTokenFile: String = "/flickr.accessToken.properties",
   oAuthSession: FlickrOAuthSession)
 
   extends MediaProvider[FlickrSearchResult](
-    oAuthSession,
-    savedCredentialsFile,
-    savedAccessTokenFile) {
+    oAuthSession) {
 
   override val termsOfUseUri = "https://secure.flickr.com/help/terms/"
   override val endPointRootUri = "https://api.flickr.com/services/rest/"

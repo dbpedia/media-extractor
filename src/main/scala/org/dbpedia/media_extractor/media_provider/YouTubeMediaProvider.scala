@@ -10,15 +10,10 @@ import org.scribe.model.Response
 import org.scribe.model.Verb
 
 class YouTubeMediaProvider(
-
-  savedCredentialsFile: String = "/youtube.setup.properties",
-  savedAccessTokenFile: String = "/youtube.accessToken.properties",
   oAuthSession: YouTubeOAuthSession)
 
   extends MediaProvider[YouTubeSearchResult](
-    oAuthSession,
-    savedCredentialsFile,
-    savedAccessTokenFile) {
+    oAuthSession) {
 
   override val termsOfUseUri = "https://www.youtube.com/t/terms"
   override val endPointRootUri = "https://www.googleapis.com/youtube/v3/"
@@ -37,7 +32,7 @@ class YouTubeMediaProvider(
   override private def getSearchResponse(searchText: String = "", latitude: String = "", longitude: String = "", radius: String = "", signRequest: Boolean = true): Response = {
     val searchRequest = new OAuthRequest(Verb.GET, endPointRootUri)
 
-    searchRequest.addQuerystringParameter("method", "flickr.photos.search")
+    searchRequest.addQuerystringParameter("method", endPointRootUri + "search")
     searchRequest.addQuerystringParameter("text", searchText)
     searchRequest.addQuerystringParameter("lat", latitude)
     searchRequest.addQuerystringParameter("lon", longitude)
