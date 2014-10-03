@@ -3,9 +3,8 @@ package org.dbpedia.media_extractor.media_provider
 import scala.collection.mutable.ListBuffer
 import scala.xml.XML
 
-import org.dbpedia.media_extractor.oauthsession.OAuthSession
+import org.dbpedia.media_extractor.oauthsession.YouTubeOAuthSession
 import org.dbpedia.media_extractor.search_result.YouTubeSearchResult
-import org.scribe.builder.api.Google2Api
 import org.scribe.model.OAuthRequest
 import org.scribe.model.Response
 import org.scribe.model.Verb
@@ -14,10 +13,9 @@ class YouTubeMediaProvider(
 
   savedCredentialsFile: String = "/youtube.setup.properties",
   savedAccessTokenFile: String = "/youtube.accessToken.properties",
-  oAuthSession: OAuthSession[Google2Api])
+  oAuthSession: YouTubeOAuthSession)
 
-  extends MediaProvider[Google2Api, YouTubeSearchResult](
-    new Google2Api,
+  extends MediaProvider[YouTubeSearchResult](
     oAuthSession,
     savedCredentialsFile,
     savedAccessTokenFile) {
@@ -39,8 +37,10 @@ class YouTubeMediaProvider(
     val request = new OAuthRequest(Verb.POST, endPointRootUri)
     request.addQuerystringParameter("method", method)
 
+    val myService = oAuthSession.myOAuthServiceBuilder.oAuthService
+
     if (signRequest)
-      oAuthSession.oAuthService.signRequest(oAuthSession.accessToken, request)
+      myService.signRequest(oAuthSession.accessToken, request)
 
     request.send()
   }
@@ -59,9 +59,11 @@ class YouTubeMediaProvider(
     searchRequest.addQuerystringParameter("sort", "relevance")
     searchRequest.addQuerystringParameter("min_taken_date", "1800-01-01 00:00:00") // limiting agent to avoid "parameterless searches"
 
+    val myService = oAuthSession.myOAuthServiceBuilder.oAuthService
+
     // This request does not need to be signed
     if (signRequest)
-      oAuthSession.oAuthService.signRequest(oAuthSession.accessToken, searchRequest)
+      myService.signRequest(oAuthSession.accessToken, searchRequest)
 
     searchRequest.send()
   }
