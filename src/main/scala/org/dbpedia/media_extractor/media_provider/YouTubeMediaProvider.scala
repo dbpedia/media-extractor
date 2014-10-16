@@ -35,6 +35,7 @@ class YouTubeMediaProvider(
     // Documentation:
     // https://developers.google.com/youtube/v3/docs/search/list
 
+    searchRequest.addQuerystringParameter("part", "snippet")
     searchRequest.addQuerystringParameter("q", searchText)
     searchRequest.addQuerystringParameter("location", "(" + latitude + "," + longitude + ")")
     searchRequest.addQuerystringParameter("locationRadius", radius + measurementUnit)
