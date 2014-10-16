@@ -16,9 +16,9 @@ case class FlickrSearchResult(
 }
 
 case class YouTubeSearchResult(
-  thumbnailUri: String)
+  videoPageUri: String)
   extends SearchResult {
-  override def getUri() = thumbnailUri
+  override def getUri() = videoPageUri
   override def getProperty() = FOAF.page
 }
 
