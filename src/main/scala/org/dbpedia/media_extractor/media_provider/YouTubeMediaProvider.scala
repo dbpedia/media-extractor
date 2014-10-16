@@ -32,6 +32,9 @@ class YouTubeMediaProvider(
   override protected def getSearchResponse(searchText: String = "", latitude: String = "", longitude: String = "", radius: String = "", signRequest: Boolean = true): Response = {
     val searchRequest = new OAuthRequest(Verb.GET, endPointRootUri)
 
+    // Documentation:
+    // https://developers.google.com/youtube/v3/docs/search/list
+
     searchRequest.addQuerystringParameter("method", endPointRootUri + "search")
     searchRequest.addQuerystringParameter("q", searchText)
     searchRequest.addQuerystringParameter("location", "(" + latitude + "," + longitude + ")")
