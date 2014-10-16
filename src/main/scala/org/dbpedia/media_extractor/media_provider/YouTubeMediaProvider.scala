@@ -29,7 +29,7 @@ class YouTubeMediaProvider(
    * 
    */
 
-  override private def getSearchResponse(searchText: String = "", latitude: String = "", longitude: String = "", radius: String = "", signRequest: Boolean = true): Response = {
+  override protected def getSearchResponse(searchText: String = "", latitude: String = "", longitude: String = "", radius: String = "", signRequest: Boolean = true): Response = {
     val searchRequest = new OAuthRequest(Verb.GET, endPointRootUri)
 
     searchRequest.addQuerystringParameter("method", endPointRootUri + "search")
@@ -52,7 +52,7 @@ class YouTubeMediaProvider(
     searchRequest.send()
   }
 
-  override private def getSearchResults(searchResponse: Response): Set[YouTubeSearchResult] = {
+  override protected def getSearchResults(searchResponse: Response): Set[YouTubeSearchResult] = {
     val myXml = XML.loadString(searchResponse.getBody())
     val resultsListBuffer = new ListBuffer[YouTubeSearchResult]
     (myXml \\ "rsp" \ "photos" \ "photo") foreach {
