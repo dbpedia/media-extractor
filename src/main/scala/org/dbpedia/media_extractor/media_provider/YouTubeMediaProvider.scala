@@ -33,15 +33,14 @@ class YouTubeMediaProvider(
     val searchRequest = new OAuthRequest(Verb.GET, endPointRootUri)
 
     searchRequest.addQuerystringParameter("method", endPointRootUri + "search")
-    searchRequest.addQuerystringParameter("text", searchText)
-    searchRequest.addQuerystringParameter("lat", latitude)
-    searchRequest.addQuerystringParameter("lon", longitude)
-    searchRequest.addQuerystringParameter("radius", radius)
-    searchRequest.addQuerystringParameter("radius_units", measurementUnit)
-    searchRequest.addQuerystringParameter("license", targetLicenses)
-    searchRequest.addQuerystringParameter("per_page", maxResultsPerQuery)
-    searchRequest.addQuerystringParameter("sort", "relevance")
-    searchRequest.addQuerystringParameter("min_taken_date", "1800-01-01 00:00:00") // limiting agent to avoid "parameterless searches"
+    searchRequest.addQuerystringParameter("q", searchText)
+    searchRequest.addQuerystringParameter("location", "(" + latitude + "," + longitude + ")")
+    searchRequest.addQuerystringParameter("locationRadius", radius + measurementUnit)
+    searchRequest.addQuerystringParameter("videoLicense", targetLicenses)
+    searchRequest.addQuerystringParameter("maxResults", maxResultsPerQuery)
+    searchRequest.addQuerystringParameter("order", "relevance")
+    searchRequest.addQuerystringParameter("type", "video") // only look for videos; ignore playlists and channels
+    searchRequest.addQuerystringParameter("publishedAfter", "1970-01-01T00:00:00Z")
 
     val myService = oAuthSession.myOAuthServiceBuilder.oAuthService
 
