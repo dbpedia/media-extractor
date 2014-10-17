@@ -59,8 +59,9 @@ class YouTubeMediaProvider(
 
     val JSONString = searchResponse.getBody()
     val jsonJValue = parse(JSONString)
-
+    
     val resultsListBuffer = new ListBuffer[YouTubeSearchResult]
+    
     (jsonJValue \\ "items").children foreach {
       element =>
         val videoPageUri = "https://youtube.com/watch?v=" + (element \\ "id" \ "@videoId")
