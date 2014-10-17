@@ -33,9 +33,8 @@ abstract class MediaProvider[SearchResultType <: SearchResult](
   private def dbpediaResourceFullUri(targetResource: String) = dbpediaResourceRootUri + encodeResourceLeafUri(targetResource)
   private def dbpediaMediaResourceFullUri(targetResource: String) = dbpediaMediaResourceRootUri + encodeResourceLeafUri(targetResource)
 
-  protected def getSearchResults(searchResponse: Response): Set[SearchResultType]
-
-  protected def getSearchResponse(searchText: String = "", latitude: String = "", longitude: String = "", radius: String = "", signRequest: Boolean = true): Response
+  def getSearchResults(searchResponse: Response): Set[SearchResultType]
+  def getSearchResponse(searchText: String = "", latitude: String = "", longitude: String = "", radius: String = "", signRequest: Boolean = true): Response
 
   def performLookup(targetResource: String, radius: String): Set[SearchResultType] = {
 

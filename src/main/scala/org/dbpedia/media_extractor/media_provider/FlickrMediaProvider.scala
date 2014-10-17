@@ -35,7 +35,7 @@ class FlickrMediaProvider(
    * 
    */
 
-  override protected def getSearchResponse(searchText: String = "", latitude: String = "", longitude: String = "", radius: String = "", signRequest: Boolean = true): Response = {
+  override def getSearchResponse(searchText: String = "", latitude: String = "", longitude: String = "", radius: String = "", signRequest: Boolean = true): Response = {
     val searchRequest = new OAuthRequest(Verb.POST, endPointRootUri)
 
     searchRequest.addQuerystringParameter("method", "flickr.photos.search")
@@ -58,7 +58,7 @@ class FlickrMediaProvider(
     searchRequest.send()
   }
 
-  override protected def getSearchResults(searchResponse: Response): Set[FlickrSearchResult] = {
+  override def getSearchResults(searchResponse: Response): Set[FlickrSearchResult] = {
     val myXml = XML.loadString(searchResponse.getBody())
     val resultsListBuffer = new ListBuffer[FlickrSearchResult]
     (myXml \\ "rsp" \ "photos" \ "photo") foreach {

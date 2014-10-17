@@ -30,7 +30,7 @@ class YouTubeMediaProvider(
    * 
    */
 
-  override protected def getSearchResponse(searchText: String = "", latitude: String = "", longitude: String = "", radius: String = "", signRequest: Boolean = true): Response = {
+  override def getSearchResponse(searchText: String = "", latitude: String = "", longitude: String = "", radius: String = "", signRequest: Boolean = true): Response = {
     val searchRequest = new OAuthRequest(Verb.GET, endPointRootUri + "search")
 
     // Documentation:
@@ -55,7 +55,7 @@ class YouTubeMediaProvider(
     searchRequest.send()
   }
 
-  override protected def getSearchResults(searchResponse: Response): Set[YouTubeSearchResult] = {
+  override def getSearchResults(searchResponse: Response): Set[YouTubeSearchResult] = {
 
     val JSONString = searchResponse.getBody()
     val jsonJValue = parse(JSONString)
