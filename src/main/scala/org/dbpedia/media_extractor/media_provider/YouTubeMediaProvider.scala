@@ -1,13 +1,14 @@
 package org.dbpedia.media_extractor.media_provider
 
 import scala.collection.mutable.ListBuffer
-import scala.xml.XML
 
 import org.dbpedia.media_extractor.oauthsession.YouTubeOAuthSession
 import org.dbpedia.media_extractor.search_result.YouTubeSearchResult
 import org.scribe.model.OAuthRequest
 import org.scribe.model.Response
 import org.scribe.model.Verb
+
+import net.liftweb.json.parse
 
 class YouTubeMediaProvider(
   oAuthSession: YouTubeOAuthSession)
@@ -55,13 +56,15 @@ class YouTubeMediaProvider(
   }
 
   override protected def getSearchResults(searchResponse: Response): Set[YouTubeSearchResult] = {
-    val myXml = XML.loadString(searchResponse.getBody())
-    val resultsListBuffer = new ListBuffer[YouTubeSearchResult]
-    (myXml \\ "rsp" \ "photos" \ "photo") foreach {
-      photo =>
-        val thumbnailUri = ""
-        val pageSearchResult = new YouTubeSearchResult(thumbnailUri)
 
+    val JSONString = searchResponse.getBody()
+    val jsonJValue = parse(JSONString)
+
+    val resultsListBuffer = new ListBuffer[YouTubeSearchResult]
+    (jsonJValue \\ "items").children foreach {
+      element =>
+        val videoPageUri = "https://youtube.com/watch?v=" + (element \\ "id" \ "@videoId")
+        val pageSearchResult = new YouTubeSearchResult(videoPageUri)
         resultsListBuffer += pageSearchResult
     }
     resultsListBuffer.toSet
