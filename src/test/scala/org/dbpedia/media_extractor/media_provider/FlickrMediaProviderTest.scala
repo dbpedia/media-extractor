@@ -18,13 +18,32 @@ class FlickrMediaProviderTest extends FunSpec {
       it("by reusing an OAuthSession instance if possible") {
         val flickrOAuthSession1 = FlickrOAuthSession()
         val flickrOAuthSession2 = FlickrOAuthSession()
-        
-        assert (flickrOAuthSession1 === flickrOAuthSession2)
+
+        assert(flickrOAuthSession1 === flickrOAuthSession2)
         val flickrMediaProvider2 = new FlickrMediaProvider(FlickrOAuthSession())
       }
     }
 
-    describe("should be able to perform a simple search")(pending)
+    describe("should be able to perform a simple search") {
+      val flickrOAuthSession = FlickrOAuthSession()
+      val flickrMediaProvider = new FlickrMediaProvider(flickrOAuthSession)
+
+      val searchText = "Brussels"
+      val latitude = "50.85"
+      val longitude = "4.35"
+      val radius = "5"
+      val signRequest = true
+
+      it("should be able to get the reply from YouTube") {
+        val searchResponse = flickrMediaProvider.getSearchResponse(searchText, latitude, longitude, radius, signRequest)
+      }
+
+      it("should be able to convert the reply from YouTube into a Set") {
+        val searchResponse = flickrMediaProvider.getSearchResponse(searchText, latitude, longitude, radius, signRequest)
+        val searchResults = flickrMediaProvider.getSearchResults(searchResponse)
+      }
+
+    }
 
   }
 
