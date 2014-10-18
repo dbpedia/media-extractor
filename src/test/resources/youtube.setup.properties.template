@@ -1,0 +1,2 @@
+apiKey = <your Client ID - see [Google Developers Console] >> [APIs & auth] >> [Credentials] >> [OAuth] >
+apiKeySecret = <your email address - see [Google Developers Console] >> [APIs & auth] >> [Credentials] >> [OAuth] >

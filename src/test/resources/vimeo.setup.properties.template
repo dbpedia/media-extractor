@@ -1,0 +1,2 @@
+apiKey = <your Client ID - see https://developer.vimeo.com/apps/<your-app-number>#authentication >
+apiKeySecret = <your Client secret - see https://developer.vimeo.com/apps/<your-app-number>#authentication >

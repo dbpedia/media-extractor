@@ -17,3 +17,5 @@ libraryDependencies += "org.scribe" % "scribe" % "1.3.7"
 libraryDependencies += "org.scala-lang.modules" %% "scala-xml" % "1.0.2"
 
 libraryDependencies += "org.apache.jena" % "apache-jena-libs" % "2.11.2"
+
+libraryDependencies += "net.liftweb" %% "lift-json" % "2.6-RC1"
