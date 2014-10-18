@@ -34,11 +34,11 @@ class FlickrMediaProviderTest extends FunSpec {
       val radius = "5"
       val signRequest = true
 
-      it("should be able to get the reply from YouTube") {
+      it("should be able to get the reply from Flickr") {
         val searchResponse = flickrMediaProvider.getSearchResponse(searchText, latitude, longitude, radius, signRequest)
       }
 
-      it("should be able to convert the reply from YouTube into a Set") {
+      it("should be able to convert the reply from Flickr into a Set") {
         val searchResponse = flickrMediaProvider.getSearchResponse(searchText, latitude, longitude, radius, signRequest)
         val searchResults = flickrMediaProvider.getSearchResults(searchResponse)
       }
