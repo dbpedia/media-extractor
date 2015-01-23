@@ -2,7 +2,7 @@ name := "media-extractor"
 
 version := "0.0.1"
 
-scalaVersion := "2.11.2"
+scalaVersion := "2.11.5"
 
 resolvers += Resolver.mavenLocal
 
@@ -19,3 +19,4 @@ libraryDependencies += "org.scala-lang.modules" %% "scala-xml" % "1.0.2"
 libraryDependencies += "org.apache.jena" % "apache-jena-libs" % "2.11.2"
 
 libraryDependencies += "net.liftweb" %% "lift-json" % "2.6-RC1"
+
