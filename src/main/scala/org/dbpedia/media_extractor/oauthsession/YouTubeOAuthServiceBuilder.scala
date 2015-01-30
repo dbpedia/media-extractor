@@ -1,8 +1,8 @@
 package org.dbpedia.media_extractor.oauthsession
 
-import org.scribe.builder.ServiceBuilder
-import org.scribe.builder.api.Google2Api
-import org.scribe.oauth.OAuthService
+import ru.hh.oauth.subscribe.apis.GoogleApi20
+import ru.hh.oauth.subscribe.core.oauth.OAuthService
+import ru.hh.oauth.subscribe.core.builder.ServiceBuilder
 
 class YouTubeOAuthServiceBuilder(
   myApiKey: String,
@@ -10,7 +10,7 @@ class YouTubeOAuthServiceBuilder(
   extends {
 
     override val oAuthService: OAuthService = new ServiceBuilder()
-      .provider(classOf[Google2Api])
+      .provider(classOf[GoogleApi20])
       .apiKey(myApiKey)
       .apiSecret(myApiKeySecret)
       .scope("https://www.googleapis.com/auth/youtube.readonly")

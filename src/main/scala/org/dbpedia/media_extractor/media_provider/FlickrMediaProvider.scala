@@ -5,9 +5,10 @@ import scala.xml.XML
 
 import org.dbpedia.media_extractor.oauthsession.FlickrOAuthSession
 import org.dbpedia.media_extractor.search_result.FlickrSearchResult
-import org.scribe.model.OAuthRequest
-import org.scribe.model.Response
-import org.scribe.model.Verb
+import ru.hh.oauth.subscribe.core.model.OAuthRequest
+import ru.hh.oauth.subscribe.core.model.Response
+import ru.hh.oauth.subscribe.core.model.Verb
+
 
 class FlickrMediaProvider(
   oAuthSession: FlickrOAuthSession)
