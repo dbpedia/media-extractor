@@ -31,7 +31,9 @@ class YouTubeMediaProvider(
    */
 
   override def getSearchResponse(searchText: String = "", latitude: String = "", longitude: String = "", radius: String = "", signRequest: Boolean = true): Response = {
-    val searchRequest = new OAuthRequest(Verb.GET, endPointRootUri + "search")
+
+    val myOAuthServiceBuilder = oAuthSession.myOAuthServiceBuilder
+    val searchRequest = new OAuthRequest(Verb.POST, endPointRootUri + "search", myOAuthServiceBuilder.oAuthService)
 
     // Documentation:
     // https://developers.google.com/youtube/v3/docs/search/list
@@ -59,9 +61,9 @@ class YouTubeMediaProvider(
 
     val JSONString = searchResponse.getBody()
     val jsonJValue = parse(JSONString)
-    
+
     val resultsListBuffer = new ListBuffer[YouTubeSearchResult]
-    
+
     (jsonJValue \\ "items").children foreach {
       element =>
         val videoPageUri = "https://youtube.com/watch?v=" + (element \\ "id" \ "@videoId")
