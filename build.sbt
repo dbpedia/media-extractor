@@ -8,7 +8,8 @@ lazy val root = (project in file(".")).
   settings(commonSettings: _*).
   settings(
     name := "media-extractor",
-    libraryDependencies ++= Seq("ru.hh.oauth.subscribe" % "apis" % "3.0",
+    libraryDependencies ++= Seq(
+	"ru.hh.oauth.subscribe" % "apis" % "3.0",
  	"org.scalatest" %% "scalatest" % "2.2.1" % "test",
 	"org.glassfish.jersey.core" % "jersey-client" % "2.15",
 	"org.scala-lang.modules" %% "scala-xml" % "1.0.3",
