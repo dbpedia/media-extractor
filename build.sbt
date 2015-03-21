@@ -9,11 +9,11 @@ lazy val root = (project in file(".")).
   settings(
     name := "media-extractor",
     libraryDependencies ++= Seq(
-	"ru.hh.oauth.subscribe" % "apis" % "3.0",
- 	"org.scalatest" %% "scalatest" % "2.2.1" % "test",
-	"org.glassfish.jersey.core" % "jersey-client" % "2.15",
+	"ru.hh.oauth.subscribe" % "apis" % "3.1",
+ 	"org.scalatest" %% "scalatest" % "2.2.4" % "test",
+	"org.glassfish.jersey.core" % "jersey-client" % "2.17",
 	"org.scala-lang.modules" %% "scala-xml" % "1.0.3",
-	"org.apache.jena" % "apache-jena-libs" % "2.12.1",
-	"net.liftweb" %% "lift-json" % "2.6"
+	"org.apache.jena" % "apache-jena-libs" % "2.13.0",
+	"net.liftweb" %% "lift-json" % "2.6.1"
 	)
    )
