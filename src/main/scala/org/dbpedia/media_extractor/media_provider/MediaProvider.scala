@@ -2,7 +2,6 @@ package org.dbpedia.media_extractor.media_provider
 
 import org.dbpedia.media_extractor.oauthsession.OAuthSession
 import org.dbpedia.media_extractor.search_result.SearchResult
-import org.scribe.model.Response
 
 import com.hp.hpl.jena.query.QueryExecutionFactory
 import com.hp.hpl.jena.query.QueryFactory
@@ -13,6 +12,8 @@ import com.hp.hpl.jena.vocabulary.DCTerms
 import com.hp.hpl.jena.vocabulary.OWL
 import com.hp.hpl.jena.vocabulary.RDF
 import com.hp.hpl.jena.vocabulary.RDFS
+
+import ru.hh.oauth.subscribe.core.model.Response
 
 abstract class MediaProvider[SearchResultType <: SearchResult](
   val oAuthSession: OAuthSession) {

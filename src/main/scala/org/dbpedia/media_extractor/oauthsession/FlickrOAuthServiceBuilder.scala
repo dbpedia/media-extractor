@@ -1,8 +1,8 @@
 package org.dbpedia.media_extractor.oauthsession
 
-import org.scribe.builder.ServiceBuilder
-import org.scribe.builder.api.FlickrApi
-import org.scribe.oauth.OAuthService
+import ru.hh.oauth.subscribe.apis.FlickrApi
+import ru.hh.oauth.subscribe.core.oauth.OAuthService
+import ru.hh.oauth.subscribe.core.builder.ServiceBuilder
 
 class FlickrOAuthServiceBuilder(
   myApiKey: String,

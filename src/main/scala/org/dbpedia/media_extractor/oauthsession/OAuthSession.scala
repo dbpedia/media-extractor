@@ -3,8 +3,8 @@ package org.dbpedia.media_extractor.oauthsession
 import java.util.Properties
 import java.util.Scanner
 
-import org.scribe.model.Token
-import org.scribe.model.Verifier
+import ru.hh.oauth.subscribe.core.model.Token
+import ru.hh.oauth.subscribe.core.model.Verifier
 
 abstract class OAuthSession(
   val savedCredentialsFile: String,

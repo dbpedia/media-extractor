@@ -5,9 +5,10 @@ import scala.xml.XML
 
 import org.dbpedia.media_extractor.oauthsession.FlickrOAuthSession
 import org.dbpedia.media_extractor.search_result.FlickrSearchResult
-import org.scribe.model.OAuthRequest
-import org.scribe.model.Response
-import org.scribe.model.Verb
+import ru.hh.oauth.subscribe.core.model.OAuthRequest
+import ru.hh.oauth.subscribe.core.model.Response
+import ru.hh.oauth.subscribe.core.model.Verb
+
 
 class FlickrMediaProvider(
   oAuthSession: FlickrOAuthSession)
@@ -36,7 +37,9 @@ class FlickrMediaProvider(
    */
 
   override def getSearchResponse(searchText: String = "", latitude: String = "", longitude: String = "", radius: String = "", signRequest: Boolean = true): Response = {
-    val searchRequest = new OAuthRequest(Verb.POST, endPointRootUri)
+  
+    val myOAuthServiceBuilder = oAuthSession.myOAuthServiceBuilder    
+    val searchRequest = new OAuthRequest(Verb.POST, endPointRootUri, myOAuthServiceBuilder.oAuthService)
 
     searchRequest.addQuerystringParameter("method", "flickr.photos.search")
     searchRequest.addQuerystringParameter("text", searchText)
