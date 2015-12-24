@@ -16,4 +16,5 @@
 .worksheet
 /.project
 /.classpath
-
+/.cache-main
+/.cache-tests
