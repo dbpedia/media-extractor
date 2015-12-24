@@ -4,7 +4,7 @@ import org.scalatest.FunSpec
 import org.dbpedia.media_extractor.oauthsession.YouTubeOAuthSession
 
 class YouTubeMediaProviderTest extends FunSpec {
-  
+
   describe("a YouTubeMediaProvider") {
 
     describe("should be able to connect to YouTube") {
