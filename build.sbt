@@ -1,7 +1,7 @@
 lazy val commonSettings = Seq(
   organization := "org.dbpedia.media_extractor",
   version := "0.0.1",
-  scalaVersion := "2.11.6"
+  scalaVersion := "2.11.7"
 )
 
 lazy val root = (project in file(".")).
