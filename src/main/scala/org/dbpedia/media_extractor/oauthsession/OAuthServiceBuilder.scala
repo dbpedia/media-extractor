@@ -1,6 +1,6 @@
 package org.dbpedia.media_extractor.oauthsession
 
-import ru.hh.oauth.subscribe.core.oauth.OAuthService
+import com.github.scribejava.core.oauth.OAuthService
 
 abstract class OAuthServiceBuilder(
   myApiKey: String,
