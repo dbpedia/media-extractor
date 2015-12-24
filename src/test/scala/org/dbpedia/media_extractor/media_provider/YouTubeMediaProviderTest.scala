@@ -16,6 +16,7 @@ class YouTubeMediaProviderTest extends FunSpec {
       }
 
       it("by reusing an OAuthSession instance if possible") {
+      // FIXME: fix this one
         val youTubeOAuthSession1 = YouTubeOAuthSession()
         val youTubeOAuthSession2 = YouTubeOAuthSession()
 
