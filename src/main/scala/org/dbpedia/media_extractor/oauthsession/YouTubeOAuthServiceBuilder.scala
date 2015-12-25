@@ -1,8 +1,8 @@
 package org.dbpedia.media_extractor.oauthsession
 
-import ru.hh.oauth.subscribe.apis.GoogleApi20
-import ru.hh.oauth.subscribe.core.oauth.OAuthService
-import ru.hh.oauth.subscribe.core.builder.ServiceBuilder
+import com.github.scribejava.apis.GoogleApi20
+import com.github.scribejava.core.oauth.OAuthService
+import com.github.scribejava.core.builder.ServiceBuilder
 
 class YouTubeOAuthServiceBuilder(
   myApiKey: String,

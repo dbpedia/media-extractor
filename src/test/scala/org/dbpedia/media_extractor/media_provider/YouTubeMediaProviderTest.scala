@@ -4,6 +4,7 @@ import org.scalatest.FunSpec
 import org.dbpedia.media_extractor.oauthsession.YouTubeOAuthSession
 
 class YouTubeMediaProviderTest extends FunSpec {
+
   describe("a YouTubeMediaProvider") {
 
     describe("should be able to connect to YouTube") {
@@ -15,6 +16,7 @@ class YouTubeMediaProviderTest extends FunSpec {
       }
 
       it("by reusing an OAuthSession instance if possible") {
+      // FIXME: fix this one
         val youTubeOAuthSession1 = YouTubeOAuthSession()
         val youTubeOAuthSession2 = YouTubeOAuthSession()
 

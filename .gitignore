@@ -11,9 +11,11 @@
 /target
 .project
 .classpath
+.settings
 *~
 //*.sc
 .worksheet
 /.project
 /.classpath
-
+/.cache-main
+/.cache-tests

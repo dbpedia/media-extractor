@@ -5,10 +5,10 @@ import scala.xml.XML
 
 import org.dbpedia.media_extractor.oauthsession.FlickrOAuthSession
 import org.dbpedia.media_extractor.search_result.FlickrSearchResult
-import ru.hh.oauth.subscribe.core.model.OAuthRequest
-import ru.hh.oauth.subscribe.core.model.Response
-import ru.hh.oauth.subscribe.core.model.Verb
 
+import com.github.scribejava.core.model.OAuthRequest
+import com.github.scribejava.core.model.Response
+import com.github.scribejava.core.model.Verb
 
 class FlickrMediaProvider(
   oAuthSession: FlickrOAuthSession)
