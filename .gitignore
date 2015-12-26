@@ -11,7 +11,7 @@
 /target
 .project
 .classpath
-.settings
+/.settings
 *~
 //*.sc
 .worksheet
