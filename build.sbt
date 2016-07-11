@@ -9,8 +9,8 @@ lazy val root = (project in file(".")).
   settings(
     name := "media-extractor",
     libraryDependencies ++= Seq(
-	"com.github.scribejava" % "scribejava-apis" % "2.8.1",
- 	"org.scalatest" %% "scalatest" % "2.2.6" % "test",
-  "org.scalacheck" %% "scalacheck" % "1.13.0" % "test"
+      "com.github.scribejava" % "scribejava-apis" % "2.8.1",
+      "org.scalatest" %% "scalatest" % "2.2.6" % "test",
+      "org.scalacheck" %% "scalacheck" % "1.13.0" % "test"
     )
   )
