@@ -1,5 +1,5 @@
 lazy val commonSettings = Seq(
-  organization := "org.dbpedia.media_extractor",
+  organization := "org.dbpedia",
   version := "0.1-SNAPSHOT",
   scalaVersion := "2.11.8"
 )
