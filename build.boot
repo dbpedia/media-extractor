@@ -3,18 +3,18 @@
 
 (set-env! :resource-paths #{"resources" "src"}
           :source-paths   #{"test"}
-          :dependencies   '[[org.clojure/clojure "RELEASE"]
+          :dependencies   '[[org.clojure/clojure "1.8.0"]
                             [adzerk/boot-test "RELEASE" :scope "test"]])
 
 (task-options!
  aot {:namespace   #{'dbpedia-media-extractor.core}}
  pom {:project     project
       :version     version
-      :description "FIXME: write description"
-      :url         "http://example/FIXME"
-      :scm         {:url "https://github.com/yourname/dbpedia-media-extractor"}
-      :license     {"Eclipse Public License"
-                    "http://www.eclipse.org/legal/epl-v10.html"}}
+      :description "Related DBpedia resources to different media"
+      :url         "https://www.github.com/allentiak/dbpedia-media-extractor"
+      :scm         {:url "https://github.com/allentiak/dbpedia-media-extractor"}
+      :license     {"GNU Affero General Public License (AGPL) 3 or later, with Clojure linking permission"
+                   "https://www.gnu.org/licenses/agpl.html"}}
  jar {:main        'dbpedia-media-extractor.core
       :file        (str "dbpedia-media-extractor-" version "-standalone.jar")})
 
