@@ -1,4 +1,4 @@
-(ns dbpedia-media-extractor.core-test
+(ns dbpedia-media-extractor.io-test
   (:require [clojure.test :refer :all]
             [dbpedia-media-extractor.core :refer :all]))
 
