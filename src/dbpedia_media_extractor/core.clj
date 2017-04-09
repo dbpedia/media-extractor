@@ -1,4 +1,4 @@
-(ns dbpedia-media-extractor.io
+(ns dbpedia-media-extractor.core
   (:gen-class))
 
 (defn -main
