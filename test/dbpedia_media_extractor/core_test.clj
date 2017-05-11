@@ -11,3 +11,10 @@
       (spit tmp-filename raw-data)
       (is (= (parse (slurp tmp-filename)) correctly-parsed-data) "Testing the parser")
       (io/delete-file tmp-filename))))
+
+(deftest input-mapifying-test
+  (testing "Mapifying a CSV file (with header)"
+    (let [raw-data '(["name" "age"] ["Bart" "10"] ["Lisa" "8"])
+          correctly-mapified-data '({:name "Bart", :age "10"} {:name "Lisa", :age "8"})]
+      (is (= (mapify raw-data) correctly-mapified-data))
+      )))
