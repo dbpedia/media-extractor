@@ -8,6 +8,7 @@ pom.xml.asc
 /.lein-*
 /.nrepl-history
 /.nrepl-port
+*.log
 .hgignore
 .hg/
 /resources/flickr_keys.csv
