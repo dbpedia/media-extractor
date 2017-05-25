@@ -2,7 +2,7 @@
   (:require [clojure.test :refer :all]
             [dbpedia-media-extractor.core :refer :all]
             [clojure.java.io :as io]
-            [qarth.oauth :as oauth])
+            [qarth.oauth :as oauth]))
 
 (deftest input-parsing-test
   (testing "Parsing a file."
@@ -17,13 +17,13 @@
   (testing "Mapifying a CSV file (with header)"
     (let [raw-data '(["name" "age"] ["Bart" "10"] ["Lisa" "8"])
           correctly-mapified-data '({:name "Bart", :age "10"} {:name "Lisa", :age "8"})]
-      (is (= (mapify raw-data) correctly-mapified-data))
-      )))
+      (is (= (mapify raw-data) correctly-mapified-data)))))
+
 
 (deftest flickr-oauth-login
   (testing "Logging into Flickr."
     (def conf {:type :scribe
-               :provider org.scribe.builder.api.FlickrApi
+               :provider com.github.scribejava.apis.FlickrApi
                :api-key "my-key"
                :api-secret "my-secret"})
     (def service (oauth/build conf))))
