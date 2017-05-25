@@ -1,7 +1,8 @@
 (ns dbpedia-media-extractor.core-test
   (:require [clojure.test :refer :all]
             [dbpedia-media-extractor.core :refer :all]
-            [clojure.java.io :as io]))
+            [clojure.java.io :as io]
+            [qarth.oauth :as oauth])
 
 (deftest input-parsing-test
   (testing "Parsing a file."
@@ -18,3 +19,11 @@
           correctly-mapified-data '({:name "Bart", :age "10"} {:name "Lisa", :age "8"})]
       (is (= (mapify raw-data) correctly-mapified-data))
       )))
+
+(deftest flickr-oauth-login
+  (testing "Logging into Flickr."
+    (def conf {:type :scribe
+               :provider org.scribe.builder.api.FlickrApi
+               :api-key "my-key"
+               :api-secret "my-secret"})
+    (def service (oauth/build conf))))
