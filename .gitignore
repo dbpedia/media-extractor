@@ -12,3 +12,4 @@ pom.xml.asc
 .hgignore
 .hg/
 /resources/flickr_keys.csv
+/resources/flickr_keys.edn

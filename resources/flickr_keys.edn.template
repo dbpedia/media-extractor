@@ -1,0 +1,2 @@
+{:flickr {:api-key "your-api-key"
+         :api-secret "your-api-secret"}}
