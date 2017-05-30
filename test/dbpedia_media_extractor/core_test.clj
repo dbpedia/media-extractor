@@ -38,17 +38,9 @@
           token (clojure.string/trim (read-line))
           rec (oauth/activate service rec token)
           resp ((oauth/requestor service rec)
-                {:url "https://social.yahooapis.com/v1/me/guid"})
-          user-guid (-> resp :body clojure.data.xml/parse-str
+                {:url "https://api.flickr.com/services/rest/"})
+          flickr.test.login (-> resp :body clojure.data.xml/parse-str
                       :content first :content first)
           _ (println "response status:" (:status resp))
           _ (println "response headers:" (pr-str (:headers resp)))
-          _ (println "user-guid:" user-guid)
-          resp ((oauth/requestor service rec)
-                {:url (str "https://social.yahooapis.com/v1/user/"
-                           user-guid "/profile")
-                      :as :stream})
-          user-info (-> resp :body clojure.data.xml/parse :content)
-          _ (println "response status:" (:status resp))
-          _ (println "response headers:" (pr-str (:headers resp)))
-          _ (println "user info:" (pr-str user-info))])))
+          _ (println "user:" user)])))
