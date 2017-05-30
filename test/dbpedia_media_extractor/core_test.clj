@@ -40,8 +40,8 @@
           rec (oauth/activate service rec token)
           resp ((oauth/requestor service rec)
                 {:url "https://api.flickr.com/services/rest/"})
-          flickr.test.login (-> resp :body json/read-str
+          flickr-test-login (-> resp :body json/read-str
                       :content first :content first)
           _ (println "response status:" (:status resp))
           _ (println "response headers:" (pr-str (:headers resp)))
-          _ (println "user:" user)])))
+          _ (println "flickr-test-login:" flickr-test-login)])))
