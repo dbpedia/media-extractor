@@ -4,7 +4,8 @@
             [clojure.java.io :as io]
             [qarth.oauth :as oauth]
             [qarth.impl.scribe]
-            [clojure.data.json :as json]))
+            [clojure.data.json :as json]
+            [clojure.data.xml]))
 
 (deftest input-parsing-test
   (testing "Parsing a file."
@@ -40,7 +41,7 @@
           rec (oauth/activate service rec token)
           resp ((oauth/requestor service rec)
                 {:url "https://api.flickr.com/services/rest/"})
-          flickr-test-login (-> resp :body json/read-str
+          flickr-test-login (-> resp :body clojure.data.xml/parse-str
                       :content first :content first)
           _ (println "response status:" (:status resp))
           _ (println "response headers:" (pr-str (:headers resp)))
