@@ -25,7 +25,7 @@
   (testing "Logging into Flickr."
 
     (def conf {:type :scribe
-               :provider com.github.scribejava.apis.FlickrApi
+               :provider org.scribe.builder.api.FlickrApi
                :api-key "my-key"
                :api-secret "my-secret"})
 
