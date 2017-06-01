@@ -29,10 +29,13 @@
 
     (def mapped-login-credentials (first (mapify (parse (slurp credentials-csv-file)))))
 
+    (def my-api-key (:api_key mapped-login-credentials))
+    (def my-api-secret (:secret mapped-login-credentials))
+
     (def conf {:type       :scribe
                :provider   org.scribe.builder.api.FlickrApi
-               :api-key    (:api_key mapped-login-credentials)
-               :api-secret (:secret mapped-login-credentials)})
+               :api-key    my-api-key
+               :api-secret my-api-secret})
 
     (def service (oauth/build conf))
 
