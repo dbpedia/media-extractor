@@ -22,27 +22,30 @@
           correctly-mapified-data '({:name "Bart", :age "10"} {:name "Lisa", :age "8"})]
       (is (= (mapify raw-data) correctly-mapified-data)))))
 
-
 (deftest flickr-oauth-login
-  (testing "Logging into Flickr."
+  (testing "Logging into Flick."
 
-    (def conf {:type :scribe
-               :provider org.scribe.builder.api.FlickrApi
-               :api-key "my-key"
-               :api-secret "my-secret"})
+    (def credentials-csv-file "resources/flickr_keys.csv")
+
+    (def mapped-login-credentials (first (mapify (parse (slurp credentials-csv-file)))))
+
+    (def conf {:type       :scribe
+               :provider   org.scribe.builder.api.FlickrApi
+               :api-key    (:api_key mapped-login-credentials)
+               :api-secret (:secret mapped-login-credentials)})
 
     (def service (oauth/build conf))
 
-    (let [rec (oauth/new-record service)
-          _ (println "Auth url:" (:url rec))
-          _ (print "Enter token: ")
-          _ (flush)
-          token (clojure.string/trim (read-line))
-          rec (oauth/activate service rec token)
-          resp ((oauth/requestor service rec)
-                {:url "https://api.flickr.com/services/rest/"})
+    (let [rec               (oauth/new-record service)
+          _                 (println "Auth url:" (:url rec))
+          _                 (print "Enter token: ")
+          _                 (flush)
+          token             (clojure.string/trim (read-line))
+          rec               (oauth/activate service rec token)
+          resp              ((oauth/requestor service rec)
+                             {:url "https://api.flickr.com/services/rest/"})
           flickr-test-login (-> resp :body clojure.data.xml/parse-str
-                      :content first :content first)
-          _ (println "response status:" (:status resp))
-          _ (println "response headers:" (pr-str (:headers resp)))
-          _ (println "flickr-test-login:" flickr-test-login)])))
+                                :content first :content first)
+          _                 (println "response status:" (:status resp))
+          _                 (println "response headers:" (pr-str (:headers resp)))
+          _                 (println "flickr-test-login:" flickr-test-login)])))
