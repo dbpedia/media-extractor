@@ -6,7 +6,8 @@
           :dependencies   '[[org.clojure/clojure "1.8.0"]
                             [adzerk/boot-test "RELEASE" :scope "test"]
                             [qarth "0.1.3"]
-                            [org.clojure/data.json "0.2.6"]])
+                            [org.clojure/data.json "0.2.6"]
+                            [org.clojure/data.xml "0.0.8"]])
 
 (task-options!
  aot {:namespace   #{'dbpedia-media-extractor.core}}
