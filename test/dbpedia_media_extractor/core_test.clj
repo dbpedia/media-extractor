@@ -38,9 +38,9 @@
     (println "my-api-key (inline): " (:api_key mapped-login-credentials))
     (println "my-api-key (pre-calculated): " my-api-key)
 
-    (def my-api-secret (:secret mapped-login-credentials))
+    (def my-api-secret (:api_secret mapped-login-credentials))
 
-    (println "my-api-secret (inline): " (:secret mapped-login-credentials))
+    (println "my-api-secret (inline): " (:api_secret mapped-login-credentials))
     (println "my-api-secret (pre-calculated): " my-api-secret)
 
 
