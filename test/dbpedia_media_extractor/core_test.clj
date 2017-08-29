@@ -4,7 +4,6 @@
             [clojure.java.io :as io]
             [qarth.oauth :as oauth]
             [qarth.impl.scribe]
-            [clojure.data.json :as json]
             [clojure.data.xml]))
 
 (deftest input-parsing-test
