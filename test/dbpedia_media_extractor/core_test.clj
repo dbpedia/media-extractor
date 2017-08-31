@@ -40,6 +40,8 @@
           _                         (println "your token: " token)
           rec                       (oauth/activate service rec token)
           _                         (println "Authorized rec: " rec)
+          access-token              (:access-token rec)
+          _                         (println "access-token (to be stored for future access): " access-token)
           requestor                 (oauth/requestor service rec)
           _                         (println "requestor: " requestor)
           resp                      (requestor {:url "https://api.flickr.com/services/rest/"})
