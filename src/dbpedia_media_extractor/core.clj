@@ -1,5 +1,9 @@
 (ns dbpedia-media-extractor.core
-  (:gen-class))
+  (:gen-class)
+  (:require
+    [qarth.oauth :as oauth]
+    [qarth.impl.scribe]))
+
 
 (defn parse
   "Convert a CSV into rows of columns"

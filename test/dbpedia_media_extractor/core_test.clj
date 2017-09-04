@@ -1,10 +1,7 @@
 (ns dbpedia-media-extractor.core-test
   (:require [clojure.test :refer :all]
             [dbpedia-media-extractor.core :refer :all]
-            [clojure.java.io :as io]
-            [qarth.oauth :as oauth]
-            [qarth.impl.scribe]
-            [clojure.data.xml :as xml]))
+            [clojure.java.io :as io]))
 
 (deftest input-parsing-test
   (testing "Parsing a file"
