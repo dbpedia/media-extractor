@@ -36,10 +36,13 @@
         #_                         (println "service: " service)
         rec                       (oauth/new-record service)
         #_                         (println "rec: " rec)
-        _                         (println "Please, follow the link below to authorize this App on Flickr.
-                                            Once that is done, please enter the token obtained from Flickr."
-                                           \n "Authorization URL: "(:url rec)
-                                           \n "Token ('NNN-NNN-NNN'):")
+        _                         (println)
+        _                         (println "Please, follow the Authorization URL below to authorize this app on Flickr.")
+        _                         (println "Once that is done, please enter the token obtained from Flickr.")
+        _                         (println)
+        _                         (println "Authorization URL: "(:url rec))
+        _                         (println)
+        _                         (print "Token ('NNN-NNN-NNN'): ")
         _                         (flush)
         token                     (clojure.string/trim (read-line))
         _                         (println "Thank you!")
