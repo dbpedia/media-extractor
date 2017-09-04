@@ -20,3 +20,12 @@
     (let [raw-data '(["name" "age"] ["Bart" "10"] ["Lisa" "8"])
           correctly-mapified-data '({:name "Bart", :age "10"} {:name "Lisa", :age "8"})]
       (is (= (mapify raw-data) correctly-mapified-data)))))
+
+(deftest generate-access-token-test
+  (testing "Generating Flickr OAuth Access Token"
+    [stored-access-token-csv-file generated-access-token]
+    (let [stored-acces-token  (second (parse (slurp stored-access-token-csv-file)))]
+          ;;stored-token-key                       (:oauth_token (mapify pre-generated-acces-token))
+          ;;stored-token-secret                    (:oauth_token_secret (mapify pre-generated-acces-token)
+
+      (is (= stored-access-token generated-access-token)))))
