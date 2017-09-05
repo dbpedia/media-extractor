@@ -13,3 +13,5 @@ pom.xml.asc
 .hg/
 /resources/flickr_keys.csv
 /resources/flickr_keys.edn
+/resources/flickr_oauth_token.csv
+/resources/flickr_user_details.csv
