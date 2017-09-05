@@ -1,2 +1,2 @@
-{:flickr {:api-key "your-api-key"
-         :api-secret "your-api-secret"}}
+ {:flickr {:api-key "abcdef01234567890abcdef0123456789"
+           :api-secret "1a2b3c4d5e6f7a8b"}}
