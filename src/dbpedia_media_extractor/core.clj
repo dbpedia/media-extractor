@@ -27,6 +27,11 @@
   [stored-credentials-csv-file] ;; This one should be "resources/flickr_keys.csv"
   (first (mapify (parse (slurp stored-credentials-csv-file)))))
 
+(defn flickr-service
+  "Create Flickr service, given my-api-key and my-api-secret"
+  [my-api-key my-api-secret]
+  (oauth/build {:type :scribe, :provider org.scribe.builder.api.FlickrApi, :api-key my-api-key, :api-secret my-api-secret}))
+
 (defn generate-access-token
   "Generates an access token vector, based on credentials stored in a CSV file. Needs interaction to get the authorization."
   [stored-credentials-csv-file] ;; This one should be "resources/flickr_keys.csv"
@@ -34,9 +39,7 @@
         my-api-secret  (:api_secret (stored-credentials stored-credentials-csv-file))
         #_             (println "my-api-key: " my-api-key)
         #_             (println "my-api-secret: " my-api-secret)
-        conf           {:type :scribe, :provider org.scribe.builder.api.FlickrApi, :api-key my-api-key, :api-secret my-api-secret}
-        #_             (println "conf: " conf)
-        service        (oauth/build conf)
+        service        (flickr-service my-api-key my-api-secret)
         #_             (println "service: " service)
         rec            (oauth/new-record service)
         #_             (println "rec: " rec)
