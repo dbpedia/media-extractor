@@ -22,12 +22,16 @@
                    (map vector my-keywords unmapped-row)))
          (rest rows))))
 
+(defn stored-credentials
+  "Returns a map with the stored API key and secret"
+  [stored-credentials-csv-file] ;; This one should be "resources/flickr_keys.csv"
+  (first (mapify (parse (slurp stored-credentials-csv-file)))))
+
 (defn generate-access-token
   "Generates an access token vector, based on credentials stored in a CSV file. Needs interaction to get the authorization."
   [stored-credentials-csv-file] ;; This one should be "resources/flickr_keys.csv"
-  (let [mapped-login-credentials  (first (mapify (parse (slurp stored-credentials-csv-file))))
-        my-api-key                (:api_key mapped-login-credentials)
-        my-api-secret             (:api_secret mapped-login-credentials)
+  (let [my-api-key                (:api_key (stored-credentials stored-credentials-csv-file))
+        my-api-secret             (:api_secret (stored-credentials stored-credentials-csv-file))
         #_                         (println "my-api-key: " my-api-key)
         #_                         (println "my-api-secret: " my-api-secret)
         conf                      {:type :scribe, :provider org.scribe.builder.api.FlickrApi, :api-key my-api-key, :api-secret my-api-secret}
