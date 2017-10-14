@@ -23,8 +23,9 @@
          (rest rows))))
 
 (defn stored-credentials
-  "Returns a map with the stored API key and secret"
-  [stored-credentials-csv-file] ;; This one should be "resources/flickr_keys.csv"
+  "Returns a map with the stored credentials (such as API key, secret, access token, access secret).
+  'stored-credentials-csv-file' should be a CSV file such as 'resources/flickr_{keys,oauth_token}.csv'"
+  [stored-credentials-csv-file]
   (first (mapify (parse (slurp stored-credentials-csv-file)))))
 
 (defn flickr-service
