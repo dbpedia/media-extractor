@@ -28,8 +28,9 @@
            ;;stored-token-secret                    (:oauth_token_secret (mapify pre-generated-acces-token))
          (is (= parsed-access-token generated-access-token)))))
 
-(deftest flickr-echo-test
+(deftest invoke-flickr-test-echo-test
   (testing "Invoking 'flickr.test.echo' (it requires no authentication; only the API key)."
-    (let [response "no-response"
-          argument "echo"]
-      (is (= response argument)))))
+    (let [api-key  (:api_key (stored-credentials "resources/flickr_keys.csv"))
+          response (invoke-flickr-test-echo api-key)
+          _        (println "Response: " response)]
+      (is (= (:stat response) "ok")))))
