@@ -61,6 +61,17 @@
         #_             (println "This is the Access Token (to be stored): " access-token)]
     access-token))
 
+(defn invoke-flickr-test-echo
+  "Invokes Flickr's flickr.test.echo method (it requires no authentication)"
+  [api-key api-secret oauth-token oauth-secret]
+  (let [service       (flickr-service api-key api-secret)
+        access-token  {:access-token [oauth-token oauth-secret]}
+        _        (println "access-token: " access-token)
+        _        (println "service: " service)
+        resp     ((oauth/requestor service access-token)
+                  {:url (str "https://api.flickr.com/services/rest/?method=flickr.test.echo&api_key=" api-key)})]
+    resp))
+
 (defn -main
   "I don't do a whole lot ... yet."
   [& args]
