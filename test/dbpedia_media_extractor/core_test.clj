@@ -30,7 +30,12 @@
 
 (deftest invoke-flickr-test-echo-test
   (testing "Invoking 'flickr.test.echo' (it requires no authentication; only the API key)."
-    (let [api-key  (:api_key (stored-credentials "resources/flickr_keys.csv"))
-          response (invoke-flickr-test-echo api-key)
-          _        (println "Response: " response)]
-      (is (= (:stat response) "ok")))))
+    (let [stored-flickr-keys-csv-file         "resources/flickr_keys.csv"
+          api-key                             (:api_key (stored-credentials stored-flickr-keys-csv-file))
+          api-secret                          (:api_secret (stored-credentials stored-flickr-keys-csv-file))
+          stored-flickr-oauth-token-csv-file  "resources/flickr_oauth_token.csv"
+          oauth-token                         (:oauth_token (stored-credentials stored-flickr-oauth-token-csv-file))
+          oauth-secret                        (:oauth_secret (stored-credentials stored-flickr-oauth-token-csv-file))
+          response                            (invoke-flickr-test-echo api-key api-secret oauth-token oauth-secret)
+          _                                   (println "Response: " response)]
+      (is (= (:status response) 200)))))
