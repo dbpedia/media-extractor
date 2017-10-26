@@ -61,15 +61,18 @@
         #_             (println "This is the Access Token (to be stored): " access-token)]
     access-token))
 
-(defn invoke-flickr-test-echo
-  "Invokes Flickr's flickr.test.echo method (it requires no authentication)"
-  [api-key api-secret oauth-token oauth-secret]
+(def flickr-root-method-path
+  "https://api.flickr.com/services/rest/")
+
+(defn invoke-flickr-method
+  "Invokes a Flickr method (due to a qarth bug, authentication is needed for all methods, even those who don't nrequire it)"
+  [method-path api-key api-secret oauth-token oauth-secret]
   (let [service       (flickr-service api-key api-secret)
         access-token  {:access-token [oauth-token oauth-secret]}
-        _        (println "access-token: " access-token)
-        _        (println "service: " service)
+        #_        (println "access-token: " access-token)
+        #_        (println "service: " service)
         resp     ((oauth/requestor service access-token)
-                  {:url (str "https://api.flickr.com/services/rest/?method=flickr.test.echo&api_key=" api-key)})]
+                  {:url (str flickr-root-method-path "?method=" method-path "&api_key=" api-key)})]
     resp))
 
 (defn -main
