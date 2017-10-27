@@ -65,12 +65,14 @@
   "https://api.flickr.com/services/rest/")
 
 (defn invoke-flickr-method
-  "Invokes a Flickr method (due to a qarth bug, authentication is needed for all methods, even those who don't nrequire it)"
-  [method-path api-key api-secret oauth-token oauth-secret]
+  "Invokes a Flickr method (currently, it signs all requests due to a qarth bug)"
+  [method-path sign-request api-key api-secret oauth-token oauth-secret]
   (let [service       (flickr-service api-key api-secret)
         access-token  {:access-token [oauth-token oauth-secret]}
         #_        (println "access-token: " access-token)
         #_        (println "service: " service)
+        ;; FIXME: 'sign-request' flag is currently ignored due to a qarth 0.1.3 library bug
+        ;;                                                    --Leandro Doctors, 2017-10-27
         resp     ((oauth/requestor service access-token)
                   {:url (str flickr-root-method-path "?method=" method-path "&api_key=" api-key)})]
     resp))

@@ -31,11 +31,12 @@
 (deftest invoke-flickr-test-echo-test
   (testing "Invoking 'flickr.test.echo'."
     (let [stored-flickr-keys-csv-file         "resources/flickr_keys.csv"
+          sign-request                        true
           api-key                             (:api_key (stored-credentials stored-flickr-keys-csv-file))
           api-secret                          (:api_secret (stored-credentials stored-flickr-keys-csv-file))
           stored-flickr-oauth-token-csv-file  "resources/flickr_oauth_token.csv"
           oauth-token                         (:oauth_token (stored-credentials stored-flickr-oauth-token-csv-file))
           oauth-secret                        (:oauth_secret (stored-credentials stored-flickr-oauth-token-csv-file))
-          response                            (invoke-flickr-method "flickr.test.echo" api-key api-secret oauth-token oauth-secret)
+          response                            (invoke-flickr-method "flickr.test.echo" sign-request api-key api-secret oauth-token oauth-secret)
           #_                                   (println "Response: " response)]
       (is (= (:status response) 200)))))
