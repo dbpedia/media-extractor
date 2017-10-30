@@ -74,7 +74,9 @@
         ;; FIXME: 'sign-request?' flag is currently ignored due to a qarth 0.1.3 library bug
         ;;                                                    --Leandro Doctors, 2017-10-27
         resp     ((oauth/requestor service access-token)
-                  {:url (str flickr-root-method-path "?method=" method-path "&api_key=" api-key)})]
+                  {:url (str flickr-root-method-path
+                             "?method=" method-path
+                             "&api_key=" api-key)})]
     resp))
 
 (defn perform-flickr-search
@@ -96,9 +98,9 @@
                             "&radius=" radius
                             "&license=" target-licenses
                             "&per_page=" results-per-query
-                            "&radius_units=" "km"
-                            "&sort=" "relevance"
-                            "&min_taken_date=" "1800-01-01 00:00:00")})]
+                            "&radius_units=km"
+                            "&sort=relevance"
+                            "&min_taken_date=1800-01-01 00:00:00")})]
    resp))
 
 (defn -main
