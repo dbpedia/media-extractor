@@ -61,3 +61,10 @@
           ;;_                                   (println "**Response**")
           ;;_                                   (println response)]
       (is (= (:status response) 200)))))
+
+(deftest search-result->page-uri-test
+  (testing "Converting a list of search results to a URI list"
+    (let
+        [results-file "resources/flickr.photos.search--sample-response.xml"
+         uris-file "resources/flickr.photos.search--pageURIs-list.edn"]
+      (is (= (slurp uris-file) (convert-response results-file))))))
