@@ -65,6 +65,6 @@
 (deftest search-result->page-uri-test
   (testing "Converting a list of search results to a URI list"
     (let
-        [results-file "resources/flickr.photos.search--sample-response.xml"
+        [results-file "resources/flickr.photos.search--sample-response.json"
          uris-file "resources/flickr.photos.search--pageURIs-list.edn"]
       (is (= (slurp uris-file) (convert-response results-file))))))

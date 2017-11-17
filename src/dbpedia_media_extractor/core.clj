@@ -76,7 +76,8 @@
         resp     ((oauth/requestor service access-token)
                   {:url (str flickr-root-method-path
                              "?method=" method-path
-                             "&api_key=" api-key)})]
+                             "&api_key=" api-key
+                             "&format=json&nojsoncallback=1")})]
     resp))
 
 (defn perform-flickr-search
@@ -100,7 +101,8 @@
                             "&per_page=" results-per-query
                             "&radius_units=km"
                             "&sort=relevance"
-                            "&min_taken_date=1800-01-01 00:00:00")})]
+                            "&min_taken_date=1800-01-01 00:00:00"
+                            "&format=json&nojsoncallback=1")})]
    resp))
 
 (defn -main
