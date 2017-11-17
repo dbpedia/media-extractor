@@ -12,7 +12,7 @@ pom.xml.asc
 /checkouts
 .hgignore
 .hg/
-/resources/flickr_keys.csv
-/resources/flickr_keys.edn
-/resources/flickr_oauth_token.csv
-/resources/flickr_user_details.csv
+/resources/flickr-keys.csv
+/resources/flickr-keys.edn
+/resources/flickr-oauth-token.csv
+/resources/flickr-user-details.csv

@@ -1,0 +1,39 @@
+;; (clojure.xml/parse "resources/flickr.photos.search--sample-response.xml")
+
+{:tag :rsp, :attrs {:stat "ok"}, :content [
+
+{:tag :photos, :attrs {:total "89239", :perpage "3", :pages "29747", :page "1"}, :content [
+
+{:tag :photo, :attrs {:isfamily "0", :isfriend "0", :ispublic "1", :title "Hôtel de Ville (Stadhuis) seen from the St. Michael and Gudula Cathedral, Brussels", :farm "5", :server "4269", :secret "661faf037a", :owner "127226743@N02", :id "35033195546"}, :content nil} 
+
+{:tag :photo, :attrs {:isfamily "0", :isfriend "0", :ispublic "1", :title "Passing by", :farm "7", :server "6141", :secret "6608091d2e", :owner "82182478@N00", :id "5917929564"}, :content nil}
+
+{:tag :photo, :attrs {:isfamily "0", :isfriend "0", :ispublic "1", :title "La petite ile et son ombre -The small island and its shadow (Woluwe park -Brussels)", :farm "7", :server "6113", :secret "50a440762e", :owner "42741665@N08", :id "6246106732"}, :content nil}]}]}
+
+
+;; (xml-seq (clojure.xml/parse "resources/flickr.photos.search--sample-response.xml"))
+
+({:tag :rsp, :attrs {:stat "ok"}, :content [{:tag :photos, :attrs {:total "89239", :perpage "3", :pages "29747", :page "1"}, :content 
+
+[{:tag :photo, :attrs {:isfamily "0", :isfriend "0", :ispublic "1", :title "Hôtel de Ville (Stadhuis) seen from the St. Michael and Gudula Cathedral, Brussels", :farm "5", :server "4269", :secret "661faf037a", :owner "127226743@N02", :id "35033195546"}, :content nil} 
+
+{:tag :photo, :attrs {:isfamily "0", :isfriend "0", :ispublic "1", :title "Passing by", :farm "7", :server "6141", :secret "6608091d2e", :owner "82182478@N00", :id "5917929564"}, :content nil}
+
+{:tag :photo, :attrs {:isfamily "0", :isfriend "0", :ispublic "1", :title "La petite ile et son ombre -The small island and its shadow (Woluwe park -Brussels)", :farm "7", :server "6113", :secret "50a440762e", :owner "42741665@N08", :id "6246106732"}, :content nil}]}]}
+
+
+{:tag :photos, :attrs {:total "89239", :perpage "3", :pages "29747", :page "1"}, :content [
+
+{:tag :photo, :attrs {:isfamily "0", :isfriend "0", :ispublic "1", :title "Hôtel de Ville (Stadhuis) seen from the St. Michael and Gudula Cathedral, Brussels", :farm "5", :server "4269", :secret "661faf037a", :owner "127226743@N02", :id "35033195546"}, :content nil}
+
+{:tag :photo, :attrs {:isfamily "0", :isfriend "0", :ispublic "1", :title "Passing by", :farm "7", :server "6141", :secret "6608091d2e", :owner "82182478@N00", :id "5917929564"}, :content nil}
+
+{:tag :photo, :attrs {:isfamily "0", :isfriend "0", :ispublic "1", :title "La petite ile et son ombre -The small island and its shadow (Woluwe park -Brussels)", :farm "7", :server "6113", :secret "50a440762e", :owner "42741665@N08", :id "6246106732"}, :content nil}]}
+
+
+{:tag :photo, :attrs {:isfamily "0", :isfriend "0", :ispublic "1", :title "Hôtel de Ville (Stadhuis) seen from the St. Michael and Gudula Cathedral, Brussels", :farm "5", :server "4269", :secret "661faf037a", :owner "127226743@N02", :id "35033195546"}, :content nil} 
+
+{:tag :photo, :attrs {:isfamily "0", :isfriend "0", :ispublic "1", :title "Passing by", :farm "7", :server "6141", :secret "6608091d2e", :owner "82182478@N00", :id "5917929564"}, :content nil}
+
+{:tag :photo, :attrs {:isfamily "0", :isfriend "0", :ispublic "1", :title "La petite ile et son ombre -The small island and its shadow (Woluwe park -Brussels)", :farm "7", :server "6113", :secret "50a440762e", :owner "42741665@N08", :id "6246106732"}, :content nil})
+

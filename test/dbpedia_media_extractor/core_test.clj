@@ -6,7 +6,7 @@
 (deftest input-parsing-test
   (testing "Parsing a file"
     (let [raw-data "name,age\nBart,10\nLisa,8"
-          tmp-filename "resources/simpson_kids.csv"
+          tmp-filename "resources/simpson-kids.csv"
           correctly-parsed-data '(["name" "age"] ["Bart" "10"] ["Lisa" "8"])]
       (spit tmp-filename raw-data)
       (is (= (parse (slurp tmp-filename)) correctly-parsed-data) "Testing the parser")
@@ -20,8 +20,8 @@
 
 #_(deftest generate-access-token-test
    (testing "Generating Flickr OAuth Access Token"
-     (let [stored-access-token-csv-file "resources/flickr_oauth_token.csv"
-           stored-credentials-csv-file  "resources/flickr_keys.csv"
+     (let [stored-access-token-csv-file "resources/flickr-oauth-token.csv"
+           stored-credentials-csv-file  "resources/flickr-keys.csv"
            generated-access-token       (generate-access-token stored-credentials-csv-file)
            parsed-access-token          (second (parse (slurp stored-access-token-csv-file)))]
            ;;stored-token                 (:oauth_token (mapify pre-generated-acces-token))
@@ -30,11 +30,11 @@
 
 (deftest invoke-flickr-test-echo-test
   (testing "Invoking 'flickr.test.echo'."
-    (let [stored-flickr-keys-csv-file         "resources/flickr_keys.csv"
+    (let [stored-flickr-keys-csv-file         "resources/flickr-keys.csv"
           sign-request?                       true
           api-key                             (:api_key (stored-credentials stored-flickr-keys-csv-file))
           api-secret                          (:api_secret (stored-credentials stored-flickr-keys-csv-file))
-          stored-flickr-oauth-token-csv-file  "resources/flickr_oauth_token.csv"
+          stored-flickr-oauth-token-csv-file  "resources/flickr-oauth-token.csv"
           oauth-token                         (:oauth_token (stored-credentials stored-flickr-oauth-token-csv-file))
           oauth-secret                        (:oauth_secret (stored-credentials stored-flickr-oauth-token-csv-file))
           response                            (invoke-flickr-method "flickr.test.echo" sign-request? api-key api-secret oauth-token oauth-secret)]
@@ -44,11 +44,11 @@
 
 (deftest perform-flickr-search-test
   (testing "Invoking 'flickr.photos.search' with geographical coordinates"
-    (let [stored-flickr-keys-csv-file         "resources/flickr_keys.csv"
+    (let [stored-flickr-keys-csv-file         "resources/flickr-keys.csv"
           sign-request?                       true
           api-key                             (:api_key (stored-credentials stored-flickr-keys-csv-file))
           api-secret                          (:api_secret (stored-credentials stored-flickr-keys-csv-file))
-          stored-flickr-oauth-token-csv-file  "resources/flickr_oauth_token.csv"
+          stored-flickr-oauth-token-csv-file  "resources/flickr-oauth-token.csv"
           oauth-token                         (:oauth_token (stored-credentials stored-flickr-oauth-token-csv-file))
           oauth-secret                        (:oauth_secret (stored-credentials stored-flickr-oauth-token-csv-file))
           search-text                         "Brussels"
