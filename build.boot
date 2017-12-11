@@ -17,7 +17,7 @@
       :url         "https://www.github.com/allentiak/dbpedia-media-extractor"
       :scm         {:url "https://github.com/allentiak/dbpedia-media-extractor"}
       :license     {"GNU Affero General Public License (AGPL) 3 or later, with Clojure linking permission"
-                   "https://www.gnu.org/licenses/agpl.html"}}
+                    "https://www.gnu.org/licenses/agpl.html"}}
  jar {:main        'dbpedia-media-extractor.core
       :file        (str "dbpedia-media-extractor-" version "-standalone.jar")})
 
