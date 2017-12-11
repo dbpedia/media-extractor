@@ -1,8 +1,7 @@
 (ns dbpedia-media-extractor.core
-  (:gen-class)
-  (:require
-    [qarth.oauth :as oauth]
-    [qarth.impl.scribe]))
+ (:gen-class)
+ (:require
+  [oauth.client :as oc]))
 
 
 (defn parse

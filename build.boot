@@ -5,7 +5,7 @@
           :source-paths   #{"test"}
           :dependencies   '[[org.clojure/clojure "1.8.0"]
                             [adzerk/boot-test "RELEASE" :scope "test"]
-                            [qarth "0.1.3"]
+                            [clj-oauth "1.5.5"]
                             [org.clojure/data.json "0.2.6"]
                             [org.clojure/data.xml "0.0.8"]])
 
