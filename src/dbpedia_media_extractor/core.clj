@@ -30,7 +30,12 @@
 (defn flickr-service
   "Create Flickr service, given my-api-key and my-api-secret"
   [my-api-key my-api-secret]
-  (oauth/build {:type :scribe, :provider org.scribe.builder.api.FlickrApi, :api-key my-api-key, :api-secret my-api-secret}))
+  (oc/make-consumer my-api-key
+                    my-api-secret
+                    "https://www.flickr.com/services/oauth/request_token"
+                    "https://www.flickr.com/services/oauth/access_token"
+                    "https://www.flickr.com/services/oauth/authorize"
+                    :hmac-sha1))
 
 (defn generate-access-token
   "Generates an access token vector, based on credentials stored in a CSV file. Needs interaction to get the authorization."
