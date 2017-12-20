@@ -27,7 +27,7 @@
   [stored-credentials-csv-file]
   (first (mapify (parse (slurp stored-credentials-csv-file)))))
 
-(defn flickr-service
+(defn make-flickr-consumer
   "Create Flickr service, given my-api-key and my-api-secret"
   [my-api-key my-api-secret]
   (oc/make-consumer my-api-key
@@ -40,31 +40,31 @@
 (defn generate-access-token
   "Generates an access token vector, based on credentials stored in a CSV file. Needs interaction to get the authorization."
   [stored-credentials-csv-file] ;; This one should be "resources/flickr_keys.csv"
-  (let [my-api-key     (:api_key (stored-credentials stored-credentials-csv-file))
-        my-api-secret  (:api_secret (stored-credentials stored-credentials-csv-file))
-        #_             (println "my-api-key: " my-api-key)
-        #_             (println "my-api-secret: " my-api-secret)
-        service        (flickr-service my-api-key my-api-secret)
-        #_             (println "service: " service)
-        rec            (oc/request-token service)
-        #_             (println "rec: " rec)
-        _              (println)
-        _              (println "Please, follow the Authorization URL below to authorize this app on Flickr.")
-        _              (println "Once that is done, please enter the verifier obtained from Flickr.")
-        _              (println)
-        _              (println "Authorization URL: "(oc/user-approval-uri service
-                                                                           (:oauth_token rec)))
-        _              (println)
-        _              (print "Verifier ('NNN-NNN-NNN'): ")
-        _              (flush)
-        verifier       (clojure.string/trim (read-line))
-        _              (println "Thank you!")
-        #_             (println "This is the verifier you obtained: " verifier)
-        rec            (oc/access-token service rec verifier)
-        #_             (println "Authorized rec: " rec)
-        access-token   (vector (:oauth_token rec) (:oauth_token_secret rec))
-        #_             (println "This is the Access Token (to be stored): " access-token)]
-    access-token))
+  (let [my-api-key      (:api_key (stored-credentials stored-credentials-csv-file))
+        my-api-secret   (:api_secret (stored-credentials stored-credentials-csv-file))
+        #_               (println "my-api-key: " my-api-key)
+        #_               (println "my-api-secret: " my-api-secret)
+        flickr-consumer (make-flickr-consumer my-api-key my-api-secret)
+        #_               (println "flickr-consumer: " flickr-consumer)
+        request-token            (oc/request-token flickr-consumer)
+        #_               (println "request-token: " request-token)
+        _               (println)
+        _               (println "Please, follow the Authorization URL below to authorize this app on Flickr.")
+        _               (println "Once that is done, please enter the verifier obtained from Flickr.")
+        _               (println)
+        _               (println "Authorization URL: "(oc/user-approval-uri flickr-consumer
+                                                                           (:oauth_token request-token)))
+        _               (println)
+        _               (print "Verifier ('NNN-NNN-NNN'): ")
+        _               (flush)
+        verifier        (clojure.string/trim (read-line))
+        _               (println "Thank you!")
+        #_               (println "This is the verifier you obtained: " verifier)
+        access-token    (oc/access-token flickr-consumer request-token verifier)
+        #_               (println "Access-token: " access-token)
+        acc-tok-vec     (vector (:oauth_token access-token) (:oauth_token_secret access-token))
+        #_               (println "This is the Access Token (to be stored): " acc-tok-vec)]
+    acc-tok-vec))
 
 (def flickr-root-method-path
   "https://api.flickr.com/services/rest/")
@@ -72,25 +72,25 @@
 (defn invoke-flickr-method
   "Invokes a Flickr method"
   [method-path sign-request? api-key api-secret oauth-token oauth-secret]
-  (let [service       (flickr-service api-key api-secret)
-        access-token  {:access-token [oauth-token oauth-secret]}
-        #_        (println "access-token: " access-token)
-        #_        (println "service: " service)
-        creds     (oc/credentials service oauth-token oauth-secret :POST flickr-root-method-path {:method method-path :api_key api-key})
-        user-params {:format "json&nojsoncallback=1"}
-        resp      (clj-http.client/post flickr-root-method-path {:query-params (merge creds user-params)})]
+  (let [flickr-consumer (make-flickr-consumer api-key api-secret)
+        access-token    {:access-token [oauth-token oauth-secret]}
+        #_               (println "access-token: " access-token)
+        #_               (println "flickr-consumer: " flickr-consumer)
+        creds           (oc/credentials flickr-consumer oauth-token oauth-secret :POST flickr-root-method-path {:method method-path :api_key api-key})
+        user-params     {:format "json&nojsoncallback=1"}
+        resp            (clj-http.client/post flickr-root-method-path {:query-params (merge creds user-params)})]
     resp))
 
 (defn perform-flickr-search
   "Performs a simple search on Flickr. It supports geographical restrictions."
   [method-path sign-request? api-key api-secret oauth-token oauth-secret search-text latitude longitude radius results-per-query target-licenses]
-  (let [service       (flickr-service api-key api-secret)
-        access-token  {:access-token [oauth-token oauth-secret]}
-        #_             (println "access-token: " access-token)
-        #_             (println "service: " service)
-        creds         (oc/credentials service oauth-token oauth-secret :POST flickr-root-method-path {:method method-path :api_key api-key})
-        user-params   {:format "json&nojsoncallback=1" :text search-text :lat latitude :lon longitude :radius radius :license target-licenses :per_page results-per-query :radius_units "km" :sort "relevance" :min_taken_date "1800-01-01 00:00:00"}
-        resp          (clj-http.client/post flickr-root-method-path {:queri-params (merge creds user-params)})]
+  (let [flickr-consumer  (make-flickr-consumer api-key api-secret)
+        access-token     {:access-token [oauth-token oauth-secret]}
+        #_                (println "access-token: " access-token)
+        #_                (println "service: " service)
+        creds            (oc/credentials flickr-consumer oauth-token oauth-secret :POST flickr-root-method-path {:method method-path :api_key api-key})
+        user-params      {:format "json&nojsoncallback=1" :text search-text :lat latitude :lon longitude :radius radius :license target-licenses :per_page results-per-query :radius_units "km" :sort "relevance" :min_taken_date "1800-01-01 00:00:00"}
+        resp             (clj-http.client/post flickr-root-method-path {:query-params (merge creds user-params)})]
     resp))
 
 (defn -main
