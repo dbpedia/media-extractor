@@ -74,13 +74,13 @@
 
 (defn invoke-flickr-method
   "Invokes a Flickr method"
-  [method-path sign-request? consumer-key access-token]
+  [method-path sign-request? consumer-key access-token & extra-params]
   (let [flickr-consumer (make-flickr-consumer consumer-key)
         #_               (println "access-token: " access-token)
         #_               (println "flickr-consumer: " flickr-consumer)
         creds           (oc/credentials flickr-consumer (:oauth_token access-token) (:oauth_token_secret access-token) :POST flickr-root-method-path {:method method-path :api_key consumer-key})
-        user-params     {:format "json&nojsoncallback=1"}
-        resp            (clj-http.client/post flickr-root-method-path {:query-params (merge creds user-params)})]
+        format-params   {:format "json&nojsoncallback=1"}
+        resp            (clj-http.client/post flickr-root-method-path {:query-params (merge creds format-params extra-params)})]
     resp))
 
 (defn perform-flickr-search
