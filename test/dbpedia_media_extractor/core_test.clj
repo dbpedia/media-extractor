@@ -41,34 +41,30 @@
   (testing "Invoking 'flickr.test.echo'."
     (let [stored-flickr-keys-csv-file         "resources/flickr-keys.csv"
           sign-request?                       true
-          api-key                             (:api_key (stored-credentials stored-flickr-keys-csv-file))
-          api-secret                          (:api_secret (stored-credentials stored-flickr-keys-csv-file))
+          consumer-key                        (stored-credentials-map stored-flickr-keys-csv-file)
           stored-flickr-oauth-token-csv-file  "resources/flickr-oauth-token.csv"
-          oauth-token                         (:oauth_token (stored-credentials stored-flickr-oauth-token-csv-file))
-          oauth-secret                        (:oauth_secret (stored-credentials stored-flickr-oauth-token-csv-file))
-          response                            (invoke-flickr-method "flickr.test.echo" sign-request? api-key api-secret oauth-token oauth-secret)]
-          ;;_                                   (println "**Response**")
-          ;;_                                   (println response)]
+          access-token                        (stored-credentials-map stored-flickr-oauth-token-csv-file)
+          response                            (invoke-flickr-method "flickr.test.echo" sign-request? consumer-key access-token)
+          #_                                   (println "**Response**")
+          #_                                   (println response)]
       (is (= (:status response) 200)))))
 
 (deftest perform-flickr-search-test
   (testing "Invoking 'flickr.photos.search' with geographical coordinates"
     (let [stored-flickr-keys-csv-file         "resources/flickr-keys.csv"
           sign-request?                       true
-          api-key                             (:api_key (stored-credentials stored-flickr-keys-csv-file))
-          api-secret                          (:api_secret (stored-credentials stored-flickr-keys-csv-file))
+          consumer-key                        (stored-credentials-map stored-flickr-keys-csv-file)
           stored-flickr-oauth-token-csv-file  "resources/flickr-oauth-token.csv"
-          oauth-token                         (:oauth_token (stored-credentials stored-flickr-oauth-token-csv-file))
-          oauth-secret                        (:oauth_secret (stored-credentials stored-flickr-oauth-token-csv-file))
+          access-token                        (stored-credentials-map stored-flickr-oauth-token-csv-file)
           search-text                         "Brussels"
           latitude                            "50.85"
           longitude                           "4.35"
           radius                              "5"
           results-per-query                   "3" ; Max. 30, according to Flickr's TOU
           target-licenses                     "4,5,7,8"
-          response                            (perform-flickr-search "flickr.photos.search" sign-request? api-key api-secret oauth-token oauth-secret search-text latitude longitude radius results-per-query target-licenses)]
-          ;;_                                   (println "**Response**")
-          ;;_                                   (println response)]
+          response                            (perform-flickr-search "flickr.photos.search" sign-request? consumer-key access-token search-text latitude longitude radius results-per-query target-licenses)
+          #_                                   (println "**Response**")
+          #_                                   (println response)]
       (is (= (:status response) 200)))))
 
 (deftest search-result->page-uri-test

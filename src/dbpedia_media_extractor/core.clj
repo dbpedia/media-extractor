@@ -74,24 +74,22 @@
 
 (defn invoke-flickr-method
   "Invokes a Flickr method"
-  [method-path sign-request? api-key api-secret oauth-token oauth-secret]
-  (let [flickr-consumer (make-flickr-consumer api-key api-secret)
-        access-token    {:access-token [oauth-token oauth-secret]}
+  [method-path sign-request? consumer-key access-token]
+  (let [flickr-consumer (make-flickr-consumer consumer-key)
         #_               (println "access-token: " access-token)
         #_               (println "flickr-consumer: " flickr-consumer)
-        creds           (oc/credentials flickr-consumer oauth-token oauth-secret :POST flickr-root-method-path {:method method-path :api_key api-key})
+        creds           (oc/credentials flickr-consumer (:oauth_token access-token) (:oauth_token_secret access-token) :POST flickr-root-method-path {:method method-path :api_key consumer-key})
         user-params     {:format "json&nojsoncallback=1"}
         resp            (clj-http.client/post flickr-root-method-path {:query-params (merge creds user-params)})]
     resp))
 
 (defn perform-flickr-search
   "Performs a simple search on Flickr. It supports geographical restrictions."
-  [method-path sign-request? api-key api-secret oauth-token oauth-secret search-text latitude longitude radius results-per-query target-licenses]
-  (let [flickr-consumer  (make-flickr-consumer api-key api-secret)
-        access-token     {:access-token [oauth-token oauth-secret]}
+  [method-path sign-request? consumer-key access-token search-text latitude longitude radius results-per-query target-licenses]
+  (let [flickr-consumer  (make-flickr-consumer consumer-key)
         #_                (println "access-token: " access-token)
         #_                (println "service: " service)
-        creds            (oc/credentials flickr-consumer oauth-token oauth-secret :POST flickr-root-method-path {:method method-path :api_key api-key})
+        creds            (oc/credentials flickr-consumer (:oauth_token access-token) (:oauth_token_secret access-token) :POST flickr-root-method-path {:method method-path :api_key consumer-key})
         user-params      {:format "json&nojsoncallback=1" :text search-text :lat latitude :lon longitude :radius radius :license target-licenses :per_page results-per-query :radius_units "km" :sort "relevance" :min_taken_date "1800-01-01 00:00:00"}
         resp             (clj-http.client/post flickr-root-method-path {:query-params (merge creds user-params)})]
     resp))
