@@ -18,6 +18,15 @@
           correctly-mapified-data '({:name "Bart", :age "10"} {:name "Lisa", :age "8"})]
       (is (= (mapify raw-data) correctly-mapified-data)))))
 
+(deftest stored-credentials-map-test
+  (testing "Retrieving a map of stored credentials from a file"
+    (let [raw-data "name,age\nBart,10\nLisa,8"
+          tmp-filename "resources/simpson-kids.csv"
+          correctly-mapified-data '{:name "Bart", :age "10"}]
+      (spit tmp-filename raw-data)
+      (is (= (stored-credentials-map tmp-filename) correctly-mapified-data) "Testing credentials storing")
+      (io/delete-file tmp-filename))))
+
 #_(deftest generate-access-token-test
    (testing "Generating Flickr OAuth Access Token"
      (let [stored-access-token-csv-file  "resources/flickr-oauth-token.csv"
