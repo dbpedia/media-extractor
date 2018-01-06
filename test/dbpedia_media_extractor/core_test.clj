@@ -40,7 +40,7 @@
 (deftest invoke-flickr-test-echo-test
   (testing "Invoking 'flickr.test.echo'."
     (let [stored-flickr-keys-csv-file         "resources/flickr-keys.csv"
-          sign-request?                       true
+          sign-request?                       false
           consumer-key                        (stored-credentials-map stored-flickr-keys-csv-file)
           stored-flickr-oauth-token-csv-file  "resources/flickr-oauth-token.csv"
           access-token                        (stored-credentials-map stored-flickr-oauth-token-csv-file)
