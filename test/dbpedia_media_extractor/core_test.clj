@@ -20,12 +20,12 @@
 
 #_(deftest generate-access-token-test
    (testing "Generating Flickr OAuth Access Token"
-     (let [stored-access-token-csv-file "resources/flickr-oauth-token.csv"
-           stored-credentials-csv-file  "resources/flickr-keys.csv"
-           generated-access-token       (generate-access-token stored-credentials-csv-file)
-           parsed-access-token          (second (parse (slurp stored-access-token-csv-file)))]
-           ;;stored-token                 (:oauth_token (mapify pre-generated-acces-token))
-           ;;stored-secret                (:oauth_secret (mapify pre-generated-acces-token))
+     (let [stored-access-token-csv-file  "resources/flickr-oauth-token.csv"
+           stored-credentials-csv-file   "resources/flickr-keys.csv"
+           parsed-access-token           (map->OAuthToken (stored-credentials-map stored-access-token-csv-file))
+           generated-access-token        (generate-access-token stored-credentials-csv-file)
+           #_                             (println "parsed-access-token: "parsed-access-token)
+           #_                             (println "generated-access-token: " generated-access-token)]
          (is (= parsed-access-token generated-access-token)))))
 
 (deftest invoke-flickr-test-echo-test

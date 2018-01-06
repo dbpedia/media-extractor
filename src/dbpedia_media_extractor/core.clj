@@ -21,32 +21,35 @@
                    (map vector my-keywords unmapped-row)))
          (rest rows))))
 
-(defn stored-credentials
+(defn stored-credentials-map
   "Returns a map with the stored credentials (such as API key, secret, access token, access secret).
   'stored-credentials-csv-file' should be a CSV file such as 'resources/flickr_{keys,oauth_token}.csv'"
   [stored-credentials-csv-file]
   (first (mapify (parse (slurp stored-credentials-csv-file)))))
 
+(defrecord OAuthConsumerKey [api_key api_secret])
+
+(defrecord OAuthToken [oauth_token oauth_token_secret])
+
 (defn make-flickr-consumer
   "Create Flickr service, given my-api-key and my-api-secret"
-  [my-api-key my-api-secret]
-  (oc/make-consumer my-api-key
-                    my-api-secret
+  [{:keys [api_key api_secret]}]
+  (oc/make-consumer api_key
+                    api_secret
                     "https://www.flickr.com/services/oauth/request_token"
                     "https://www.flickr.com/services/oauth/access_token"
                     "https://www.flickr.com/services/oauth/authorize"
                     :hmac-sha1))
 
 (defn generate-access-token
-  "Generates an access token vector, based on credentials stored in a CSV file. Needs interaction to get the authorization."
+  "Generates an access token record, based on credentials stored in a CSV file. Needs interaction to get the authorization."
   [stored-credentials-csv-file] ;; This one should be "resources/flickr_keys.csv"
-  (let [my-api-key      (:api_key (stored-credentials stored-credentials-csv-file))
-        my-api-secret   (:api_secret (stored-credentials stored-credentials-csv-file))
-        #_               (println "my-api-key: " my-api-key)
-        #_               (println "my-api-secret: " my-api-secret)
-        flickr-consumer (make-flickr-consumer my-api-key my-api-secret)
+  (let [creds           (stored-credentials-map stored-credentials-csv-file)
+        consumer-key    (map->OAuthConsumerKey creds)
+        #_               (println "consumer-key: " consumer-key)
+        flickr-consumer (make-flickr-consumer consumer-key)
         #_               (println "flickr-consumer: " flickr-consumer)
-        request-token            (oc/request-token flickr-consumer)
+        request-token   (oc/request-token flickr-consumer)
         #_               (println "request-token: " request-token)
         _               (println)
         _               (println "Please, follow the Authorization URL below to authorize this app on Flickr.")
@@ -60,11 +63,11 @@
         verifier        (clojure.string/trim (read-line))
         _               (println "Thank you!")
         #_               (println "This is the verifier you obtained: " verifier)
-        access-token    (oc/access-token flickr-consumer request-token verifier)
-        #_               (println "Access-token: " access-token)
-        acc-tok-vec     (vector (:oauth_token access-token) (:oauth_token_secret access-token))
-        #_               (println "This is the Access Token (to be stored): " acc-tok-vec)]
-    acc-tok-vec))
+        access-token    (select-keys (oc/access-token flickr-consumer request-token verifier) [:oauth_token :oauth_token_secret])
+        _               (println "Access-token: " access-token)
+        acc-tok-rec     (map->OAuthToken access-token)
+        _               (println "This is the Access Token (to be stored): " acc-tok-rec)]
+    acc-tok-rec))
 
 (def flickr-root-method-path
   "https://api.flickr.com/services/rest/")
